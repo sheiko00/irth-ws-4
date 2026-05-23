@@ -395,7 +395,7 @@
        PAGE CONTENT
     ══════════════════════════════════════════ */
     #page { position: relative; z-index: 200; }
-    .scroll-space { height: 240vh; }
+    .scroll-space { height: 240vh; pointer-events: none; }
 
     /* Shared section header */
     .sec-hd {
@@ -959,15 +959,6 @@
     </button>
   </nav>
 
-  <!-- Mobile nav drawer -->
-  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
-    <button class="mobile-nav-close" id="mobile-nav-close" aria-label="إغلاق القائمة">✕</button>
-    <a href="collection.html" class="nav-veil-link">المجموعة</a>
-    <a href="#story">قصتنا</a>
-    <a href="#values">القيم</a>
-    <a href="#contact">تواصل</a>
-  </div>
-
   <div class="h-center">
     <div class="h-eyebrow">From the Heart of Arab Heritage · من قلب الموروث</div>
     <h1 class="h-title">
@@ -984,6 +975,15 @@
     </div>
     <div class="h-year">©2026</div>
   </div>
+</div>
+
+<!-- Mobile nav drawer — outside #hud so opacity:0 on hud doesn't affect it -->
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="إغلاق القائمة">✕</button>
+  <a href="collection.html" class="nav-veil-link">المجموعة</a>
+  <a href="#story">قصتنا</a>
+  <a href="#values">القيم</a>
+  <a href="#contact">تواصل</a>
 </div>
 
 <!-- ── PAGE CONTENT ── -->
@@ -1745,5 +1745,7 @@
 
 })();
 </script>
+
+
 </body>
 </html>
