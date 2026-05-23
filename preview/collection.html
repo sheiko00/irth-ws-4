@@ -91,6 +91,41 @@
       transition: opacity .3s; cursor: none;
     }
     .back-btn:hover { opacity: 1; }
+    .n-burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .n-burger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--ink); opacity: .55;
+    }
+    @media (max-width: 900px) {
+      .n-burger { display: flex; }
+      .site-nav .n-links { display: none; }
+      .back-btn { display: none; }
+    }
+    .mobile-nav {
+      position: fixed; inset: 0; z-index: 8100;
+      background: var(--madinah);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 28px;
+      opacity: 0; pointer-events: none; transition: opacity .4s;
+    }
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+    .mobile-nav a {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(26px, 6vw, 40px); color: rgba(233,226,213,.82);
+      text-decoration: none; transition: color .3s;
+    }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-nav-close {
+      position: absolute; top: 24px; right: 24px;
+      width: 40px; height: 40px;
+      background: none; border: 1px solid rgba(201,168,106,.2);
+      border-radius: 50%; color: white; font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
 
     /* COLLECTION HERO */
     .col-hero {
@@ -296,6 +331,86 @@
     .f-links { display: flex; gap: 22px; list-style: none; }
     .f-links a { font-size: 11px; color: var(--ink); text-decoration: none; opacity: .32; transition: opacity .3s; }
     .f-links a:hover { opacity: 1; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+
+    @media (hover: none) {
+      #cur, #cur-ring, #cur-label { display: none !important; }
+      body { cursor: auto; }
+      a, button { cursor: pointer; }
+    }
+
+    /* ── Tablet ≤ 900px ── */
+    @media (max-width: 900px) {
+      .site-nav { padding: 16px 24px; }
+      .site-nav .n-links { display: none; }
+      .site-nav .n-logo img { height: 30px; }
+
+      .col-hero { padding: 72px 28px 56px; flex-direction: column; gap: 32px; align-items: flex-start; }
+      .col-hero-right { text-align: right; }
+      .col-count { font-size: 60px; }
+
+      .filter-bar { padding: 18px 28px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+      .filter-label { display: none; }
+
+      .catalog { padding: 48px 28px; }
+      .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .sourcing-strip { grid-template-columns: 1fr; padding: 60px 28px; gap: 0; }
+      .source-col { border-right: none; border-bottom: 1px solid rgba(201,168,106,.08); padding: 32px 0; }
+      .source-col:last-child { border-bottom: none; }
+
+      #cta { padding: 100px 28px; }
+
+      footer { flex-wrap: wrap; gap: 16px; padding: 22px 28px; }
+      .f-copy { order: 3; width: 100%; }
+    }
+
+    /* ── Mobile ≤ 600px ── */
+    @media (max-width: 600px) {
+      /* Nav */
+      .site-nav { padding: 14px 20px; }
+      .site-nav .n-logo img { height: 28px; }
+      .back-btn { font-size: 10px; }
+
+      /* Collection hero */
+      .col-hero { padding: 56px 20px 44px; gap: 24px; }
+      .col-title    { font-size: clamp(42px, 11vw, 62px); }
+      .col-title-en { font-size: clamp(30px, 8vw, 48px); }
+      .col-eyebrow  { font-size: 9px; letter-spacing: .22em; }
+      .col-count    { font-size: 52px; }
+      .col-desc     { font-size: 13px; max-width: 100%; }
+
+      /* Filter bar */
+      .filter-bar { padding: 14px 20px; gap: 6px; }
+      .filter-btn { padding: 7px 14px; font-size: 13px; }
+
+      /* Catalog */
+      .catalog { padding: 40px 20px; }
+      .catalog-grid { grid-template-columns: 1fr; }
+      .cat-body { padding: 20px 22px 18px; }
+      .cat-name-ar { font-size: 19px; }
+      .cat-desc, .cat-desc-ar { font-size: 12px; }
+      .cat-footer { padding: 0 22px 22px; }
+      .cat-tag { font-size: 8px; padding: 3px 8px; }
+
+      /* Sourcing */
+      .sourcing-strip { padding: 48px 20px; }
+      .source-name-ar { font-size: 20px; }
+      .source-desc, .source-desc-ar { font-size: 12px; }
+
+      /* CTA */
+      #cta { padding: 80px 20px; }
+      .cta-title { font-size: clamp(38px, 10vw, 60px); }
+      .cta-sub   { font-size: clamp(22px, 6vw, 36px); }
+      .cta-email { font-size: clamp(13px, 3.8vw, 20px); }
+
+      /* Footer */
+      footer  { padding: 18px 20px; gap: 12px; }
+      .f-links { gap: 14px; }
+    }
   </style>
 </head>
 <body>
@@ -318,7 +433,17 @@
     <li><a href="index.html#contact" class="nav-veil-link">تواصل</a></li>
   </ul>
   <a href="index.html" class="back-btn nav-veil-link">← Back</a>
+  <button class="n-burger" id="n-burger" aria-label="فتح القائمة">
+    <span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="إغلاق">✕</button>
+  <a href="index.html" class="nav-veil-link">الرئيسية</a>
+  <a href="collection.html">المجموعة</a>
+  <a href="index.html#contact" class="nav-veil-link">تواصل</a>
+</div>
 
 <!-- COLLECTION HERO -->
 <header class="col-hero">
@@ -661,6 +786,16 @@
       scrollTrigger: { trigger: el, start: 'top 88%' }
     });
   });
+
+  /* MOBILE NAV */
+  const burger    = document.getElementById('n-burger');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mClose    = document.getElementById('mobile-nav-close');
+  if (burger) {
+    burger.addEventListener('click', () => { mobileNav.classList.add('open'); mobileNav.setAttribute('aria-hidden','false'); });
+    mClose.addEventListener('click',  () => { mobileNav.classList.remove('open'); mobileNav.setAttribute('aria-hidden','true'); });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+  }
 
 })();
 </script>

@@ -279,6 +279,44 @@
     }
     .n-dot span { font-size: 13px; color: white; opacity: .45; letter-spacing: .12em; }
 
+    /* Mobile menu toggle */
+    .n-burger {
+      display: none; flex-direction: column; gap: 5px;
+      pointer-events: all; cursor: pointer; padding: 4px;
+    }
+    .n-burger span {
+      display: block; width: 22px; height: 1.5px;
+      background: white; transition: transform .3s, opacity .3s;
+    }
+    @media (max-width: 900px) {
+      .n-burger { display: flex; }
+    }
+    /* Mobile nav drawer */
+    .mobile-nav {
+      position: fixed; inset: 0; z-index: 8100;
+      background: var(--madinah);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 28px;
+      opacity: 0; pointer-events: none;
+      transition: opacity .4s;
+    }
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+    .mobile-nav a {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(28px, 6vw, 42px); font-weight: 400;
+      color: rgba(233,226,213,.82); text-decoration: none;
+      transition: color .3s;
+    }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-nav-close {
+      position: absolute; top: 24px; right: 24px;
+      width: 40px; height: 40px;
+      background: none; border: 1px solid rgba(201,168,106,.2);
+      border-radius: 50%; color: white; font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+
     /* Hero center */
     .h-center {
       position: absolute; top: 50%; left: 50%;
@@ -724,6 +762,139 @@
     .f-links { display: flex; gap: 22px; list-style: none; }
     .f-links a { font-size: 11px; color: var(--ink); text-decoration: none; opacity: .32; transition: opacity .3s; }
     .f-links a:hover { opacity: 1; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+
+    /* Touch: hide custom cursor */
+    @media (hover: none) {
+      #cur, #cur-ring, #cur-label { display: none !important; }
+      body { cursor: auto; }
+      a, button { cursor: pointer; }
+    }
+
+    /* ── Tablet ≤ 900px ── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 24px; }
+      .n-links { display: none; }
+      .n-dot   { display: none; }
+      .n-logo img { height: 32px; }
+
+      .ar-line      { font-size: clamp(40px, 9vw, 64px); }
+      .ar-line-bold { font-size: clamp(42px, 9.4vw, 68px); }
+      .h-pill { padding: 11px 22px; font-size: 14px; }
+
+      .prod-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .vals-grid { grid-template-columns: 1fr; }
+      .val { border-right: none; border-bottom: 1px solid rgba(201,168,106,.08); }
+      .val:last-child { border-bottom: none; }
+
+      #story { grid-template-columns: 1fr; }
+      .story-img-side { height: 56vw; min-height: 300px; }
+      .story-text-side { padding: 64px 36px; }
+      .story-stats { gap: 28px; }
+
+      .hs-panel { width: 72vw; }
+      .hs-intro-panel { width: 80vw; padding: 0 32px; }
+
+      #prod-overlay { grid-template-columns: 1fr; grid-template-rows: 48vh 1fr; }
+      .ov-info-side { padding: 40px 32px; overflow-y: auto; }
+      .ov-close { top: calc(48vh + 16px); left: 20px; }
+
+      #products, #values { padding: 80px 28px; }
+      #contact { padding: 100px 28px; }
+
+      footer { flex-wrap: wrap; gap: 16px; padding: 24px 28px; }
+      .f-copy { order: 3; width: 100%; }
+
+      #sec-indicator { left: 24px; bottom: 24px; }
+    }
+
+    /* ── Mobile ≤ 600px ── */
+    @media (max-width: 600px) {
+      /* Preloader */
+      .pre-logo { height: 40px; }
+
+      /* Entry screen */
+      .eye { width: 58px; height: 58px; }
+      .pupil { width: 30px; height: 30px; }
+      .e-logo-img { height: 68px; }
+      .e-desc-ar { font-size: 14px; max-width: 280px; }
+      .e-desc    { font-size: 11px; }
+      .e-btn     { padding: 13px 26px; font-size: 15px; }
+
+      /* Nav */
+      nav { padding: 16px 20px; }
+      .n-logo img { height: 28px; }
+
+      /* Hero */
+      .h-center { width: 92vw; }
+      .ar-line      { font-size: clamp(34px, 10.5vw, 50px); }
+      .ar-line-bold { font-size: clamp(36px, 11vw, 53px); }
+      .h-eyebrow { display: none; }
+      .h-pill    { padding: 10px 20px; font-size: 13px; }
+      .h-bottom  { bottom: 20px; left: 20px; right: 20px; }
+      .origin-ar { font-size: 12px; }
+      .origin-icon { width: 20px; height: 20px; font-size: 9px; }
+      .h-year { font-size: 10px; }
+
+      /* Products */
+      .prod-grid { grid-template-columns: 1fr; }
+      #products  { padding: 64px 20px; }
+      .sec-hd {
+        flex-direction: column; align-items: flex-start;
+        gap: 14px; margin-bottom: 44px;
+      }
+      .sec-title { font-size: clamp(32px, 8.5vw, 50px); }
+      .sec-ey    { font-size: 9px; }
+
+      /* Horizontal scroll */
+      .hs-panel { width: 88vw; }
+      .hs-intro-panel { width: 88vw; padding: 0 24px; }
+      .hs-intro-title { font-size: clamp(26px, 7vw, 38px); }
+      .hs-intro-sub   { font-size: 12px; }
+
+      /* Marquee */
+      .marquee-inner span { font-size: 11px; padding: 0 20px; }
+
+      /* Story */
+      .story-img-side { height: 70vw; }
+      .story-text-side { padding: 48px 20px; gap: 20px; }
+      .story-title     { font-size: clamp(24px, 7vw, 38px); }
+      .story-body, .story-body-ar { font-size: 13px; }
+      .stat-num  { font-size: 38px; }
+      .stat-label { font-size: 11px; }
+      .story-stats { gap: 20px; flex-wrap: wrap; padding-top: 16px; }
+
+      /* Values */
+      #values  { padding: 64px 20px; }
+      .val     { padding: 36px 24px; }
+      .val-name-ar { font-size: 24px; }
+      .val-name    { font-size: 20px; }
+      .val-num     { margin-bottom: 32px; }
+
+      /* Contact */
+      #contact { padding: 80px 20px; }
+      .contact-title { font-size: clamp(42px, 11.5vw, 68px); }
+      .contact-title .ar { font-size: clamp(38px, 10.5vw, 60px); }
+      .contact-email { font-size: clamp(14px, 4vw, 20px); }
+
+      /* Product overlay */
+      #prod-overlay { grid-template-rows: 42vh 1fr; }
+      .ov-name-ar { font-size: clamp(26px, 7vw, 40px); }
+      .ov-info-side { padding: 26px 20px; gap: 12px; }
+      .ov-desc, .ov-desc-ar { font-size: 13px; }
+
+      /* Section indicator */
+      #sec-indicator { display: none; }
+
+      /* Footer */
+      footer  { padding: 20px; gap: 14px; flex-wrap: wrap; }
+      .f-links { gap: 16px; }
+      .f-logo img { height: 26px; }
+    }
   </style>
 </head>
 <body>
@@ -783,7 +954,19 @@
       <li><a href="#contact">تواصل</a></li>
     </ul>
     <div class="n-dot"><span>···</span></div>
+    <button class="n-burger" id="n-burger" aria-label="فتح القائمة" aria-expanded="false">
+      <span></span><span></span>
+    </button>
   </nav>
+
+  <!-- Mobile nav drawer -->
+  <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <button class="mobile-nav-close" id="mobile-nav-close" aria-label="إغلاق القائمة">✕</button>
+    <a href="collection.html" class="nav-veil-link">المجموعة</a>
+    <a href="#story">قصتنا</a>
+    <a href="#values">القيم</a>
+    <a href="#contact">تواصل</a>
+  </div>
 
   <div class="h-center">
     <div class="h-eyebrow">From the Heart of Arab Heritage · من قلب الموروث</div>
@@ -1531,6 +1714,33 @@
 
     // Horizontal scroll
     initHScroll();
+  }
+
+  /* ══════════════════════════════════════════
+     MOBILE NAV
+  ══════════════════════════════════════════ */
+  const burger    = document.getElementById('n-burger');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mobileNavClose = document.getElementById('mobile-nav-close');
+
+  if (burger) {
+    burger.addEventListener('click', () => {
+      mobileNav.classList.add('open');
+      mobileNav.setAttribute('aria-hidden', 'false');
+      burger.setAttribute('aria-expanded', 'true');
+    });
+    mobileNavClose.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+    // Close on link click
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
   }
 
 })();
