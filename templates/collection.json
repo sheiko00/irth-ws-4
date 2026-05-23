@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "collection-hero": {
+      "type": "collection-hero",
+      "settings": {
+        "title_en": "The Full Collection"
+      }
+    },
+    "collection-grid": {
+      "type": "collection-grid",
+      "settings": {
+        "products_count": 12,
+        "eyebrow": "",
+        "title_ar": "",
+        "title_en": "",
+        "show_view_all": false
+      }
+    },
+    "sourcing-strip": {
+      "type": "sourcing-strip",
+      "blocks": {
+        "p1": {
+          "type": "pillar",
+          "settings": {
+            "icon": "◈",
+            "title_ar": "مصادر أصيلة",
+            "title_en": "Authentic Sourcing",
+            "desc": "نختار التمور من أعرق المزارع في المدينة المنورة والقصيم"
+          }
+        },
+        "p2": {
+          "type": "pillar",
+          "settings": {
+            "icon": "◉",
+            "title_ar": "تغليف فاخر",
+            "title_en": "Luxury Packaging",
+            "desc": "صناديق هدايا مصممة بعناية تليق بأفضل المناسبات والعملاء"
+          }
+        },
+        "p3": {
+          "type": "pillar",
+          "settings": {
+            "icon": "◎",
+            "title_ar": "توصيل B2B",
+            "title_en": "B2B Delivery",
+            "desc": "شحن موثوق للشركات في الخليج وأوروبا وأفريقيا"
+          }
+        }
+      },
+      "block_order": ["p1","p2","p3"],
+      "settings": {}
+    },
+    "contact-cta": {
+      "type": "contact-cta",
+      "settings": {
+        "eyebrow": "شراكة",
+        "title_ar": "ابدأ شراكة",
+        "whatsapp_label": "تواصل عبر واتساب"
+      }
+    }
+  },
+  "order": [
+    "collection-hero",
+    "collection-grid",
+    "sourcing-strip",
+    "contact-cta"
+  ]
+}

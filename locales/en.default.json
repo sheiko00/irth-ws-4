@@ -1,0 +1,36 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search products…"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price"
+    },
+    "general": {
+      "from": "From"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "checkout": "Checkout",
+      "continue_browsing": "Continue browsing",
+      "item": {
+        "one": "item",
+        "other": "items"
+      }
+    }
+  }
+}

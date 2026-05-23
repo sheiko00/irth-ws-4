@@ -1,0 +1,99 @@
+{
+  "sections": {
+    "entry-screen": {
+      "type": "entry-screen",
+      "disabled": false,
+      "settings": {}
+    },
+    "hero-video": {
+      "type": "hero-video",
+      "settings": {
+        "hero_line1_ar": "إرث الأجيال",
+        "hero_line2_ar": "في كل ثمرة",
+        "hero_pill_ar": "تمور طبيعية",
+        "hero_pill_en": "Natural Dates",
+        "hero_origin": "الجزيرة العربية",
+        "cta_label": "اكتشف المجموعة",
+        "cta_url": "/collections/all"
+      }
+    },
+    "collection-grid": {
+      "type": "collection-grid",
+      "settings": {
+        "products_count": 6,
+        "eyebrow": "01 — Collection",
+        "title_ar": "منتجاتنا",
+        "title_en": "Our Products",
+        "show_view_all": true,
+        "view_all_label": "عرض المجموعة الكاملة"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "marquee-1": { "type": "text_item", "settings": { "text": "تمور طبيعية", "icon": "✦" } },
+        "marquee-2": { "type": "text_item", "settings": { "text": "Natural Dates", "icon": "✦" } },
+        "marquee-3": { "type": "text_item", "settings": { "text": "إرث الأجيال", "icon": "✦" } },
+        "marquee-4": { "type": "text_item", "settings": { "text": "B2B Wholesale", "icon": "✦" } },
+        "marquee-5": { "type": "text_item", "settings": { "text": "Luxury Packaging", "icon": "✦" } },
+        "marquee-6": { "type": "text_item", "settings": { "text": "شراكات فاخرة", "icon": "✦" } }
+      },
+      "block_order": ["marquee-1","marquee-2","marquee-3","marquee-4","marquee-5","marquee-6"],
+      "settings": {}
+    },
+    "values": {
+      "type": "values",
+      "blocks": {
+        "val-1": {
+          "type": "value",
+          "settings": {
+            "number": "01",
+            "name_ar": "الأصالة",
+            "name_en": "Authenticity",
+            "desc": "نختار أجود أنواع التمور من مصادرها الأصيلة في الجزيرة العربية"
+          }
+        },
+        "val-2": {
+          "type": "value",
+          "settings": {
+            "number": "02",
+            "name_ar": "الرفاهية",
+            "name_en": "Luxury",
+            "desc": "تغليف فاخر يعكس مكانة الهدية ويليق بالمناسبات الراقية"
+          }
+        },
+        "val-3": {
+          "type": "value",
+          "settings": {
+            "number": "03",
+            "name_ar": "الاستدامة",
+            "name_en": "Sustainability",
+            "desc": "شراكات مباشرة مع المزارعين لضمان الجودة والاستدامة البيئية"
+          }
+        }
+      },
+      "block_order": ["val-1","val-2","val-3"],
+      "settings": {
+        "eyebrow": "02 — Our Values",
+        "title_ar": "قيمنا"
+      }
+    },
+    "contact-cta": {
+      "type": "contact-cta",
+      "settings": {
+        "eyebrow": "03 — Get in touch",
+        "title_ar": "ابدأ شراكة",
+        "subtitle_ar": "نرحب بالشركات والموزعين في منطقة الخليج والشرق الأوسط وأوروبا وأفريقيا",
+        "whatsapp_label": "تواصل عبر واتساب"
+      }
+    }
+  },
+  "order": [
+    "entry-screen",
+    "hero-video",
+    "collection-grid",
+    "marquee",
+    "values",
+    "contact-cta"
+  ]
+}

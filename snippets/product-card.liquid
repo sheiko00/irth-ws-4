@@ -1,0 +1,45 @@
+{%- comment -%}
+  Renders a single product card.
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+{%- assign product_ar_name = product.metafields.irth.name_ar.value | default: product.title -%}
+{%- assign product_ar_desc = product.metafields.irth.desc_ar.value | default: '' -%}
+{%- assign product_origin  = product.metafields.irth.origin.value  | default: '' -%}
+
+<article class="prod-card" data-product-id="{{ product.id }}">
+  <a href="{{ product.url }}" class="prod-card-link nav-veil-link" aria-label="{{ product.title }}">
+    <div class="prod-img-wrap parallax-wrap">
+      {%- if product.featured_image -%}
+        <img
+          class="prod-img parallax-img"
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          width="600"
+          height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
+          loading="lazy"
+        >
+      {%- else -%}
+        <div class="prod-img prod-img--placeholder"></div>
+      {%- endif -%}
+    </div>
+
+    <div class="prod-info">
+      <div class="prod-line"></div>
+      <div class="prod-names">
+        <span class="prod-name-ar" lang="ar" dir="rtl">{{ product_ar_name }}</span>
+        <span class="prod-name-en">{{ product.title }}</span>
+      </div>
+      {%- if product_origin != blank -%}
+        <span class="prod-origin">{{ product_origin }}</span>
+      {%- endif -%}
+      {%- if product_ar_desc != blank -%}
+        <p class="prod-desc" lang="ar" dir="rtl">{{ product_ar_desc }}</p>
+      {%- endif -%}
+      <div class="prod-foot">
+        <span class="prod-price">{{ product.price | money }}</span>
+        <span class="prod-order-ar" lang="ar">اطلب الآن →</span>
+      </div>
+    </div>
+  </a>
+</article>

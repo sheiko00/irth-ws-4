@@ -1,0 +1,36 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "ابحث عن منتج…"
+    },
+    "pagination": {
+      "previous": "السابق",
+      "next": "التالي"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "أضف للسلة",
+      "sold_out": "نفذت الكمية",
+      "unavailable": "غير متاح",
+      "quantity": "الكمية",
+      "regular_price": "السعر الأصلي",
+      "sale_price": "سعر التخفيض"
+    },
+    "general": {
+      "from": "من"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "السلة",
+      "empty": "سلتك فارغة",
+      "checkout": "الدفع",
+      "continue_browsing": "مواصلة التصفح",
+      "item": {
+        "one": "منتج",
+        "other": "منتجات"
+      }
+    }
+  }
+}

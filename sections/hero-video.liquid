@@ -1,0 +1,144 @@
+{%- liquid
+  assign hero_video_url = section.settings.video_url | default: ''
+  assign hero_line1_ar  = section.settings.hero_line1_ar | default: 'إرث الأجيال'
+  assign hero_line2_ar  = section.settings.hero_line2_ar | default: 'في كل ثمرة'
+  assign hero_pill_ar   = section.settings.hero_pill_ar  | default: 'تمور طبيعية'
+  assign hero_pill_en   = section.settings.hero_pill_en  | default: 'Natural Dates'
+  assign hero_origin    = section.settings.hero_origin   | default: 'الجزيرة العربية'
+  assign hero_cta_label = section.settings.cta_label     | default: 'اكتشف المجموعة'
+  assign hero_cta_url   = section.settings.cta_url       | default: '/collections/all'
+-%}
+
+{%- comment -%} Fixed video hero — behind scroll content {%- endcomment -%}
+<div id="video-hero" aria-hidden="true">
+
+  {%- if hero_video_url != blank -%}
+    <video
+      id="hero-vid"
+      src="{{ hero_video_url }}"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    ></video>
+  {%- elsif section.settings.video != blank -%}
+    <video
+      id="hero-vid"
+      src="{{ section.settings.video.sources.first.url }}"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    ></video>
+  {%- else -%}
+    {%- comment -%} Fallback: background color gradient {%- endcomment -%}
+    <div id="hero-vid" class="hero-fallback-bg"></div>
+  {%- endif -%}
+
+  <div class="video-vignette"></div>
+  <div class="video-fade-bottom"></div>
+  <div class="video-chroma" aria-hidden="true"></div>
+
+</div>
+
+{%- comment -%} HUD — fixed overlay text {%- endcomment -%}
+<div id="hud" aria-label="{{ shop.name }} — {{ hero_line1_ar }} {{ hero_line2_ar }}">
+
+  <div class="h-text" lang="ar" dir="rtl">
+    <div class="h-line-wrap"><span class="inner">{{ hero_line1_ar }}</span></div>
+    <div class="h-line-wrap"><span class="inner">{{ hero_line2_ar }}</span></div>
+  </div>
+
+  <div class="h-pill" lang="ar">
+    <span class="h-pill-ar">{{ hero_pill_ar }}</span>
+    <span class="h-pill-sep">·</span>
+    <span class="h-pill-en">{{ hero_pill_en }}</span>
+  </div>
+
+  <div class="h-bottom">
+    <span class="h-origin" lang="ar" dir="rtl">{{ hero_origin }}</span>
+    <a href="{{ hero_cta_url }}" class="h-cta nav-veil-link mag-btn" lang="ar" dir="rtl">
+      {{ hero_cta_label }}
+      <span class="h-cta-arrow" aria-hidden="true">↓</span>
+    </a>
+  </div>
+
+</div>
+
+{%- comment -%} Scroll space — drives camera zoom animation {%- endcomment -%}
+<div class="scroll-space" aria-hidden="true"></div>
+
+{% schema %}
+{
+  "name": "Video Hero",
+  "tag": "div",
+  "class": "section-hero",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (external or CDN)",
+      "info": "Paste a direct .mp4 URL, or use Shopify Files. Leave blank to use the Video picker below."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video (Shopify hosted)",
+      "info": "Upload via Shopify. Used only if Video URL above is blank."
+    },
+    {
+      "type": "header",
+      "content": "Hero Text"
+    },
+    {
+      "type": "text",
+      "id": "hero_line1_ar",
+      "label": "Headline line 1 (Arabic)",
+      "default": "إرث الأجيال"
+    },
+    {
+      "type": "text",
+      "id": "hero_line2_ar",
+      "label": "Headline line 2 (Arabic)",
+      "default": "في كل ثمرة"
+    },
+    {
+      "type": "text",
+      "id": "hero_pill_ar",
+      "label": "Pill text (Arabic)",
+      "default": "تمور طبيعية"
+    },
+    {
+      "type": "text",
+      "id": "hero_pill_en",
+      "label": "Pill text (English)",
+      "default": "Natural Dates"
+    },
+    {
+      "type": "text",
+      "id": "hero_origin",
+      "label": "Origin label",
+      "default": "الجزيرة العربية"
+    },
+    {
+      "type": "header",
+      "content": "CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label (Arabic)",
+      "default": "اكتشف المجموعة"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL",
+      "default": "/collections/all"
+    }
+  ]
+}
+{% endschema %}

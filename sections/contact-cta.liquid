@@ -1,0 +1,144 @@
+<section id="contact" class="contact-section">
+
+  <div class="contact-inner">
+    <span class="sec-ey">{{ section.settings.eyebrow | default: '03 — Get in touch' }}</span>
+    <h2 class="sec-title contact-title" lang="ar" dir="rtl">
+      {{ section.settings.title_ar | default: 'ابدأ شراكة' }}
+    </h2>
+    <p class="contact-sub" lang="ar" dir="rtl">
+      {{ section.settings.subtitle_ar | default: 'نرحب بالشركات والموزعين في منطقة الخليج والشرق الأوسط وأوروبا وأفريقيا' }}
+    </p>
+
+    <div class="contact-actions">
+      <a
+        href="mailto:{{ section.settings.email | default: settings.contact_email | default: 'hello@irth.co' }}"
+        class="contact-email mag-btn"
+        aria-label="Email {{ section.settings.email | default: 'hello@irth.co' }}"
+      >
+        {{ section.settings.email | default: settings.contact_email | default: 'hello@irth.co' }}
+      </a>
+
+      {%- if section.settings.whatsapp_url != blank or settings.social_whatsapp != blank -%}
+        {%- assign wa_url = section.settings.whatsapp_url | default: settings.social_whatsapp -%}
+        <a href="{{ wa_url }}" class="btn-outline mag-btn" target="_blank" rel="noopener" lang="ar" dir="rtl">
+          {{ section.settings.whatsapp_label | default: 'تواصل عبر واتساب' }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_details -%}
+      <div class="contact-details fade-up">
+        {%- if section.settings.detail_1 != blank -%}
+          <div class="contact-detail">
+            <span class="contact-detail-label">{{ section.settings.detail_1_label }}</span>
+            <span class="contact-detail-val">{{ section.settings.detail_1 }}</span>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.detail_2 != blank -%}
+          <div class="contact-detail">
+            <span class="contact-detail-label">{{ section.settings.detail_2_label }}</span>
+            <span class="contact-detail-val">{{ section.settings.detail_2 }}</span>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.detail_3 != blank -%}
+          <div class="contact-detail">
+            <span class="contact-detail-label">{{ section.settings.detail_3_label }}</span>
+            <span class="contact-detail-val">{{ section.settings.detail_3 }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Contact CTA",
+  "tag": "div",
+  "class": "section-contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "03 — Get in touch"
+    },
+    {
+      "type": "text",
+      "id": "title_ar",
+      "label": "Title (Arabic)",
+      "default": "ابدأ شراكة"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle_ar",
+      "label": "Subtitle (Arabic)",
+      "default": "نرحب بالشركات والموزعين في منطقة الخليج والشرق الأوسط وأوروبا وأفريقيا"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Contact email (overrides global)",
+      "info": "Leave blank to use global contact email from Theme Settings."
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_url",
+      "label": "WhatsApp URL",
+      "info": "Leave blank to use global WhatsApp URL from Theme Settings."
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp button label",
+      "default": "تواصل عبر واتساب"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_details",
+      "label": "Show contact details",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "detail_1_label",
+      "label": "Detail 1 label",
+      "default": "Location"
+    },
+    {
+      "type": "text",
+      "id": "detail_1",
+      "label": "Detail 1 value"
+    },
+    {
+      "type": "text",
+      "id": "detail_2_label",
+      "label": "Detail 2 label",
+      "default": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "detail_2",
+      "label": "Detail 2 value"
+    },
+    {
+      "type": "text",
+      "id": "detail_3_label",
+      "label": "Detail 3 label",
+      "default": "Hours"
+    },
+    {
+      "type": "text",
+      "id": "detail_3",
+      "label": "Detail 3 value"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact CTA",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,89 @@
+<div class="sourcing-strip">
+  <div class="sourcing-inner">
+    {%- for block in section.blocks -%}
+      <div class="sourcing-col fade-up" {{ block.shopify_attributes }}>
+        <span class="sourcing-icon" aria-hidden="true">{{ block.settings.icon | default: '✦' }}</span>
+        <h3 class="sourcing-title" lang="ar" dir="rtl">{{ block.settings.title_ar }}</h3>
+        <h3 class="sourcing-title sourcing-title--en">{{ block.settings.title_en }}</h3>
+        <p class="sourcing-desc" lang="ar" dir="rtl">{{ block.settings.desc }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Sourcing Strip",
+  "tag": "div",
+  "class": "section-sourcing",
+  "max_blocks": 4,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "✦"
+        },
+        {
+          "type": "text",
+          "id": "title_ar",
+          "label": "Title (Arabic)",
+          "default": "مصادر أصيلة"
+        },
+        {
+          "type": "text",
+          "id": "title_en",
+          "label": "Title (English)",
+          "default": "Authentic Sourcing"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description (Arabic)",
+          "default": "نختار التمور من أعرق المزارع في المدينة المنورة والقصيم والمناطق المجاورة"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sourcing Strip",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "icon": "◈",
+            "title_ar": "مصادر أصيلة",
+            "title_en": "Authentic Sourcing",
+            "desc": "نختار التمور من أعرق المزارع في المدينة المنورة والقصيم"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "icon": "◉",
+            "title_ar": "تغليف فاخر",
+            "title_en": "Luxury Packaging",
+            "desc": "صناديق هدايا مصممة بعناية تليق بأفضل المناسبات والعملاء"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "icon": "◎",
+            "title_ar": "توصيل B2B",
+            "title_en": "B2B Delivery",
+            "desc": "شحن موثوق للشركات في الخليج وأوروبا وأفريقيا بأفضل الأسعار"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

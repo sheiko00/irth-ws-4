@@ -1,0 +1,109 @@
+<section id="values" class="values-section">
+
+  <div class="sec-head">
+    <span class="sec-ey">{{ section.settings.eyebrow | default: '02 — Our Values' }}</span>
+    <h2 class="sec-title" lang="ar" dir="rtl">{{ section.settings.title_ar | default: 'قيمنا' }}</h2>
+  </div>
+
+  <div class="values-grid">
+    {%- for block in section.blocks -%}
+      <div class="value-col fade-up" {{ block.shopify_attributes }}>
+        <span class="value-num">{{ block.settings.number | default: forloop.index | prepend: '0' }}</span>
+        <h3 class="value-name-ar" lang="ar" dir="rtl">{{ block.settings.name_ar }}</h3>
+        <h3 class="value-name-en">{{ block.settings.name_en }}</h3>
+        <p class="value-desc" lang="ar" dir="rtl">{{ block.settings.desc }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Values",
+  "tag": "div",
+  "class": "section-values",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "02 — Our Values"
+    },
+    {
+      "type": "text",
+      "id": "title_ar",
+      "label": "Section title (Arabic)",
+      "default": "قيمنا"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "name_ar",
+          "label": "Name (Arabic)",
+          "default": "الأصالة"
+        },
+        {
+          "type": "text",
+          "id": "name_en",
+          "label": "Name (English)",
+          "default": "Authenticity"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description (Arabic)",
+          "default": "نختار أجود أنواع التمور من مصادرها الأصيلة في الجزيرة العربية"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Values",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "number": "01",
+            "name_ar": "الأصالة",
+            "name_en": "Authenticity",
+            "desc": "نختار أجود أنواع التمور من مصادرها الأصيلة في الجزيرة العربية"
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "number": "02",
+            "name_ar": "الرفاهية",
+            "name_en": "Luxury",
+            "desc": "تغليف فاخر يعكس مكانة الهدية ويليق بالمناسبات الراقية"
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "number": "03",
+            "name_ar": "الاستدامة",
+            "name_en": "Sustainability",
+            "desc": "شراكات مباشرة مع المزارعين لضمان الجودة والاستدامة البيئية"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

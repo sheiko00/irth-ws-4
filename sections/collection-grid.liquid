@@ -1,0 +1,115 @@
+{%- liquid
+  assign grid_collection = collections[section.settings.collection]
+  if grid_collection == blank
+    assign grid_collection = collection
+  endif
+  assign products_to_show = section.settings.products_count | default: 6
+  assign section_title_ar = section.settings.title_ar | default: 'منتجاتنا'
+  assign section_title_en = section.settings.title_en | default: 'Our Products'
+  assign section_ey       = section.settings.eyebrow  | default: '01 — Collection'
+-%}
+
+<section id="products" class="products-section">
+
+  <div class="sec-head">
+    <span class="sec-ey">{{ section_ey }}</span>
+    <div class="sec-head-row">
+      <h2 class="sec-title" lang="ar" dir="rtl">{{ section_title_ar }}</h2>
+      <p class="sec-title-en">{{ section_title_en }}</p>
+    </div>
+  </div>
+
+  <div class="prod-grid">
+    {%- if grid_collection != blank and grid_collection.products.size > 0 -%}
+      {%- for product in grid_collection.products limit: products_to_show -%}
+        {%- render 'product-card', product: product -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- comment -%} Static placeholder cards for demo / when no collection assigned {%- endcomment -%}
+      {%- for i in (1..6) -%}
+        <article class="prod-card prod-card--placeholder">
+          <div class="prod-img-wrap">
+            <div class="prod-img prod-img--placeholder" aria-hidden="true"></div>
+          </div>
+          <div class="prod-info">
+            <div class="prod-line"></div>
+            <div class="prod-names">
+              <span class="prod-name-ar" lang="ar" dir="rtl">منتج فاخر</span>
+              <span class="prod-name-en">Premium Product</span>
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_view_all and grid_collection != blank -%}
+    <div class="prod-cta-row">
+      <a href="{{ grid_collection.url }}" class="btn-outline nav-veil-link mag-btn" lang="ar" dir="rtl">
+        {{ section.settings.view_all_label | default: 'عرض المجموعة الكاملة' }}
+        <span aria-hidden="true"> →</span>
+      </a>
+    </div>
+  {%- endif -%}
+
+</section>
+
+{% schema %}
+{
+  "name": "Collection Grid",
+  "tag": "div",
+  "class": "section-collection-grid",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "01 — Collection"
+    },
+    {
+      "type": "text",
+      "id": "title_ar",
+      "label": "Section title (Arabic)",
+      "default": "منتجاتنا"
+    },
+    {
+      "type": "text",
+      "id": "title_en",
+      "label": "Section title (English)",
+      "default": "Our Products"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View all' button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label (Arabic)",
+      "default": "عرض المجموعة الكاملة"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Grid",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

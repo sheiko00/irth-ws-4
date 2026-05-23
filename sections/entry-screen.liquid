@@ -1,0 +1,52 @@
+{%- if settings.entry_screen_enabled -%}
+<div id="entry-screen" aria-hidden="true">
+
+  <div class="entry-eyes">
+    <div class="eye">
+      <div class="eye-lid eye-lid--top"></div>
+      <div class="eye-iris">
+        <div class="eye-pupil"></div>
+        <div class="eye-highlight"></div>
+      </div>
+      <div class="eye-lid eye-lid--bot"></div>
+    </div>
+    <div class="eye">
+      <div class="eye-lid eye-lid--top"></div>
+      <div class="eye-iris">
+        <div class="eye-pupil"></div>
+        <div class="eye-highlight"></div>
+      </div>
+      <div class="eye-lid eye-lid--bot"></div>
+    </div>
+  </div>
+
+  <div class="entry-brand">
+    {%- if settings.logo != blank -%}
+      <img
+        id="entry-logo"
+        src="{{ settings.logo | image_url: width: 180 }}"
+        alt="{{ shop.name }}"
+        width="90"
+        height="90"
+        loading="eager"
+      >
+    {%- else -%}
+      <span id="entry-logo" class="entry-logo-text">{{ shop.name }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="entry-desc">
+    <p class="entry-desc-ar" lang="ar" dir="rtl">{{ settings.entry_tagline_ar }}</p>
+    <p class="entry-desc-en">{{ settings.entry_tagline_en }}</p>
+  </div>
+
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Entry Screen",
+  "limit": 1,
+  "settings": []
+}
+{% endschema %}

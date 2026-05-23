@@ -1,0 +1,56 @@
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    {%- for i in (1..3) -%}
+      {%- for block in section.blocks -%}
+        <span class="marquee-item">
+          <span class="marquee-icon">{{ block.settings.icon | default: '✦' }}</span>
+          {{ block.settings.text }}
+        </span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Marquee",
+  "tag": "div",
+  "class": "section-marquee",
+  "max_blocks": 12,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "text_item",
+      "name": "Marquee item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "IRTH — Premium Dates"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon / separator",
+          "default": "✦"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee",
+      "category": "Text",
+      "blocks": [
+        { "type": "text_item", "settings": { "text": "تمور طبيعية", "icon": "✦" } },
+        { "type": "text_item", "settings": { "text": "Natural Dates", "icon": "✦" } },
+        { "type": "text_item", "settings": { "text": "إرث الأجيال", "icon": "✦" } },
+        { "type": "text_item", "settings": { "text": "B2B Wholesale", "icon": "✦" } },
+        { "type": "text_item", "settings": { "text": "Luxury Packaging", "icon": "✦" } },
+        { "type": "text_item", "settings": { "text": "شراكات فاخرة", "icon": "✦" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
