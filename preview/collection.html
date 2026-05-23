@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المجموعة · IRTH Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:    #E9E2D5;
+      --linen:   #F0E8DC;
+      --ink:     #1A1A1A;
+      --gold:    #C9A86A;
+      --madinah: #0E2B22;
+      --warm:    #DDD5C4;
+    }
+
+    html { scroll-behavior: auto; }
+    body { background: var(--sand); font-family: 'DM Sans', sans-serif; cursor: none; overflow-x: hidden; }
+
+    /* PROGRESS */
+    #prog {
+      position: fixed; top: 0; left: 0; height: 1.5px;
+      background: var(--gold); width: 0%; z-index: 10000; pointer-events: none;
+    }
+
+    /* VEIL */
+    #veil {
+      position: fixed; inset: 0; z-index: 9100;
+      background: var(--madinah); transform: translateY(100%); pointer-events: none;
+    }
+
+    /* CURSOR */
+    #cur {
+      position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+      background: var(--ink); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+    }
+    #cur-ring {
+      position: fixed; top: 0; left: 0; width: 36px; height: 36px;
+      border: 1px solid rgba(26,26,26,.25); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+    }
+    #cur-label {
+      position: fixed; top: 0; left: 0; z-index: 9997; pointer-events: none;
+      font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--ink); opacity: 0; transform: translate(18px, -22px);
+      white-space: nowrap; transition: opacity .25s;
+    }
+    #cur-label.vis { opacity: 1; }
+
+    /* NOISE */
+    .noise {
+      position: fixed; inset: 0; z-index: 9000; pointer-events: none; opacity: 0.065;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 140px; animation: grain .55s steps(1) infinite;
+    }
+    @keyframes grain {
+      0%,100%{background-position:0 0}10%{background-position:-5% -10%}20%{background-position:-15% 5%}
+      30%{background-position:7% -25%}40%{background-position:20% 25%}50%{background-position:-25% 10%}
+      60%{background-position:15% 5%}70%{background-position:0 15%}80%{background-position:25% 35%}90%{background-position:-10% 10%}
+    }
+
+    /* STICKY NAV */
+    .site-nav {
+      position: sticky; top: 0; z-index: 1000;
+      background: var(--sand);
+      border-bottom: 1px solid rgba(26,26,26,.07);
+      padding: 18px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      direction: ltr;
+    }
+    .site-nav .n-logo { display: block; text-decoration: none; }
+    .site-nav .n-logo img { height: 34px; object-fit: contain; }
+    .site-nav .n-links { display: flex; gap: 30px; list-style: none; }
+    .site-nav .n-links a {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 14px; color: var(--ink); text-decoration: none;
+      opacity: .48; transition: opacity .3s;
+    }
+    .site-nav .n-links a:hover { opacity: 1; }
+    .back-btn {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink); opacity: .38; text-decoration: none;
+      transition: opacity .3s; cursor: none;
+    }
+    .back-btn:hover { opacity: 1; }
+
+    /* COLLECTION HERO */
+    .col-hero {
+      padding: 90px 48px 72px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      border-bottom: 1px solid rgba(26,26,26,.06);
+      overflow: hidden; direction: rtl;
+    }
+    .col-hero-left { max-width: 580px; }
+    .col-eyebrow {
+      font-size: 10px; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--ink); opacity: .32; margin-bottom: 22px; direction: ltr;
+    }
+    .col-title {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(52px, 6.5vw, 90px);
+      font-weight: 500; color: var(--ink); line-height: 1.05; direction: rtl;
+    }
+    .col-title-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 5vw, 68px); font-weight: 300; font-style: italic;
+      color: var(--ink); opacity: .38; letter-spacing: -.02em; margin-top: 6px;
+    }
+    .col-hero-right { text-align: left; padding-bottom: 8px; }
+    .col-count {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px; font-weight: 300; letter-spacing: -.04em;
+      color: var(--ink); opacity: .08; line-height: 1;
+    }
+    .col-desc {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 14px; line-height: 1.9; color: var(--ink); opacity: .48;
+      max-width: 300px; margin-top: 14px; text-align: right; direction: rtl;
+    }
+
+    /* FILTER TABS */
+    .filter-bar {
+      padding: 24px 48px;
+      display: flex; align-items: center; gap: 4px;
+      border-bottom: 1px solid rgba(26,26,26,.06);
+      direction: rtl;
+    }
+    .filter-label {
+      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--ink); opacity: .28; margin-left: 18px; direction: ltr;
+      margin-right: auto;
+    }
+    .filter-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 8px 18px; border-radius: 100px;
+      font-family: 'Noto Naskh Arabic', serif; font-size: 14px;
+      color: var(--ink); opacity: .45;
+      background: none; border: 1px solid transparent;
+      cursor: none; transition: all .3s;
+    }
+    .filter-btn:hover { opacity: .75; }
+    .filter-btn.active {
+      opacity: 1; border-color: rgba(26,26,26,.18);
+      background: rgba(26,26,26,.04);
+    }
+    .filter-btn .f-count {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px; color: var(--gold); opacity: .8;
+    }
+
+    /* GOLD LINE */
+    .gold-line { height: 1px; background: var(--gold); opacity: .2; }
+
+    /* CATALOG GRID */
+    .catalog { padding: 64px 48px; }
+    .catalog-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; margin-bottom: 2px;
+    }
+
+    .cat-card {
+      background: var(--linen); cursor: none; overflow: hidden; position: relative;
+      transition: background .4s, opacity .4s, transform .4s;
+    }
+    .cat-card:hover { background: var(--warm); }
+    .cat-card.hidden { opacity: 0; transform: scale(.97); pointer-events: none; }
+
+    .cat-img { aspect-ratio: 3/4; overflow: hidden; }
+    .cat-img img {
+      width: 100%; height: 110%; object-fit: cover; display: block;
+      filter: saturate(.82);
+      transition: transform .9s cubic-bezier(.25,.46,.45,.94), filter .5s;
+      will-change: transform;
+    }
+    .cat-card:hover .cat-img img { filter: saturate(1.05); }
+
+    .cat-body { padding: 26px 28px 22px; direction: rtl; }
+    .cat-num { font-size: 10px; color: var(--ink); opacity: .22; letter-spacing: .1em; margin-bottom: 14px; }
+    .cat-name-ar {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 21px; color: var(--ink); direction: rtl; margin-bottom: 4px;
+    }
+    .cat-name-en {
+      font-size: 10px; color: var(--ink); opacity: .35;
+      letter-spacing: .14em; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .cat-divider {
+      height: 1px; background: var(--gold); opacity: .25;
+      width: 32px; margin: 14px 0;
+      transition: width .5s cubic-bezier(.22,1,.36,1), opacity .4s;
+    }
+    .cat-card:hover .cat-divider { width: 100%; opacity: .42; }
+    .cat-desc {
+      font-size: 13px; line-height: 1.84; color: var(--ink); opacity: .46;
+    }
+    .cat-desc-ar {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 13px; line-height: 1.95; color: var(--ink); opacity: .38;
+      direction: rtl; margin-top: 8px;
+    }
+    .cat-footer {
+      padding: 0 28px 26px;
+      display: flex; align-items: center; justify-content: space-between;
+      direction: rtl;
+    }
+    .cat-origin { font-size: 11px; color: var(--gold); opacity: .72; }
+    .cat-order {
+      font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--madinah); opacity: .65; text-decoration: none; cursor: none;
+      border-bottom: 1px solid rgba(14,43,34,.18); padding-bottom: 1px;
+      transition: opacity .3s;
+    }
+    .cat-order:hover { opacity: 1; }
+    .cat-card::after {
+      content: ''; display: block; height: 2px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+      width: 0%; transition: width .6s cubic-bezier(.22,1,.36,1);
+    }
+    .cat-card:hover::after { width: 100%; }
+    /* Tag chip on card */
+    .cat-tag {
+      position: absolute; top: 16px; left: 16px;
+      padding: 4px 10px; border-radius: 100px;
+      background: rgba(14,43,34,.72); backdrop-filter: blur(6px);
+      font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* SOURCING STRIP */
+    .sourcing-strip {
+      background: var(--madinah); padding: 80px 48px;
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+    }
+    .source-col {
+      padding: 40px 36px;
+      border-right: 1px solid rgba(201,168,106,.08);
+    }
+    .source-col:last-child { border-right: none; }
+    .source-num { font-size: 10px; color: rgba(201,168,106,.35); letter-spacing: .1em; margin-bottom: 32px; }
+    .source-name-ar {
+      font-family: 'Noto Naskh Arabic', serif; font-size: 24px; font-weight: 500;
+      color: var(--gold); direction: rtl; margin-bottom: 8px;
+    }
+    .source-name { font-size: 13px; color: white; opacity: .40; margin-bottom: 16px; letter-spacing: .06em; }
+    .source-desc { font-size: 13px; color: white; opacity: .32; line-height: 1.84; }
+    .source-desc-ar {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 13px; color: rgba(233,226,213,.35); line-height: 1.95;
+      direction: rtl; margin-top: 6px;
+    }
+
+    /* CTA */
+    #cta { background: var(--sand); padding: 140px 48px; text-align: center; }
+    .cta-title {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(46px, 6.5vw, 92px); font-weight: 700; color: var(--ink);
+      direction: rtl; line-height: 1.05; margin-bottom: 16px;
+    }
+    .cta-sub {
+      font-size: clamp(26px, 3.8vw, 50px); font-family: 'Cormorant Garamond', serif;
+      font-style: italic; color: var(--ink); opacity: .38; margin-bottom: 40px;
+    }
+    .gold-rule { display: block; width: 44px; height: 1px; background: var(--gold); opacity: .4; margin: 0 auto 40px; }
+    .cta-email {
+      display: block; font-size: clamp(15px,2vw,24px);
+      color: var(--ink); text-decoration: none; opacity: .32; margin-bottom: 44px;
+      transition: opacity .3s; letter-spacing: .04em;
+    }
+    .cta-email:hover { opacity: 1; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--madinah); color: white;
+      padding: 18px 44px; border-radius: 100px;
+      font-family: 'Noto Naskh Arabic', serif; font-size: 16px;
+      text-decoration: none; transition: background .3s; cursor: none;
+    }
+    .cta-btn:hover { background: #0a2018; }
+
+    /* FOOTER */
+    footer {
+      background: var(--sand); padding: 28px 48px;
+      border-top: 1px solid rgba(26,26,26,.07);
+      display: flex; align-items: center; justify-content: space-between;
+      direction: ltr;
+    }
+    .f-logo img { height: 28px; object-fit: contain; opacity: .6; }
+    .f-copy { font-size: 11px; color: var(--ink); opacity: .2; font-family: 'Noto Naskh Arabic', serif; }
+    .f-links { display: flex; gap: 22px; list-style: none; }
+    .f-links a { font-size: 11px; color: var(--ink); text-decoration: none; opacity: .32; transition: opacity .3s; }
+    .f-links a:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="veil"></div>
+<div class="noise"></div>
+<div id="cur" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+<div id="cur-label" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <a href="index.html" class="n-logo nav-veil-link">
+    <img src="assets/logo.svg" alt="إرث IRTH">
+  </a>
+  <ul class="n-links">
+    <li><a href="collection.html" style="opacity:.85">المجموعة</a></li>
+    <li><a href="index.html#story" class="nav-veil-link">قصتنا</a></li>
+    <li><a href="index.html#contact" class="nav-veil-link">تواصل</a></li>
+  </ul>
+  <a href="index.html" class="back-btn nav-veil-link">← Back</a>
+</nav>
+
+<!-- COLLECTION HERO -->
+<header class="col-hero">
+  <div class="col-hero-left">
+    <div class="col-eyebrow">IRTH Collection · مجموعة إرث</div>
+    <div class="col-title">المجموعة الكاملة</div>
+    <div class="col-title-en">The Full Collection</div>
+  </div>
+  <div class="col-hero-right">
+    <div class="col-count">06</div>
+    <div class="col-desc">منتجات مختارة بعناية فائقة من أجود المصادر العربية والعالمية، معبأة بأناقة تليق بمكانة إرث.</div>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filter</span>
+  <button class="filter-btn active" data-filter="all">الكل <span class="f-count">06</span></button>
+  <button class="filter-btn" data-filter="food">الطعام <span class="f-count">04</span></button>
+  <button class="filter-btn" data-filter="fragrance">العطور <span class="f-count">01</span></button>
+  <button class="filter-btn" data-filter="wellness">الصحة <span class="f-count">01</span></button>
+</div>
+
+<div class="gold-line"></div>
+
+<!-- CATALOG -->
+<div class="catalog">
+  <div class="catalog-grid">
+
+    <div class="cat-card" data-cat="food">
+      <span class="cat-tag">Food</span>
+      <div class="cat-img"><img src="assets/dates-cream-linen.png" alt="تمور إرث المجلّلة" loading="eager"></div>
+      <div class="cat-body">
+        <div class="cat-num">01</div>
+        <div class="cat-name-ar">التمور المجلّلة</div>
+        <div class="cat-name-en">Premium Dates</div>
+        <div class="cat-divider"></div>
+        <div class="cat-desc">Hand-selected Ajwa and Medjoul dates from Madinah's finest farms — rich, naturally sweet, and presented in signature IRTH packaging.</div>
+        <div class="cat-desc-ar">تمور عجوة ومجول من المدينة المنورة، تُختار يدويًا، غنية بالمغذيات، محاطة بعبوة إرث الفاخرة.</div>
+      </div>
+      <div class="cat-footer">
+        <span class="cat-origin">المدينة المنورة</span>
+        <a href="index.html#contact" class="cat-order nav-veil-link">اطلب الآن ↘</a>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="food">
+      <span class="cat-tag">Food</span>
+      <div class="cat-img"><img src="assets/olive-oil-premium.jpg" alt="زيت الزيتون إرث" loading="lazy"></div>
+      <div class="cat-body">
+        <div class="cat-num">02</div>
+        <div class="cat-name-ar">زيت الزيتون الفاخر</div>
+        <div class="cat-name-en">Artisan Olive Oil</div>
+        <div class="cat-divider"></div>
+        <div class="cat-desc">First cold-press extra virgin from ancient Palestinian and Moroccan groves. Rich, peppery, full of life — no additives, no shortcuts.</div>
+        <div class="cat-desc-ar">بكر ممتاز، عصر بارد أول من بساتين أثرية في فلسطين والمغرب. غني، حار، لا إضافات.</div>
+      </div>
+      <div class="cat-footer">
+        <span class="cat-origin">الأراضي الفلسطينية · المغرب</span>
+        <a href="index.html#contact" class="cat-order nav-veil-link">اطلب الآن ↘</a>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="food">
+      <span class="cat-tag">Food</span>
+      <div class="cat-img"><img src="assets/cinnamon-powder.jpg" alt="قرفة إرث السيلانية" loading="lazy"></div>
+      <div class="cat-body">
+        <div class="cat-num">03</div>
+        <div class="cat-name-ar">القرفة السيلانية</div>
+        <div class="cat-name-en">Ceylon Cinnamon</div>
+        <div class="cat-divider"></div>
+        <div class="cat-desc">True cinnamon — not cassia — from Sri Lanka. Soft, sweet, hand-rolled quills. The kind that's become rare in a market flooded with imitations.</div>
+        <div class="cat-desc-ar">قرفة حقيقية من سريلانكا. ناعمة وحلوة، نادرة في سوق ملئ بالتقليد.</div>
+      </div>
+      <div class="cat-footer">
+        <span class="cat-origin">سريلانكا المختارة</span>
+        <a href="index.html#contact" class="cat-order nav-veil-link">اطلب الآن ↘</a>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="wellness">
+      <span class="cat-tag">Wellness</span>
+      <div class="cat-img"><img src="assets/sidr-honey.jpg" alt="عسل السدر الملكي" loading="lazy"></div>
+      <div class="cat-body">
+        <div class="cat-num">04</div>
+        <div class="cat-name-ar">عسل السدر الملكي</div>
+        <div class="cat-name-en">Sidr Royal Honey</div>
+        <div class="cat-divider"></div>
+        <div class="cat-desc">Raw, unfiltered, unheated Sidr honey from Yemen's Hadhramaut valley. Harvested from wild Sidr trees at peak bloom — untouched and deeply nourishing.</div>
+        <div class="cat-desc-ar">عسل سدر خام، غير مُصفى ولا مُسخّن، من وادي حضرموت. يجمع في موسم الذروة من أشجار برية.</div>
+      </div>
+      <div class="cat-footer">
+        <span class="cat-origin">اليمن · حضرموت</span>
+        <a href="index.html#contact" class="cat-order nav-veil-link">اطلب الآن ↘</a>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="food">
+      <span class="cat-tag">Food</span>
+      <div class="cat-img"><img src="assets/madinah-mint.jpg" alt="نعناع المدينة المجفّف" loading="lazy"></div>
+      <div class="cat-body">
+        <div class="cat-num">05</div>
+        <div class="cat-name-ar">نعناع المدينة المجفّف</div>
+        <div class="cat-name-en">Madinah Dried Mint</div>
+        <div class="cat-divider"></div>
+        <div class="cat-desc">Sun-dried mint from Madinah's heritage farms — intense aroma, vibrant colour. Perfect for tea, cooking, and traditional wellness rituals.</div>
+        <div class="cat-desc-ar">نعناع مجفف بأشعة الشمس من مزارع المدينة. أروما عالية، يناسب الشاي والطهي والوصفات التراثية.</div>
+      </div>
+      <div class="cat-footer">
+        <span class="cat-origin">المدينة المنورة</span>
+        <a href="index.html#contact" class="cat-order nav-veil-link">اطلب الآن ↘</a>
+      </div>
+    </div>
+
+    <div class="cat-card" data-cat="fragrance">
+      <span class="cat-tag">Fragrance</span>
+      <div class="cat-img"><img src="assets/oud-oil.jpg" alt="زيت العود النقي" loading="lazy"></div>
+      <div class="cat-body">
+        <div class="cat-num">06</div>
+        <div class="cat-name-ar">زيت العود النقي</div>
+        <div class="cat-name-en">Pure Oud Oil</div>
+        <div class="cat-divider"></div>
+        <div class="cat-desc">Pure agarwood oil from Aquilaria trees in Cambodia and India. Rare, precious, and deeply resonant — a fragrance that has defined Arab identity for centuries.</div>
+        <div class="cat-desc-ar">زيت عود طبيعي من أشجار الأقيلارية. نادر وثمين، رائحة عرّفت الهوية العربية لقرون.</div>
+      </div>
+      <div class="cat-footer">
+        <span class="cat-origin">كمبوديا · الهند</span>
+        <a href="index.html#contact" class="cat-order nav-veil-link">اطلب الآن ↘</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SOURCING STRIP -->
+<div class="sourcing-strip">
+  <div class="source-col">
+    <div class="source-num">01</div>
+    <div class="source-name-ar">المصدر الأصيل</div>
+    <div class="source-name">Authentic Sourcing</div>
+    <div class="source-desc">Every product traced directly to its region of origin. We visit farms, test harvests, and build direct relationships — no intermediaries.</div>
+    <div class="source-desc-ar">كل منتج مُتتبّع مباشرة من منشئه. نزور المزارع ونبني علاقات مباشرة مع المنتجين.</div>
+  </div>
+  <div class="source-col">
+    <div class="source-num">02</div>
+    <div class="source-name-ar">التعبئة الفاخرة</div>
+    <div class="source-name">Luxury Packaging</div>
+    <div class="source-desc">IRTH packaging is designed to reflect the gravity of what's inside. Linen, matte finishes, gold embossing — built to be kept, gifted, remembered.</div>
+    <div class="source-desc-ar">عبوة إرث مصممة لتعكس قيمة ما بداخلها. كتان، تشطيب مطفي، ذهبي محفور.</div>
+  </div>
+  <div class="source-col">
+    <div class="source-num">03</div>
+    <div class="source-name-ar">الإيصال الراقي</div>
+    <div class="source-name">B2B Delivery</div>
+    <div class="source-desc">IRTH serves premium retailers, hospitality groups, and corporate gift buyers across the Gulf, Egypt, and Europe. Minimum orders apply.</div>
+    <div class="source-desc-ar">إرث تخدم تجار التجزئة الراقيين ومشتري الهدايا المؤسسية في الخليج ومصر وأوروبا.</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section id="cta">
+  <span class="gold-rule"></span>
+  <div class="cta-title">ابدأ شراكة</div>
+  <div class="cta-sub">Start a partnership</div>
+  <a href="mailto:hello@irth.co" class="cta-email">hello@irth.co</a>
+  <a href="mailto:hello@irth.co" class="cta-btn">
+    <span>تواصل معنا</span><span>↘</span>
+  </a>
+</section>
+
+<footer>
+  <a href="index.html" class="f-logo nav-veil-link"><img src="assets/logo.svg" alt="إرث IRTH"></a>
+  <span class="f-copy">© ٢٠٢٦ إرث IRTH · جميع الحقوق محفوظة</span>
+  <ul class="f-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">LinkedIn</a></li>
+    <li><a href="#">WhatsApp</a></li>
+  </ul>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+<script>
+(function () {
+  'use strict';
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* CURSOR */
+  const cur      = document.getElementById('cur');
+  const curRing  = document.getElementById('cur-ring');
+  const curLabel = document.getElementById('cur-label');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  window.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    gsap.to(cur, { x: mx, y: my, duration: 0.07 });
+    gsap.set(curLabel, { x: mx, y: my });
+  });
+  (function rf() {
+    rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
+    gsap.set(curRing, { x: rx, y: ry });
+    requestAnimationFrame(rf);
+  })();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { gsap.to(cur, { scale: 0.35, duration: .3 }); gsap.to(curRing, { scale: 1.7, duration: .4 }); });
+    el.addEventListener('mouseleave', () => { gsap.to(cur, { scale: 1, duration: .3 }); gsap.to(curRing, { scale: 1, duration: .4 }); curLabel.classList.remove('vis'); });
+  });
+  document.querySelectorAll('.cat-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      gsap.to(cur, { scale: 0.3, duration: .3 });
+      gsap.to(curRing, { scale: 2.0, duration: .4 });
+      curLabel.textContent = 'اطلب →';
+      curLabel.classList.add('vis');
+    });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(cur, { scale: 1, duration: .3 });
+      gsap.to(curRing, { scale: 1, duration: .4 });
+      curLabel.classList.remove('vis');
+    });
+  });
+
+  /* VEIL */
+  const veil = document.getElementById('veil');
+  document.querySelectorAll('.nav-veil-link').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (!href || href.startsWith('#')) return;
+      e.preventDefault();
+      gsap.to(veil, { y: '0%', duration: .7, ease: 'power3.inOut', onComplete: () => { window.location.href = href; } });
+    });
+  });
+  gsap.set(veil, { y: '0%' });
+  gsap.to(veil, { y: '-100%', duration: .7, ease: 'power3.inOut', delay: .1 });
+
+  /* MAGNETIC */
+  document.querySelectorAll('.cta-btn, .cat-order').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      gsap.to(btn, { x: (e.clientX-(r.left+r.width/2))*.28, y: (e.clientY-(r.top+r.height/2))*.28, duration: .35, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => { gsap.to(btn, { x:0, y:0, duration:.65, ease:'elastic.out(1,.5)' }); });
+  });
+
+  /* FILTER */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards      = document.querySelectorAll('.cat-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.filter;
+
+      cards.forEach((card, i) => {
+        const show = cat === 'all' || card.dataset.cat === cat;
+        if (show) {
+          card.classList.remove('hidden');
+          gsap.fromTo(card, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out', delay: i * 0.04 });
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  /* LENIS + SCROLL */
+  const lenis = new Lenis({ lerp: 0.08 });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(tm => lenis.raf(tm * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // Progress bar
+  const prog = document.getElementById('prog');
+  ScrollTrigger.create({
+    start: 'top top', end: 'bottom bottom',
+    onUpdate: self => { prog.style.width = (self.progress * 100) + '%'; }
+  });
+
+  // Header reveal — split fields
+  const heroFields = ['.col-eyebrow', '.col-title', '.col-title-en'];
+  heroFields.forEach(sel => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'overflow:hidden;display:block';
+    el.parentNode.insertBefore(wrap, el);
+    wrap.appendChild(el);
+    gsap.fromTo(el, { yPercent: 105 }, { yPercent: 0, duration: 1.0, ease: 'power3.out', delay: heroFields.indexOf(sel) * 0.1 + .2 });
+  });
+  gsap.fromTo('.col-count, .col-desc',
+    { opacity: 0, x: 30 },
+    { opacity: 1, x: 0, duration: .9, ease: 'power2.out', stagger: .12, delay: .45 }
+  );
+
+  // Filter bar entrance
+  gsap.fromTo('.filter-btn',
+    { opacity: 0, y: 10 },
+    { opacity: 1, y: 0, stagger: .06, duration: .5, ease: 'power2.out', delay: .6 }
+  );
+
+  // Cards stagger + parallax
+  gsap.utils.toArray('.cat-card').forEach((card, i) => {
+    gsap.fromTo(card, { opacity: 0, y: 48 }, {
+      opacity: 1, y: 0, duration: .85, ease: 'power2.out', delay: i * 0.08,
+      scrollTrigger: { trigger: card, start: 'top 88%' }
+    });
+    const img = card.querySelector('.cat-img img');
+    gsap.fromTo(img, { yPercent: -7 }, {
+      yPercent: 7, ease: 'none',
+      scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+  });
+
+  // Sourcing strip
+  gsap.utils.toArray('.source-col').forEach((el, i) => {
+    gsap.fromTo(el, { opacity: 0, y: 36 }, {
+      opacity: 1, y: 0, duration: .85, ease: 'power2.out', delay: i * 0.12,
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+  // Source name Arabic clip reveals
+  gsap.utils.toArray('.source-name-ar').forEach((el, i) => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'overflow:hidden;display:block';
+    el.parentNode.insertBefore(wrap, el);
+    wrap.appendChild(el);
+    gsap.fromTo(el, { yPercent: 100 }, {
+      yPercent: 0, duration: 1.0, ease: 'power3.out', delay: i * 0.1,
+      scrollTrigger: { trigger: wrap, start: 'top 85%' }
+    });
+  });
+
+  // CTA
+  gsap.utils.toArray('.cta-title, .cta-sub, .cta-email, .cta-btn').forEach((el, i) => {
+    gsap.fromTo(el, { opacity: 0, y: 28 }, {
+      opacity: 1, y: 0, duration: .85, ease: 'power2.out', delay: i * .15,
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
