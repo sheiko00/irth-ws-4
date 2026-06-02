@@ -1,28 +1,109 @@
 <!DOCTYPE html>
-<html lang="{{ request.locale.iso_code | default: 'en' }}" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- ══ TITLE ══════════════════════════════════════════════ -->
   <title>
     {%- if template.name == 'index' -%}
-      {{ shop.name }}{% if shop.description != blank %} — {{ shop.description }}{% endif %}
+      إرث — تراث المدينة المنورة في بيتك | IRTH Madinah
+    {%- elsif template.name == 'product' -%}
+      {{ product.metafields.irth.arabic_name | default: product.title }} | إرث — IRTH Madinah
+    {%- elsif template.name == 'collection' -%}
+      {{ collection.title }} | تسوق الآن — إرث IRTH Madinah
+    {%- elsif template.name == 'article' -%}
+      {{ article.title }} | مدونة إرث — IRTH Heritage Blog
+    {%- elsif template.name == 'page' -%}
+      {{ page.title }} | إرث — IRTH Madinah
+    {%- elsif template.name == 'search' -%}
+      نتائج البحث عن {{ search.terms | escape }} | إرث
+    {%- elsif template.name == 'cart' -%}
+      عربة التسوق | إرث — IRTH Madinah
     {%- else -%}
-      {{ page_title }} | {{ shop.name }}
+      {{ page_title }} | إرث — IRTH Madinah
     {%- endif -%}
   </title>
 
-  <meta name="description" content="{{ page_description | default: shop.description | escape }}">
-
-  {%- if canonical_url != blank -%}
-    <link rel="canonical" href="{{ canonical_url }}">
+  <!-- ══ META DESCRIPTION ═══════════════════════════════════ -->
+  {%- if template.name == 'index' -%}
+    <meta name="description" content="إرث — براند فاخر يجلب تراث المدينة المنورة إلى بيتك. تمور عجوة ومجول، أعشاب، سبح، سجاد صلاة، وصناديق هدايا. توصيل لمصر والخليج والعالم. | IRTH — Luxury Islamic heritage from Madinah Al-Munawwarah.">
+  {%- elsif template.name == 'product' -%}
+    <meta name="description" content="{{ product.description | strip_html | truncate: 160 | escape }}">
+  {%- elsif template.name == 'collection' -%}
+    <meta name="description" content="{{ collection.description | strip_html | default: collection.title | append: ' — تسوق الآن من إرث. توصيل لمصر في 24 ساعة.' | truncate: 160 | escape }}">
+  {%- elsif template.name == 'article' -%}
+    <meta name="description" content="{{ article.excerpt_or_content | strip_html | truncate: 160 | escape }}">
+  {%- else -%}
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
   {%- endif -%}
+
+  <!-- ══ CANONICAL ══════════════════════════════════════════ -->
+  {%- if template.name == 'product' -%}
+    <link rel="canonical" href="{{ shop.url }}/products/{{ product.handle }}">
+  {%- else -%}
+    {%- if canonical_url != blank -%}
+      <link rel="canonical" href="{{ canonical_url }}">
+    {%- endif -%}
+  {%- endif -%}
+
+  <!-- ══ HREFLANG ═══════════════════════════════════════════ -->
+  {% render 'irth-hreflang' %}
+
+  <!-- ══ OPEN GRAPH ═════════════════════════════════════════ -->
+  <meta property="og:site_name" content="IRTH — إرث">
+  <meta property="og:locale" content="ar_EG">
+  <meta property="og:locale:alternate" content="en_US">
+
+  {%- if template.name == 'product' -%}
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="{{ product.title | escape }}">
+    <meta property="og:description" content="{{ product.description | strip_html | truncate: 200 | escape }}">
+    <meta property="og:image" content="{{ product.featured_image | img_url: '1200x630', crop: 'center' }}">
+    <meta property="og:image:alt" content="{{ product.featured_image.alt | default: product.title | escape }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="product:price:amount" content="{{ product.price | money_without_currency }}">
+    <meta property="product:price:currency" content="EGP">
+  {%- elsif template.name == 'collection' -%}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ collection.title | escape }} | إرث">
+    {%- if collection.image -%}
+      <meta property="og:image" content="{{ collection.image | img_url: '1200x630', crop: 'center' }}">
+    {%- endif -%}
+    <meta property="og:url" content="{{ canonical_url }}">
+  {%- elsif template.name == 'article' -%}
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ article.title | escape }}">
+    <meta property="og:description" content="{{ article.excerpt_or_content | strip_html | truncate: 200 | escape }}">
+    {%- if article.image -%}
+      <meta property="og:image" content="{{ article.image | img_url: '1200x630', crop: 'center' }}">
+    {%- endif -%}
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
+  {%- else -%}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ page_title | escape }} | إرث">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="https://irthmadina.com/cdn/shop/files/irth-og-default.jpg">
+  {%- endif -%}
+
+  <!-- ══ TWITTER CARD ════════════════════════════════════════ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@irthmadina">
+
+  <!-- ══ SCHEMA JSON-LD ═════════════════════════════════════ -->
+  {% render 'irth-organization-schema' %}
+  {% render 'irth-product-schema' %}
+  {% render 'irth-breadcrumb-schema' %}
 
   {{ content_for_header }}
 
+  <!-- ══ FONTS ══════════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Tajawal:wght@300;400;500;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 
   {{ 'theme.css' | asset_url | stylesheet_tag }}
 
@@ -45,7 +126,7 @@
 
   {%- section 'footer' -%}
 
-  <!-- GSAP + Lenis (pin to exact versions for stability) -->
+  <!-- GSAP + Lenis -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" crossorigin="anonymous"></script>
