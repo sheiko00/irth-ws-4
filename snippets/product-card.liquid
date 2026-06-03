@@ -1,11 +1,16 @@
 {%- comment -%}
   Renders a single product card.
   Usage: {% render 'product-card', product: product %}
+  Optional params:
+    loading:       'lazy' (default) | 'eager'
+    fetchpriority: 'auto' (default) | 'high'
 {%- endcomment -%}
 
-{%- assign product_ar_name = product.metafields.irth.name_ar.value | default: product.title -%}
-{%- assign product_ar_desc = product.metafields.irth.desc_ar.value | default: '' -%}
-{%- assign product_origin  = product.metafields.irth.origin.value  | default: '' -%}
+{%- assign product_ar_name  = product.metafields.irth.name_ar.value | default: product.title -%}
+{%- assign product_ar_desc  = product.metafields.irth.desc_ar.value | default: '' -%}
+{%- assign product_origin   = product.metafields.irth.origin.value  | default: '' -%}
+{%- assign card_loading       = loading       | default: 'lazy' -%}
+{%- assign card_fetchpriority = fetchpriority | default: 'auto' -%}
 
 <article class="prod-card" data-product-id="{{ product.id }}">
   <a href="{{ product.url }}" class="prod-card-link nav-veil-link" aria-label="{{ product.title }}">
@@ -13,11 +18,19 @@
       {%- if product.featured_image -%}
         <img
           class="prod-img parallax-img"
-          src="{{ product.featured_image | image_url: width: 600 }}"
-          alt="{{ product.featured_image.alt | escape }}"
-          width="600"
-          height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
-          loading="lazy"
+          src="{{ product.featured_image | image_url: width: 800 }}"
+          srcset="
+            {{ product.featured_image | image_url: width: 400 }} 400w,
+            {{ product.featured_image | image_url: width: 600 }} 600w,
+            {{ product.featured_image | image_url: width: 800 }} 800w,
+            {{ product.featured_image | image_url: width: 1200 }} 1200w
+          "
+          sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(50vw - 2rem), 400px"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          width="800"
+          height="{{ 800 | divided_by: product.featured_image.aspect_ratio | round }}"
+          loading="{{ card_loading }}"
+          {%- if card_fetchpriority != 'auto' %} fetchpriority="{{ card_fetchpriority }}"{% endif -%}
         >
       {%- else -%}
         <div class="prod-img prod-img--placeholder"></div>

@@ -22,7 +22,11 @@
   <div class="prod-grid">
     {%- if grid_collection != blank and grid_collection.products.size > 0 -%}
       {%- for product in grid_collection.products limit: products_to_show -%}
-        {%- render 'product-card', product: product -%}
+        {%- if forloop.first -%}
+          {%- render 'product-card', product: product, loading: 'eager', fetchpriority: 'high' -%}
+        {%- else -%}
+          {%- render 'product-card', product: product -%}
+        {%- endif -%}
       {%- endfor -%}
     {%- else -%}
       {%- comment -%} Static placeholder cards for demo / when no collection assigned {%- endcomment -%}
