@@ -61,7 +61,7 @@
     <meta property="og:type" content="product">
     <meta property="og:title" content="{{ product.title | escape }}">
     <meta property="og:description" content="{{ product.description | strip_html | truncate: 200 | escape }}">
-    <meta property="og:image" content="{{ product.featured_image | img_url: '1200x630', crop: 'center' }}">
+    <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200, height: 630, crop: 'center' }}">
     <meta property="og:image:alt" content="{{ product.featured_image.alt | default: product.title | escape }}">
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="product:price:amount" content="{{ product.price | money_without_currency }}">
@@ -70,7 +70,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ collection.title | escape }} | إرث">
     {%- if collection.image -%}
-      <meta property="og:image" content="{{ collection.image | img_url: '1200x630', crop: 'center' }}">
+      <meta property="og:image" content="{{ collection.image | image_url: width: 1200, height: 630, crop: 'center' }}">
     {%- endif -%}
     <meta property="og:url" content="{{ canonical_url }}">
   {%- elsif template.name == 'article' -%}
@@ -78,7 +78,7 @@
     <meta property="og:title" content="{{ article.title | escape }}">
     <meta property="og:description" content="{{ article.excerpt_or_content | strip_html | truncate: 200 | escape }}">
     {%- if article.image -%}
-      <meta property="og:image" content="{{ article.image | img_url: '1200x630', crop: 'center' }}">
+      <meta property="og:image" content="{{ article.image | image_url: width: 1200, height: 630, crop: 'center' }}">
     {%- endif -%}
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
@@ -97,6 +97,23 @@
   {% render 'irth-organization-schema' %}
   {% render 'irth-product-schema' %}
   {% render 'irth-breadcrumb-schema' %}
+
+  <!-- ══ VERIFICATION & ANALYTICS ══════════════════════════ -->
+  {%- if settings.gsc_verification != blank -%}
+    <meta name="google-site-verification" content="{{ settings.gsc_verification }}">
+  {%- endif -%}
+  {%- if settings.ga4_measurement_id != blank -%}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.ga4_measurement_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ settings.ga4_measurement_id }}', {
+        page_location: '{{ canonical_url }}',
+        page_title: document.title
+      });
+    </script>
+  {%- endif -%}
 
   {{ content_for_header }}
 
