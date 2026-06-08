@@ -191,6 +191,9 @@
 
   /* ── Hero text entrance (homepage) ──────────────────────── */
   function animateHeroIn() {
+    // Fade in the fixed video/bg layer
+    gsap.to('#video-hero', { opacity: 1, duration: 1.2, ease: 'power2.out' });
+
     const tl = gsap.timeline({ delay: 0.15 });
     tl.fromTo('.h-line-wrap:nth-child(1) .inner',
       { yPercent: 110 }, { yPercent: 0, duration: 1.05, ease: 'power3.out' })

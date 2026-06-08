@@ -18,10 +18,18 @@
             id="product-main-img"
             class="product-main-img parallax-img"
             src="{{ product.featured_image | image_url: width: 800 }}"
-            alt="{{ product.featured_image.alt | escape }}"
+            srcset="
+              {{ product.featured_image | image_url: width: 400 }} 400w,
+              {{ product.featured_image | image_url: width: 800 }} 800w,
+              {{ product.featured_image | image_url: width: 1200 }} 1200w,
+              {{ product.featured_image | image_url: width: 1600 }} 1600w
+            "
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+            alt="{{ product.featured_image.alt | default: product.title | escape }}"
             width="800"
             height="{{ 800 | divided_by: product.featured_image.aspect_ratio | round }}"
             loading="eager"
+            fetchpriority="high"
           >
         </div>
         {%- if product.images.size > 1 -%}
@@ -30,6 +38,7 @@
               <button
                 class="product-thumb{% if forloop.first %} product-thumb--active{% endif %}"
                 data-img-src="{{ image | image_url: width: 800 }}"
+                data-img-srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w"
                 data-img-alt="{{ image.alt | escape }}"
                 aria-label="Image {{ forloop.index }}"
                 role="listitem"
@@ -145,6 +154,7 @@
       const mainImg = document.getElementById('product-main-img');
       if (mainImg) {
         mainImg.src = btn.dataset.imgSrc;
+        if (btn.dataset.imgSrcset) mainImg.srcset = btn.dataset.imgSrcset;
         mainImg.alt = btn.dataset.imgAlt;
       }
       document.querySelectorAll('.product-thumb').forEach(b => b.classList.remove('product-thumb--active'));

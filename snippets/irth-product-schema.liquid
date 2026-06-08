@@ -1,0 +1,55 @@
+{% comment %}
+  IRTH — Product JSON-LD schema
+  Fires on product pages only. Called from theme.liquid <head>.
+{% endcomment %}
+
+{% if template.name == 'product' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | escape | json }},
+  "description": {{ product.description | strip_html | truncate: 500 | escape | json }},
+  "sku": {{ product.selected_or_first_available_variant.sku | escape | json }},
+  "mpn": {{ product.id | json }},
+  "brand": { "@type": "Brand", "name": "IRTH — إرث" },
+  "image": [
+    {% for image in product.images %}
+      {{ image.src | img_url: 'master' | json }}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "EGP",
+    "lowPrice": {{ product.price_min | money_without_currency | remove: ',' | json }},
+    "highPrice": {{ product.price_max | money_without_currency | remove: ',' | json }},
+    "offerCount": {{ product.variants.size }},
+    "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "seller": {
+      "@type": "Organization",
+      "name": "IRTH — إرث",
+      "url": "https://irthmadina.com"
+    }
+  },
+  "url": {{ canonical_url | json }},
+  {% if product.metafields.reviews.rating %}
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ product.metafields.reviews.rating.value | json }},
+    "reviewCount": {{ product.metafields.reviews.rating_count | json }}
+  },
+  {% endif %}
+  "additionalProperty": [
+    {% assign _first_prop = true %}
+    {% if product.metafields.irth.origin != blank %}
+      {% unless _first_prop %},{% endunless %}{% assign _first_prop = false %}
+      { "@type": "PropertyValue", "name": "Origin", "value": {{ product.metafields.irth.origin | json }} }
+    {% endif %}
+    {% if product.metafields.irth.hadith_reference != blank %}
+      {% unless _first_prop %},{% endunless %}{% assign _first_prop = false %}
+      { "@type": "PropertyValue", "name": "Islamic Reference", "value": {{ product.metafields.irth.hadith_reference | escape | json }} }
+    {% endif %}
+  ]
+}
+</script>
+{% endif %}

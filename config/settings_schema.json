@@ -4,8 +4,8 @@
     "theme_name": "IRTH",
     "theme_version": "1.0.0",
     "theme_author": "IRTH Studio",
-    "theme_documentation_url": "https://irth.co",
-    "theme_support_url": "mailto:hello@irth.co"
+    "theme_documentation_url": "https://www.irthmadina.com",
+    "theme_support_url": "https://www.irthmadina.com"
   },
   {
     "name": "Colors",
@@ -105,12 +105,37 @@
         "type": "text",
         "id": "contact_email",
         "label": "Contact email",
-        "default": "hello@irth.co"
+        "default": "hello@irthmadina.com"
       },
       {
         "type": "text",
         "id": "contact_phone",
         "label": "Contact phone"
+      }
+    ]
+  },
+  {
+    "name": "SEO & Analytics",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Google Search Console"
+      },
+      {
+        "type": "text",
+        "id": "gsc_verification",
+        "label": "GSC verification code",
+        "info": "Paste only the content= value from the meta tag Google provides. Example: abc123XYZ789"
+      },
+      {
+        "type": "header",
+        "content": "Google Analytics 4"
+      },
+      {
+        "type": "text",
+        "id": "ga4_measurement_id",
+        "label": "GA4 Measurement ID",
+        "info": "Format: G-XXXXXXXXXX. Leave blank if using Google Tag Manager."
       }
     ]
   },
