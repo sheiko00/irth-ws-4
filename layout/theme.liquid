@@ -89,9 +89,35 @@
     <meta property="og:image" content="https://irthmadina.com/cdn/shop/files/irth-og-default.jpg">
   {%- endif -%}
 
+  <!-- ══ ROBOTS ════════════════════════════════════════════ -->
+  {%- if template.name == 'search' or template.name == 'cart' or template.name == '404' -%}
+    <meta name="robots" content="noindex, follow">
+  {%- else -%}
+    <meta name="robots" content="index, follow">
+  {%- endif -%}
+
   <!-- ══ TWITTER CARD ════════════════════════════════════════ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@irthmadina">
+  {%- if template.name == 'product' -%}
+    <meta name="twitter:title" content="{{ product.title | escape }} | إرث">
+    <meta name="twitter:description" content="{{ product.description | strip_html | truncate: 200 | escape }}">
+    <meta name="twitter:image" content="{{ product.featured_image | image_url: width: 1200, height: 630, crop: 'center' }}">
+  {%- elsif template.name == 'collection' -%}
+    <meta name="twitter:title" content="{{ collection.title | escape }} | إرث">
+    {%- if collection.image -%}
+      <meta name="twitter:image" content="{{ collection.image | image_url: width: 1200, height: 630, crop: 'center' }}">
+    {%- endif -%}
+  {%- elsif template.name == 'article' -%}
+    <meta name="twitter:title" content="{{ article.title | escape }}">
+    <meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | truncate: 200 | escape }}">
+    {%- if article.image -%}
+      <meta name="twitter:image" content="{{ article.image | image_url: width: 1200, height: 630, crop: 'center' }}">
+    {%- endif -%}
+  {%- else -%}
+    <meta name="twitter:title" content="{{ page_title | escape }} | إرث">
+    <meta name="twitter:image" content="https://irthmadina.com/cdn/shop/files/irth-og-default.jpg">
+  {%- endif -%}
 
   <!-- ══ SCHEMA JSON-LD ═════════════════════════════════════ -->
   {% render 'irth-organization-schema' %}
