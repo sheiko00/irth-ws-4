@@ -693,7 +693,7 @@
         const img = loadFrame(i);
         const paint = () => {
           paintCover(bgCtx, img);
-          paintContain(ctx, img);
+          paintCover(ctx, img);
           curFrame = i;
           document.querySelector('.ritual-media').classList.add('is-ready');
         };

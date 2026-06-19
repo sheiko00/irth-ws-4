@@ -138,10 +138,10 @@
     {% render 'ambient-audio' %}
   {%- endif -%}
 
-  <!-- GSAP + Lenis + main (defer preserves execution order) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer crossorigin="anonymous"></script>
+  <!-- GSAP + Lenis + main (all served from Shopify CDN, defer preserves order) -->
+  <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'lenis.min.js' | asset_url }}" defer></script>
   <script src="{{ 'irth-main.js' | asset_url }}" defer></script>
 
 </body>
