@@ -539,13 +539,13 @@
 
     .ar-line {
       font-family: 'Noto Naskh Arabic', serif; font-weight: 400;
-      font-size: clamp(56px, 9vw, 134px);
+      font-size: clamp(36px, 5.4vw, 82px);
       direction: rtl; line-height: 1.05;
       text-shadow: 0 2px 24px rgba(0,0,0,.4);
     }
     .ar-line-bold {
       font-family: 'Noto Naskh Arabic', serif; font-weight: 700;
-      font-size: clamp(58px, 9.4vw, 144px);
+      font-size: clamp(38px, 5.7vw, 88px);
       direction: rtl; line-height: 1.05;
       text-shadow: 0 2px 28px rgba(0,0,0,.45);
     }
@@ -1202,8 +1202,8 @@
       .n-dot   { display: none; }
       .n-logo img { height: 32px; }
 
-      .ar-line      { font-size: clamp(40px, 9vw, 64px); }
-      .ar-line-bold { font-size: clamp(42px, 9.4vw, 68px); }
+      .ar-line      { font-size: clamp(26px, 6vw, 42px); }
+      .ar-line-bold { font-size: clamp(28px, 6.4vw, 45px); }
       .h-pill { padding: 11px 22px; font-size: 14px; }
 
       .prod-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1252,8 +1252,8 @@
 
       /* Hero */
       .h-center { width: 92vw; }
-      .ar-line      { font-size: clamp(34px, 10.5vw, 50px); }
-      .ar-line-bold { font-size: clamp(36px, 11vw, 53px); }
+      .ar-line      { font-size: clamp(22px, 7.5vw, 34px); }
+      .ar-line-bold { font-size: clamp(24px, 8vw, 36px); }
       .h-eyebrow { display: none; }
       .h-pill    { padding: 10px 20px; font-size: 13px; }
       .h-bottom  { bottom: 20px; left: 20px; right: 20px; }
@@ -1321,19 +1321,14 @@
        LOGO SEAL — Phase 01
     ══════════════════════════════════════════ */
     .hero-logo-seal {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      border: 1px solid rgba(233,226,213,.18);
+      width: 80px; height: 80px;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Noto Naskh Arabic', serif;
-      font-size: 30px; color: var(--sand);
       margin: 0 auto 26px;
-      box-shadow: 0 0 28px rgba(233,226,213,.06);
       opacity: 0;
       transform: scale(.8);
     }
     @media (max-width: 768px) {
-      .hero-logo-seal { width: 52px; height: 52px; font-size: 22px; margin-bottom: 18px; }
+      .hero-logo-seal { width: 56px; height: 56px; margin-bottom: 18px; }
     }
 
     /* ── brand logo animations ── */
@@ -1341,13 +1336,19 @@
     .fnav-logo-img {
       width: 28px; height: 28px; object-fit: contain;
       transform-style: preserve-3d;
-      filter: drop-shadow(0 1px 3px rgba(201,168,106,.5));
+      filter: brightness(0) saturate(0) opacity(.82);
       animation: logoSway 9s ease-in-out infinite;
     }
     .seal-logo-img {
-      width: 86%; height: 86%; object-fit: contain;
-      filter: brightness(2.6) saturate(0.06);
-      opacity: 0.38;
+      width: 100%; height: 100%; object-fit: contain;
+      filter: none;
+      opacity: 1;
+    }
+    /* Film-title logo (above إرث in intro overlay) */
+    .film-logo-img {
+      width: 64px; height: 64px; object-fit: contain;
+      display: block; margin: 0 auto 16px;
+      filter: brightness(0) invert(1) opacity(.88);
     }
     @keyframes logoSway { 0%,100% { transform: rotateY(-15deg); } 50% { transform: rotateY(15deg); } }
     @media (prefers-reduced-motion: reduce) {
