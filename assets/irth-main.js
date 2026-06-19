@@ -702,8 +702,8 @@
       }
 
       function warmFrames(i) {
-        const r = 8;
-        for (let f = Math.max(0, i-r); f <= Math.min(FRAME_COUNT-1, i+r); f++) loadFrame(f);
+        const behind = 4, ahead = 18;
+        for (let f = Math.max(0, i - behind); f <= Math.min(FRAME_COUNT-1, i + ahead); f++) loadFrame(f);
       }
 
       function getProgress() {
@@ -733,8 +733,8 @@
         requestAnimationFrame(() => { applyProgress(); ticking = false; });
       }
 
-      // Preload first 16 frames immediately
-      for (let i = 0; i < 16; i++) loadFrame(i);
+      // Preload first 30 frames immediately for smooth scroll start
+      for (let i = 0; i < 30; i++) loadFrame(i);
 
       lenis.on('scroll', requestUpdate);
       window.addEventListener('resize', () => { curFrame = -1; requestUpdate(); }, { passive: true });
