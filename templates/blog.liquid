@@ -1,0 +1,29 @@
+{% paginate blog.articles by 12 %}
+<div style="max-width:1400px;margin:0 auto;padding:140px 48px 120px;background:var(--sand,#E9E2D5);">
+  <div style="font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:#C9A86A;margin-bottom:28px;direction:ltr;">— Journal · المجلة</div>
+  <h1 style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(72px,11vw,140px);font-weight:300;color:#0E2B22;line-height:.95;margin-bottom:60px;direction:ltr;">Stories of <em>origin</em></h1>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:40px;">
+    {% for article in blog.articles %}
+    <article style="background:#F0E8DC;border:1px solid rgba(201,168,106,.15);overflow:hidden;">
+      {% if article.image %}
+      <a href="{{ article.url }}">
+        <div style="aspect-ratio:4/3;overflow:hidden;">
+          <img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.image.alt | escape }}" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+      </a>
+      {% endif %}
+      <div style="padding:28px;">
+        <div style="font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#C9A86A;margin-bottom:14px;direction:ltr;">{{ article.published_at | date: '%B %d, %Y' }}</div>
+        <h2 style="font-family:'Noto Naskh Arabic',serif;font-size:22px;font-weight:500;color:#0E2B22;margin-bottom:12px;"><a href="{{ article.url }}" style="color:inherit;text-decoration:none;">{{ article.title }}</a></h2>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:15px;opacity:.65;line-height:1.65;direction:ltr;">{{ article.excerpt | strip_html | truncate: 120 }}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+  <div style="text-align:center;margin-top:60px;">{{ paginate | default_pagination }}</div>
+  {% endif %}
+</div>
+{% endpaginate %}

@@ -1,0 +1,121 @@
+<div class="prod-page">
+  <nav class="prod-nav" aria-label="breadcrumb">
+    <a href="{{ routes.root_url }}">إرث</a>
+    <span>·</span>
+    <a href="{{ collection.url | default: routes.collections_url }}">{{ collection.title | default: 'المجموعة' }}</a>
+    <span>·</span>
+    <span>{{ product.title }}</span>
+  </nav>
+
+  <div class="prod-layout">
+    <!-- Gallery -->
+    <div class="prod-gallery">
+      {%- if product.featured_image -%}
+        <div class="prod-img-main">
+          <img src="{{ product.featured_image | image_url: width: 900 }}"
+               alt="{{ product.featured_image.alt | escape }}"
+               width="900" height="{{ 900 | divided_by: product.featured_image.aspect_ratio | round }}">
+        </div>
+      {%- else -%}
+        <div class="prod-img-main prod-img-placeholder"></div>
+      {%- endif -%}
+      {%- if product.images.size > 1 -%}
+      <div class="prod-thumbs">
+        {%- for img in product.images limit: 6 -%}
+          <img src="{{ img | image_url: width: 200 }}" alt="{{ img.alt | escape }}" width="200"
+               class="prod-thumb {% if forloop.first %}is-active{% endif %}" loading="lazy">
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Info -->
+    <div class="prod-info">
+      {%- if product.metafields.irth.arabic_name != blank -%}
+        <h1 class="prod-ar-name">{{ product.metafields.irth.arabic_name }}</h1>
+        <div class="prod-en-name">{{ product.title }}</div>
+      {%- else -%}
+        <h1 class="prod-ar-name">{{ product.title }}</h1>
+      {%- endif -%}
+
+      <div class="prod-gold-rule"></div>
+
+      {%- if product.metafields.irth.origin != blank -%}
+        <div class="prod-origin">— {{ product.metafields.irth.origin }}</div>
+      {%- endif -%}
+
+      <div class="prod-price">
+        {%- if product.compare_at_price > product.price -%}
+          <s class="prod-compare">{{ product.compare_at_price | money }}</s>
+        {%- endif -%}
+        <span class="prod-current">{{ product.price | money }}</span>
+      </div>
+
+      <div class="prod-desc">{{ product.description }}</div>
+
+      {%- form 'product', product -%}
+        {%- if product.variants.size > 1 -%}
+          <div class="prod-variants">
+            {%- for variant in product.variants -%}
+              <label class="prod-variant-label {% if variant == product.selected_or_first_available_variant %}is-selected{% endif %}">
+                <input type="radio" name="id" value="{{ variant.id }}"
+                       {% if variant == product.selected_or_first_available_variant %}checked{% endif %}>
+                <span>{{ variant.title }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        {%- endif -%}
+
+        <button type="submit" class="prod-add-btn" {% unless product.available %}disabled{% endunless %}>
+          {%- if product.available -%}أضف للسلة{%- else -%}غير متوفر{%- endif -%}
+        </button>
+      {%- endform -%}
+
+      <a href="mailto:hello@irthmadina.com" class="prod-inquiry">استفسار أو طلب بالجملة ↘</a>
+    </div>
+  </div>
+</div>
+
+<style>
+.prod-page { max-width: 1480px; margin: 0 auto; padding: 120px 48px 100px; background: var(--sand, #E9E2D5); }
+.prod-nav { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; opacity: .45; margin-bottom: 48px; display: flex; gap: 10px; align-items: center; }
+.prod-nav a { color: var(--ink, #101010); text-decoration: none; }
+.prod-nav a:hover { color: var(--gold, #C9A86A); }
+.prod-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+.prod-img-main { background: var(--linen, #F0E8DC); border: 1px solid rgba(201,168,106,.15); aspect-ratio: 4/5; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.prod-img-main img { width: 100%; height: 100%; object-fit: cover; }
+.prod-thumbs { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.prod-thumb { width: 80px; height: 80px; object-fit: cover; cursor: pointer; opacity: .5; border: 1px solid transparent; transition: opacity .3s, border-color .3s; }
+.prod-thumb.is-active, .prod-thumb:hover { opacity: 1; border-color: var(--gold, #C9A86A); }
+.prod-ar-name { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(36px,4vw,60px); font-weight: 500; color: var(--madinah, #0E2B22); line-height: 1.1; margin-bottom: 10px; }
+.prod-en-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(22px,2vw,32px); color: var(--ink, #101010); opacity: .6; margin-bottom: 24px; }
+.prod-gold-rule { width: 60px; height: 1px; background: var(--gold, #C9A86A); margin-bottom: 20px; opacity: .55; }
+.prod-origin { font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: var(--gold, #C9A86A); margin-bottom: 20px; }
+.prod-price { font-size: 22px; color: var(--madinah, #0E2B22); margin-bottom: 24px; display: flex; gap: 12px; align-items: baseline; }
+.prod-compare { opacity: .4; font-size: 16px; text-decoration: line-through; }
+.prod-desc { font-family: 'Noto Naskh Arabic', serif; font-size: 15px; line-height: 1.85; opacity: .7; margin-bottom: 32px; }
+.prod-variants { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.prod-variant-label { cursor: pointer; }
+.prod-variant-label input { display: none; }
+.prod-variant-label span { display: inline-flex; align-items: center; padding: 8px 18px; border: 1px solid rgba(201,168,106,.3); font-size: 13px; transition: all .25s; }
+.prod-variant-label.is-selected span, .prod-variant-label:hover span { background: var(--madinah, #0E2B22); color: #fff; border-color: var(--madinah, #0E2B22); }
+.prod-add-btn { width: 100%; padding: 18px; background: var(--madinah, #0E2B22); color: #fff; border: none; cursor: pointer; font-family: 'Noto Naskh Arabic', serif; font-size: 16px; letter-spacing: .05em; transition: background .3s; margin-bottom: 16px; }
+.prod-add-btn:hover { background: #1a4a3a; }
+.prod-add-btn:disabled { opacity: .4; cursor: not-allowed; }
+.prod-inquiry { display: block; text-align: center; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold, #C9A86A); text-decoration: none; opacity: .65; transition: opacity .3s; }
+.prod-inquiry:hover { opacity: 1; }
+@media (max-width: 860px) {
+  .prod-layout { grid-template-columns: 1fr; gap: 40px; }
+  .prod-page { padding: 100px 24px 80px; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Product Main",
+  "tag": "section",
+  "class": "section-main-product"
+}
+{% endschema %}

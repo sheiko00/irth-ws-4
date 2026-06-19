@@ -1,0 +1,72 @@
+<div class="cart-page">
+  <h1 class="cart-title">عربة التسوق</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty">
+      <p>السلة فارغة</p>
+      <a href="{{ routes.collections_url }}" class="cart-btn">تصفّح المجموعة</a>
+    </div>
+  {%- else -%}
+    {%- form 'cart', cart -%}
+      <div class="cart-items">
+        {%- for item in cart.items -%}
+          <div class="cart-item">
+            <div class="cart-item-img">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | escape }}" width="200" height="200">
+              {%- endif -%}
+            </div>
+            <div class="cart-item-info">
+              <div class="cart-item-title">{{ item.product.title }}</div>
+              {%- unless item.variant.title == 'Default Title' -%}
+                <div class="cart-item-variant">{{ item.variant.title }}</div>
+              {%- endunless -%}
+              <div class="cart-item-price">{{ item.final_price | money }}</div>
+            </div>
+            <div class="cart-item-qty">
+              <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-id="{{ item.key }}">
+            </div>
+            <div class="cart-item-total">{{ item.final_line_price | money }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-subtotal">
+          <span>الإجمالي:</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+        <button type="submit" name="checkout" class="cart-checkout-btn">الدفع الآن</button>
+        <button type="submit" name="update" class="cart-update-btn">تحديث السلة</button>
+      </div>
+    {%- endform -%}
+  {%- endif -%}
+</div>
+
+<style>
+.cart-page { max-width: 900px; margin: 0 auto; padding: 140px 48px 100px; min-height: 70vh; }
+.cart-title { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(32px,5vw,56px); color: var(--madinah, #0E2B22); margin-bottom: 48px; }
+.cart-empty { text-align: center; padding: 60px; opacity: .6; }
+.cart-empty p { font-size: 18px; margin-bottom: 32px; }
+.cart-btn { background: var(--madinah, #0E2B22); color: #fff; padding: 16px 40px; text-decoration: none; font-size: 14px; border-radius: 100px; }
+.cart-item { display: grid; grid-template-columns: 80px 1fr auto auto; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid rgba(201,168,106,.15); }
+.cart-item-img img { width: 80px; height: 80px; object-fit: cover; }
+.cart-item-title { font-family: 'Noto Naskh Arabic', serif; font-size: 16px; color: var(--madinah, #0E2B22); margin-bottom: 4px; }
+.cart-item-variant { font-size: 12px; opacity: .5; margin-bottom: 6px; }
+.cart-item-price { font-size: 14px; color: var(--gold, #C9A86A); }
+.cart-item-qty input { width: 50px; padding: 6px; text-align: center; border: 1px solid rgba(201,168,106,.3); background: transparent; }
+.cart-item-total { font-size: 15px; font-weight: 500; }
+.cart-footer { padding: 32px 0; text-align: left; }
+.cart-subtotal { display: flex; justify-content: space-between; font-size: 18px; margin-bottom: 24px; font-weight: 500; }
+.cart-checkout-btn { background: var(--madinah, #0E2B22); color: #fff; border: none; padding: 16px 48px; font-size: 15px; cursor: pointer; font-family: 'Noto Naskh Arabic', serif; margin-left: 12px; }
+.cart-update-btn { background: transparent; border: 1px solid rgba(201,168,106,.3); padding: 16px 32px; font-size: 13px; cursor: pointer; opacity: .6; }
+@media (max-width: 640px) { .cart-item { grid-template-columns: 60px 1fr; } .cart-page { padding: 100px 24px 80px; } }
+</style>
+
+{% schema %}
+{
+  "name": "Cart Main",
+  "tag": "section",
+  "class": "section-main-cart"
+}
+{% endschema %}

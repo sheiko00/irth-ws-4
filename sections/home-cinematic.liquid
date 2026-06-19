@@ -1,0 +1,637 @@
+
+<div id="prog"></div>
+<div id="veil"></div>
+<div class="noise"></div>
+<div id="cur" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+<div id="cur-label" aria-hidden="true"></div>
+<div id="sec-indicator" aria-hidden="true">
+  <span class="si-num" id="si-num">01</span>
+  <div class="si-line"></div>
+  <span class="si-name" id="si-name">Collection</span>
+</div>
+
+<!-- ── PRELOADER ── -->
+<div id="preloader" aria-hidden="true">
+  <img src="{{ 'logo.svg' | asset_url }}" alt="" class="pre-logo" id="pre-logo">
+  <div class="pre-bar-wrap"><div class="pre-bar" id="pre-bar"></div></div>
+  <span class="pre-pct" id="pre-pct">0%</span>
+</div>
+
+<!-- ── ENTRY ── -->
+<div id="entry">
+  <div class="eyes">
+    <div class="eye">
+      <svg class="eye-svg" viewBox="0 0 96 56">
+        <!-- almond white -->
+        <path class="eye-white" d="M2 28 Q24 4 48 4 Q72 4 94 28 Q72 52 48 52 Q24 52 2 28 Z"/>
+        <!-- kohl top heavy line -->
+        <path class="eye-kohl" d="M2 28 Q24 4 48 4 Q72 4 94 28"/>
+        <!-- kohl bottom light line -->
+        <path class="eye-kohl eye-kohl-bot" d="M2 28 Q24 52 48 52 Q72 52 94 28"/>
+        <!-- kohl extension (wing) -->
+        <path class="eye-kohl" d="M94 28 Q102 26 106 22"/>
+        <!-- lashes -->
+        <line class="eye-lash" x1="22" y1="6" x2="20" y2="0"/>
+        <line class="eye-lash" x1="36" y1="3" x2="35" y2="-3"/>
+        <line class="eye-lash" x1="50" y1="2" x2="50" y2="-4"/>
+        <line class="eye-lash" x1="64" y1="3" x2="65" y2="-3"/>
+        <line class="eye-lash" x1="78" y1="6" x2="80" y2="0"/>
+      </svg>
+      <div class="pupil" id="pl"></div>
+    </div>
+    <div class="eye">
+      <svg class="eye-svg" viewBox="0 0 96 56">
+        <path class="eye-white" d="M2 28 Q24 4 48 4 Q72 4 94 28 Q72 52 48 52 Q24 52 2 28 Z"/>
+        <path class="eye-kohl" d="M2 28 Q24 4 48 4 Q72 4 94 28"/>
+        <path class="eye-kohl eye-kohl-bot" d="M2 28 Q24 52 48 52 Q72 52 94 28"/>
+        <path class="eye-kohl" d="M2 28 Q-6 26 -10 22"/>
+        <line class="eye-lash" x1="22" y1="6" x2="20" y2="0"/>
+        <line class="eye-lash" x1="36" y1="3" x2="35" y2="-3"/>
+        <line class="eye-lash" x1="50" y1="2" x2="50" y2="-4"/>
+        <line class="eye-lash" x1="64" y1="3" x2="65" y2="-3"/>
+        <line class="eye-lash" x1="78" y1="6" x2="80" y2="0"/>
+      </svg>
+      <div class="pupil" id="pr"></div>
+    </div>
+  </div>
+  <img src="{{ 'logo.svg' | asset_url }}" alt="إرث IRTH" class="e-logo-img">
+  <div class="e-desc-ar">طعام راقٍ مستوحى من عمق الموروث العربي، يجمع بين نقاء المكوّن ونبل الأثر.</div>
+  <div class="e-desc">Luxury food rooted in Arab heritage — where the finest ingredients become a lasting impression.</div>
+  <button class="e-btn" id="e-enter">ادخل ↘</button>
+  <a href="#" class="e-skip" id="e-skip">Enter without audio</a>
+</div>
+
+<!-- ── TRANSITION OVERLAY — fullscreen cinematic ── -->
+<div id="trans-overlay">
+  <!-- Fullscreen landscape video -->
+  <video id="trans-vid" playsinline muted preload="auto" aria-hidden="true" poster="{{ 'intro-poster.jpg' | asset_url }}">
+    <!-- Intro video: architecture cinematic, no audio. Dual-source after bash compress-media.sh -->
+    <source media="(max-width: 768px)" src="{{ 'intro-mobile.webm' | asset_url }}" type="video/webm">
+    <source media="(max-width: 768px)" src="{{ 'intro-mobile.mp4' | asset_url }}"  type="video/mp4">
+    <source src="{{ 'intro-desktop.webm' | asset_url }}" type="video/webm">
+    <source src="{{ 'intro-desktop.mp4' | asset_url }}"  type="video/mp4">
+    <source src="assets/intro.mp4" type="video/mp4"><!-- raw fallback until compression run -->
+  </video>
+  <!-- Color grade layers -->
+  <div class="film-grade"></div>
+  <div class="film-lut"></div>
+  <!-- Cinematic letterbox bars (2.39:1) -->
+  <div class="film-lb-top"></div>
+  <div class="film-lb-bot"></div>
+  <!-- Arabic title reveal -->
+  <div id="film-title">
+    <div class="film-title-ar">إرث</div>
+    <div class="film-title-line"></div>
+    <div class="film-title-sub">IRTH · Heritage of the Pure</div>
+    <div class="film-tagline">من قلب المدينة · تراث الطيبات</div>
+  </div>
+  <!-- White flash/cut -->
+  <div id="trans-flash"></div>
+</div>
+
+<!-- Cinematic letterbox bars -->
+<div id="letterbox-top"></div>
+<div id="letterbox-bot"></div>
+
+<!-- ── VIDEO HERO ── -->
+<div id="video-hero">
+  <video id="hero-vid" autoplay muted loop playsinline poster="{{ 'hero-poster.jpg' | asset_url }}">
+    <!-- Phase 04 dual-source: webm (VP9) first for Chrome/FF savings, H.264 mp4 for Safari/fallback.
+         Browser picks first matching <source>; falls through if a file is missing. -->
+    <source media="(max-width: 768px)" src="{{ 'hero-mobile.webm' | asset_url }}" type="video/webm">
+    <source media="(max-width: 768px)" src="{{ 'hero-mobile.mp4' | asset_url }}"  type="video/mp4">
+    <source src="{{ 'hero-desktop.webm' | asset_url }}" type="video/webm">
+    <source src="{{ 'hero-desktop.mp4' | asset_url }}"  type="video/mp4">
+    <source src="{{ 'hero.mp4' | asset_url }}" type="video/mp4"><!-- fallback until compression run -->
+  </video>
+  <div class="video-grade"></div>
+  <div class="video-vignette"></div>
+  <div class="video-fade-bottom"></div>
+</div>
+<div id="chroma"></div>
+
+<!-- ── HERO UI ── -->
+<div id="hud">
+  <div class="h-center">
+    <div class="h-eyebrow">From the Heart of Arab Heritage · من قلب الموروث</div>
+    <div class="hero-logo-seal" data-anim="seal-mark"><img src="{{ 'logo.svg' | asset_url }}" class="seal-logo-img" alt="إرث"></div>
+    <h1 class="h-title">
+      <span class="h-line-wrap"><span class="inner ar-line">من تراب المدينة</span></span>
+      <span class="h-line-wrap"><span class="inner ar-line-bold">إلى مائدتك</span></span>
+    </h1>
+    <a href="{{ routes.collections_url }}" class="h-pill nav-veil-link">ابدأ رحلتك مع الإرث ↘</a>
+  </div>
+
+  <div class="h-bottom">
+    <div class="h-bottom-group">
+      <button class="audio-pill" id="audio-pill" aria-label="Toggle ambient audio">
+        <span class="audio-bars"><span></span><span></span><span></span><span></span></span>
+        <span class="audio-label">Madinah · Ambient</span>
+      </button>
+    </div>
+    <div class="h-year">©2026</div>
+  </div>
+</div>
+
+<!-- Ambient track for audio-pill -->
+<audio id="amb-track" loop preload="none">
+  <source src="assets/ambient.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ── FLOATING PILL NAV — Phase 02 (persistent, outside #hud) ── -->
+<nav class="fnav-bar" id="fnavBar" aria-label="التنقل الرئيسي">
+  <a href="{{ routes.root_url }}" class="fnav-logo" aria-label="إرث · الصفحة الرئيسية"><img src="{{ 'logo.svg' | asset_url }}" class="fnav-logo-img" alt="إرث"></a>
+  <div class="fnav-links">
+    <a href="{{ routes.root_url }}" class="fnav-link">الرئيسية</a>
+    <a href="{{ routes.collections_url }}" class="fnav-link nav-veil-link">المجموعة</a>
+    <a href="{{ routes.root_url }}pages/about" class="fnav-link nav-veil-link">قصتنا</a>
+    <a href="{{ routes.root_url }}blogs/journal" class="fnav-link nav-veil-link">المجلة</a>
+  </div>
+  <div class="fnav-icons">
+    <button class="fnav-icon" id="fnavSearch" aria-label="بحث">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+    </button>
+    <button class="fnav-icon" id="fnavCart" aria-label="السلة">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+      <span class="fnav-cart-badge" id="cartCount">0</span>
+    </button>
+    <button class="fnav-icon fnav-burger" id="fnavBurger" aria-label="فتح القائمة" aria-expanded="false">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
+    </button>
+  </div>
+</nav>
+<div id="navSentinel" aria-hidden="true" style="position:absolute;top:80px;left:0;height:1px;width:1px;pointer-events:none"></div>
+
+<!-- Mobile nav drawer — outside #hud so opacity:0 on hud doesn't affect it -->
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="إغلاق القائمة">✕</button>
+  <a href="{{ routes.collections_url }}" class="nav-veil-link">المجموعة</a>
+  <a href="{{ routes.root_url }}pages/about" class="nav-veil-link">قصتنا</a>
+  <a href="{{ routes.root_url }}blogs/journal" class="nav-veil-link">المجلة</a>
+  <a href="#contact">تواصل</a>
+</div>
+
+<!-- ── PAGE CONTENT ── -->
+<div id="page">
+  <div class="scroll-space"></div>
+
+  <!-- ── RITUAL SCROLL SECTION (Phase 06) — box-opening frame sequence ── -->
+  <section id="ritual" data-section="00a" data-section-name="Ritual">
+    <div class="ritual-hero">
+
+      <!-- Canvas frame player -->
+      <div class="ritual-media" aria-hidden="true">
+        <canvas id="ritualFramesBg"></canvas>
+        <canvas id="ritualFrames"></canvas>
+        <img class="ritual-fallback" src="{{ 'irth_0001.jpg' | asset_url }}" alt="">
+      </div>
+
+      <!-- Overlay vignette -->
+      <div class="ritual-vignette"></div>
+
+      <!-- Scroll hint -->
+      <div class="ritual-scroll-hint">
+        <span>اسحب للأسفل</span>
+        <div class="ritual-scroll-hint-line"></div>
+      </div>
+
+      <!-- Bottom text -->
+      <div class="ritual-content">
+        <div class="ritual-copy">
+          <div class="ritual-eyebrow">The Opening Ritual · طقس الفتح</div>
+          <h2 class="ritual-heading">صندوق التمر<br>يُفتح ببطء</h2>
+          <p class="ritual-sub">كل تمرة تروي حكاية. اسحب للأسفل لتشهد لحظة الكشف.</p>
+        </div>
+        <div class="ritual-stages" aria-label="مراحل الفتح">
+          <span class="ritual-stage-index">01</span>
+          <ol>
+            <li class="is-active" data-ritual-stage="0">مُختوم</li>
+            <li data-ritual-stage="1">رفع الغطاء</li>
+            <li data-ritual-stage="2">الكشف</li>
+            <li data-ritual-stage="3">التقديم</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Products Grid -->
+  <section id="products" data-section="01" data-section-name="Collection">
+    <div class="sec-hd">
+      <div>
+        <div class="sec-ey">The Collection · المجموعة</div>
+        <h2 class="sec-title ar">منتجاتنا</h2>
+      </div>
+      <a href="{{ routes.collections_url }}" class="view-all nav-veil-link">المجموعة الكاملة ↘</a>
+    </div>
+    <div class="prod-grid">
+      <div class="prod-card" data-prod-num="01" data-prod-ar="التمور المجلّلة" data-prod-en="Premium Dates" data-prod-origin="المدينة المنورة" data-prod-img="assets/dates-cream-linen.png" data-prod-desc="Hand-selected Ajwa and Medjoul dates from Madinah's finest farms." data-prod-desc-ar="عجوة ومجول، يُقطفان في موسم النضج فقط من نخيل العوالي. كل حبة تُفرز يدويًا قبل أن تستقر في صندوقها.">
+        <div class="prod-img"><img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="تمور إرث الفاخرة"></div>
+        <div class="prod-meta">
+          <div class="prod-num">01</div>
+          <div class="prod-name">التمور المجلّلة</div>
+          <div class="prod-name-en">Premium Dates</div>
+          <div class="prod-origin">المدينة المنورة</div>
+        </div>
+        <span class="prod-expand-hint">VIEW →</span>
+      </div>
+      <div class="prod-card" data-prod-num="02" data-prod-ar="زيت الزيتون الفاخر" data-prod-en="Artisan Olive Oil" data-prod-origin="فلسطين · المغرب" data-prod-img="assets/olive-oil-premium.jpg" data-prod-desc="First cold-press extra virgin from ancient Palestinian and Moroccan groves." data-prod-desc-ar="بكر ممتاز، عصر بارد أول من بساتين أثرية في فلسطين والمغرب. غني، حار، لا إضافات.">
+        <div class="prod-img"><img src="{{ 'olive-oil-premium.jpg' | asset_url }}" alt="زيت الزيتون إرث"></div>
+        <div class="prod-meta">
+          <div class="prod-num">02</div>
+          <div class="prod-name">زيت الزيتون الفاخر</div>
+          <div class="prod-name-en">Artisan Olive Oil</div>
+          <div class="prod-origin">فلسطين · المغرب</div>
+        </div>
+        <span class="prod-expand-hint">VIEW →</span>
+      </div>
+      <div class="prod-card" data-prod-num="03" data-prod-ar="القرفة السيلانية" data-prod-en="Ceylon Cinnamon" data-prod-origin="سريلانكا المختارة" data-prod-img="assets/cinnamon-powder.jpg" data-prod-desc="True cinnamon — not cassia — from Sri Lanka. Soft, sweet, hand-rolled quills." data-prod-desc-ar="قرفة حقيقية من سريلانكا. ناعمة وحلوة، نادرة في سوق ملئ بالتقليد.">
+        <div class="prod-img"><img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="قرفة إرث"></div>
+        <div class="prod-meta">
+          <div class="prod-num">03</div>
+          <div class="prod-name">القرفة السيلانية</div>
+          <div class="prod-name-en">Ceylon Cinnamon</div>
+          <div class="prod-origin">سريلانكا المختارة</div>
+        </div>
+        <span class="prod-expand-hint">VIEW →</span>
+      </div>
+      <div class="prod-card" data-prod-num="04" data-prod-ar="عسل السدر الملكي" data-prod-en="Sidr Royal Honey" data-prod-origin="اليمن · حضرموت" data-prod-img="assets/sidr-honey.jpg" data-prod-desc="Raw, unfiltered Sidr honey from Yemen's Hadhramaut valley, harvested from wild trees." data-prod-desc-ar="عسل سدر خام، غير مُصفى، من وادي حضرموت. يجمع في موسم الذروة من أشجار برية.">
+        <div class="prod-img"><img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر إرث"></div>
+        <div class="prod-meta">
+          <div class="prod-num">04</div>
+          <div class="prod-name">عسل السدر الملكي</div>
+          <div class="prod-name-en">Sidr Royal Honey</div>
+          <div class="prod-origin">اليمن · حضرموت</div>
+        </div>
+        <span class="prod-expand-hint">VIEW →</span>
+      </div>
+      <div class="prod-card" data-prod-num="05" data-prod-ar="نعناع المدينة المجفّف" data-prod-en="Madinah Dried Mint" data-prod-origin="المدينة المنورة" data-prod-img="assets/madinah-mint.jpg" data-prod-desc="Sun-dried mint from Madinah's heritage farms — intense aroma, vibrant colour." data-prod-desc-ar="نعناع مجفف بأشعة الشمس من مزارع المدينة. أروما عالية، يناسب الشاي والطهي والوصفات التراثية.">
+        <div class="prod-img"><img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع المدينة إرث"></div>
+        <div class="prod-meta">
+          <div class="prod-num">05</div>
+          <div class="prod-name">نعناع المدينة المجفّف</div>
+          <div class="prod-name-en">Madinah Dried Mint</div>
+          <div class="prod-origin">المدينة المنورة</div>
+        </div>
+        <span class="prod-expand-hint">VIEW →</span>
+      </div>
+      <div class="prod-card" data-prod-num="06" data-prod-ar="زيت العود النقي" data-prod-en="Pure Oud Oil" data-prod-origin="كمبوديا · الهند" data-prod-img="assets/oud-oil.jpg" data-prod-desc="Pure agarwood oil from Aquilaria trees in Cambodia and India. Rare, precious." data-prod-desc-ar="زيت عود طبيعي من أشجار الأقيلارية. نادر وثمين، رائحة عرّفت الهوية العربية لقرون.">
+        <div class="prod-img"><img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود إرث"></div>
+        <div class="prod-meta">
+          <div class="prod-num">06</div>
+          <div class="prod-name">زيت العود النقي</div>
+          <div class="prod-name-en">Pure Oud Oil</div>
+          <div class="prod-origin">كمبوديا · الهند</div>
+        </div>
+        <span class="prod-expand-hint">VIEW →</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CATEGORY ACT 01 · التمر ── -->
+  <section class="cat cat-tamr" data-section="01a" data-section-name="Dates">
+    <div class="cat-bg" style="background-image:url('assets/dates-cream-linen.png')"></div>
+    <div class="cat-text">
+      <div class="cat-num">— 01 · القسم الأول</div>
+      <h2 class="cat-ar">التمر</h2>
+      <div class="cat-en">Sweetness, harvested by hand</div>
+      <div class="cat-rule"></div>
+      <p class="cat-desc">عجوة ومجول، يُقطفان في موسم النضج فقط من نخيل العوالي. كل حبة تُفرز يدويًا قبل أن تستقر في صندوقها.</p>
+      <a href="collection.html#tamr" class="cat-cta nav-veil-link">اكتشف التمر ↘</a>
+    </div>
+    <div class="cat-grid">
+      <a href="{{ routes.root_url }}products/dates" class="cat-card">
+        <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="التمور المجلّلة">
+        <div class="cat-card-meta">
+          <div class="cat-card-ar">التمور المجلّلة</div>
+          <div class="cat-card-en">Premium Dates · Madinah</div>
+        </div>
+      </a>
+      <a href="{{ routes.root_url }}products/dates" class="cat-card">
+        <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="عجوة">
+        <div class="cat-card-meta">
+          <div class="cat-card-ar">عجوة</div>
+          <div class="cat-card-en">Ajwa · Al-Awali</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── CATEGORY ACT 02 · أعشاب المدينه ── -->
+  <section class="cat cat-herbs" data-section="01b" data-section-name="Herbs">
+    <div class="cat-bg" style="background-image:url('assets/madinah-mint.jpg')"></div>
+    <div class="cat-text">
+      <div class="cat-num">— 02 · القسم الثاني</div>
+      <h2 class="cat-ar">أعشاب المدينه</h2>
+      <div class="cat-en">Dried slow. Kept close.</div>
+      <div class="cat-rule"></div>
+      <p class="cat-desc">نعناع، قرفة، إكليل جبل — أعشاب جُمعت من مزارع المدينة، مجفّفة طبيعيًا، تحمل رائحة الأرض الأصلية في كل حبّة.</p>
+      <a href="collection.html#herbs" class="cat-cta nav-veil-link">اكتشف الأعشاب ↘</a>
+    </div>
+    <div class="cat-grid">
+      <a href="{{ routes.root_url }}products/mint" class="cat-card">
+        <img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع">
+        <div class="cat-card-meta">
+          <div class="cat-card-ar">نعناع المدينة</div>
+          <div class="cat-card-en">Madinah Mint</div>
+        </div>
+      </a>
+      <a href="{{ routes.root_url }}products/cinnamon" class="cat-card">
+        <img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="قرفة">
+        <div class="cat-card-meta">
+          <div class="cat-card-ar">القرفة السيلانية</div>
+          <div class="cat-card-en">Ceylon Cinnamon</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── CATEGORY ACT 03 · روح المدينه ── -->
+  <section class="cat cat-ruh" data-section="01c" data-section-name="Spirit">
+    <div class="cat-bg" style="background-image:url('assets/oud-oil.jpg')"></div>
+    <div class="cat-text">
+      <div class="cat-num">— 03 · القسم الثالث</div>
+      <h2 class="cat-ar">روح المدينه</h2>
+      <div class="cat-en">What lingers after</div>
+      <div class="cat-rule"></div>
+      <p class="cat-desc">عسل السدر، زيت العود، زيت الزيتون — جواهر تحمل رائحة الأرض وذاكرة الأجداد، تُهدى بحبّ، تُذكر إلى الأبد.</p>
+      <a href="collection.html#ruh" class="cat-cta nav-veil-link">اكتشف الروح ↘</a>
+    </div>
+    <div class="cat-grid">
+      <a href="{{ routes.root_url }}products/oud" class="cat-card">
+        <img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود">
+        <div class="cat-card-meta">
+          <div class="cat-card-ar">زيت العود النقي</div>
+          <div class="cat-card-en">Pure Oud Oil</div>
+        </div>
+      </a>
+      <a href="{{ routes.root_url }}products/honey" class="cat-card">
+        <img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر">
+        <div class="cat-card-meta">
+          <div class="cat-card-ar">عسل السدر الملكي</div>
+          <div class="cat-card-en">Sidr Royal Honey</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Horizontal Scroll Showcase -->
+  <div id="hscroll-section" data-section="02" data-section-name="Showcase">
+    <div id="hscroll-sticky">
+      <div id="hscroll-track">
+        <!-- Intro panel -->
+        <div class="hs-intro-panel">
+          <div class="hs-intro-ey">02 — Showcase</div>
+          <h2 class="hs-intro-title">من المصدر<br>إلى مائدتك</h2>
+          <p class="hs-intro-sub">كل منتج رحلة — من البيئة التي نشأ فيها إلى العبوة التي تحمله إليك.</p>
+          <div class="hs-drag-hint">
+            <div class="hs-drag-hint-line"></div>
+            <span>DRAG →</span>
+          </div>
+        </div>
+        <!-- Panels filled by JS from prod-cards data -->
+        <div class="hs-panel" id="hs-p1">
+          <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="التمور المجلّلة">
+          <div class="hs-caption">
+            <div class="hs-caption-ar">التمور المجلّلة</div>
+            <div class="hs-caption-en">Premium Dates · Madinah</div>
+          </div>
+        </div>
+        <div class="hs-panel" id="hs-p2">
+          <img src="{{ 'olive-oil-premium.jpg' | asset_url }}" alt="زيت الزيتون">
+          <div class="hs-caption">
+            <div class="hs-caption-ar">زيت الزيتون الفاخر</div>
+            <div class="hs-caption-en">Artisan Olive Oil · Palestine</div>
+          </div>
+        </div>
+        <div class="hs-panel" id="hs-p3">
+          <img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر">
+          <div class="hs-caption">
+            <div class="hs-caption-ar">عسل السدر الملكي</div>
+            <div class="hs-caption-en">Sidr Honey · Hadhramaut</div>
+          </div>
+        </div>
+        <div class="hs-panel" id="hs-p4">
+          <img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="القرفة السيلانية">
+          <div class="hs-caption">
+            <div class="hs-caption-ar">القرفة السيلانية</div>
+            <div class="hs-caption-en">Ceylon Cinnamon · Sri Lanka</div>
+          </div>
+        </div>
+        <div class="hs-panel" id="hs-p5">
+          <img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود">
+          <div class="hs-caption">
+            <div class="hs-caption-ar">زيت العود النقي</div>
+            <div class="hs-caption-en">Pure Oud Oil · Cambodia</div>
+          </div>
+        </div>
+        <div class="hs-panel" id="hs-p6">
+          <img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع المدينة">
+          <div class="hs-caption">
+            <div class="hs-caption-ar">نعناع المدينة</div>
+            <div class="hs-caption-en">Dried Mint · Madinah</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marquee -->
+  <div class="marquee-strip">
+    <div class="marquee-inner" id="marquee-inner">
+      <span>النقاء</span><span class="dot">✦</span>
+      <span>PURITY</span><span class="dot">✦</span>
+      <span>التراث</span><span class="dot">✦</span>
+      <span>HERITAGE</span><span class="dot">✦</span>
+      <span>الأثر</span><span class="dot">✦</span>
+      <span>IMPACT</span><span class="dot">✦</span>
+      <span>إرث</span><span class="dot">✦</span>
+      <span>IRTH</span><span class="dot">✦</span>
+      <span>المدينة المنورة</span><span class="dot">✦</span>
+      <span>MADINAH</span><span class="dot">✦</span>
+      <span>النقاء</span><span class="dot">✦</span>
+      <span>PURITY</span><span class="dot">✦</span>
+      <span>التراث</span><span class="dot">✦</span>
+      <span>HERITAGE</span><span class="dot">✦</span>
+      <span>الأثر</span><span class="dot">✦</span>
+      <span>IMPACT</span><span class="dot">✦</span>
+      <span>إرث</span><span class="dot">✦</span>
+      <span>IRTH</span><span class="dot">✦</span>
+      <span>المدينة المنورة</span><span class="dot">✦</span>
+      <span>MADINAH</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <!-- Brand Story -->
+  <section id="story" data-section="03" data-section-name="Story">
+    <div class="story-img-side">
+      <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="إرث — قصة البراند">
+      <div class="story-img-overlay"></div>
+    </div>
+    <div class="story-text-side">
+      <div class="story-ey">03 — Our Story</div>
+      <h2 class="story-title">
+        ولدنا من رحم<br>
+        <em>التراث</em>
+      </h2>
+      <p class="story-body-ar">
+        إرث ليس مجرد علامة تجارية — إنه التزام بإعادة ما أعطته الأرض بكرم وأمانة. نبحث عن أجود المكوّنات في أصولها الحقيقية: تمور المدينة المنورة، عسل حضرموت، زيتون فلسطين، وعود آسيا — لنقدّمها في صورة تليق بما تستحق.
+      </p>
+      <p class="story-body">We chose patience over speed.</p>
+      <p class="story-body">Source over shortcuts.</p>
+      <p class="story-body">That is the only way heritage survives.</p>
+      <div class="story-stats">
+        <div class="stat">
+          <div class="stat-num" data-count="6">0</div>
+          <div class="stat-label">منتج فاخر</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-count="12">0</div>
+          <div class="stat-label">دولة مصدر</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-count="3">0</div>
+          <div class="stat-label">سنوات خبرة</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section id="values" data-section="04" data-section-name="Values">
+    <div class="sec-hd">
+      <div>
+        <div class="sec-ey">ما نؤمن به · Our Pillars</div>
+        <h2 class="sec-title ar">قيمنا</h2>
+      </div>
+    </div>
+    <div class="vals-grid">
+      <div class="val">
+        <div class="val-num">01</div>
+        <div class="val-name-ar">المصدر</div>
+        <div class="val-name">Pure<br><em>Origins</em></div>
+        <div class="val-desc">Every ingredient selected at its purest form — no additives, no compromise.</div>
+        <div class="val-desc-ar">كل شحنة نزورها بأنفسنا — من البستان إلى الصندوق</div>
+      </div>
+      <div class="val">
+        <div class="val-num">02</div>
+        <div class="val-name-ar">الجودة</div>
+        <div class="val-name">Deep<br><em>Heritage</em></div>
+        <div class="val-desc">Rooted in centuries of Arab culinary tradition — each product carries memory.</div>
+        <div class="val-desc-ar">لا نقبل ما لا نقدمه على مائدتنا</div>
+      </div>
+      <div class="val">
+        <div class="val-num">03</div>
+        <div class="val-name-ar">الاستمرارية</div>
+        <div class="val-name">Lasting<br><em>Impact</em></div>
+        <div class="val-desc">Products that leave an impression on your senses, your table, your lineage.</div>
+        <div class="val-desc-ar">نفس العائلات، نفس الأرض، كل موسم</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gift Customization -->
+  <section id="gifts" data-section="04b" data-section-name="Gifts">
+    <div class="gifts-eyebrow">Gift Customization · تخصيص الهدية</div>
+    <h2 class="gifts-heading">هدية تليق<br><span style="color:var(--gold)">بكل مناسبة</span></h2>
+    <p class="gifts-sub">اختر الباقة المناسبة، خصّص رسالتك، واجعل هديتك لا تُنسى.</p>
+
+    <div class="gifts-tabs" role="tablist">
+      <button class="gift-tab active" data-occasion="ramadan">رمضان الكريم</button>
+      <button class="gift-tab" data-occasion="eid">الأعياد والمناسبات</button>
+      <button class="gift-tab" data-occasion="wedding">الأعراس والخطوبة</button>
+      <button class="gift-tab" data-occasion="corporate">الشركات والأعمال</button>
+    </div>
+
+    <div class="gifts-grid">
+      <div class="gift-card selected" data-pkg="classic">
+        <div class="gift-card-check"></div>
+        <div class="gift-card-icon">◈</div>
+        <div class="gift-card-name">الكلاسيك</div>
+        <div class="gift-card-name-en">Classic Heritage</div>
+        <div class="gift-card-desc">صندوق خشبي مُبطّن بالمخمل مع ختم شمعي يحمل شعار إرث. مثالي للإهداء الرسمي.</div>
+      </div>
+      <div class="gift-card" data-pkg="signature">
+        <div class="gift-card-check"></div>
+        <div class="gift-card-icon">◇</div>
+        <div class="gift-card-name">السيجنتشر</div>
+        <div class="gift-card-name-en">Signature Edition</div>
+        <div class="gift-card-desc">علبة مذهّبة مع طباعة اسم المُهدى إليه. لمسة شخصية لا مثيل لها.</div>
+      </div>
+      <div class="gift-card" data-pkg="royal">
+        <div class="gift-card-check"></div>
+        <div class="gift-card-icon">⬡</div>
+        <div class="gift-card-name">الرويال</div>
+        <div class="gift-card-name-en">Royal Collection</div>
+        <div class="gift-card-desc">طقم متكامل في صندوق فاخر مع ورد مجفّف وبطاقة بالخط العربي اليدوي.</div>
+      </div>
+    </div>
+
+    <label class="gifts-message-label" for="giftMessage">رسالتك الخاصة · Personal Message</label>
+    <textarea class="gifts-message" id="giftMessage" rows="3" placeholder="اكتب هنا رسالتك... مثال: بمناسبة رمضان الكريم، أهدي إليك أجود تمور المدينة."></textarea>
+
+    <a href="mailto:hello@irthmadina.com" class="gifts-cta">ابدأ تخصيص هديتك ↘</a>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" data-section="05" data-section-name="Contact">
+    <span class="gold-rule"></span>
+    <h2 class="contact-title">
+      <span class="ar">تواصل</span><br><span class="it">with us</span>
+    </h2>
+    <a href="mailto:hello@irthmadina.com" class="contact-email">hello@irthmadina.com</a>
+    <a href="mailto:hello@irthmadina.com" class="contact-btn">
+      <span>ابدأ شراكة</span><span>↘</span>
+    </a>
+  </section>
+
+  <footer>
+    <a href="{{ routes.root_url }}" class="f-logo"><img src="{{ 'logo.svg' | asset_url }}" alt="إرث IRTH"></a>
+    <span class="f-copy">© ٢٠٢٦ إرث IRTH · جميع الحقوق محفوظة</span>
+    <ul class="f-links">
+      <li><a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.19 8.19 0 0 0 4.79 1.53V6.77a4.84 4.84 0 0 1-1.03-.08z"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="X / Twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </a></li>
+    </ul>
+  </footer>
+</div>
+
+<!-- ── PRODUCT OVERLAY ── -->
+<div id="prod-overlay" aria-hidden="true" role="dialog">
+  <div class="ov-img-side">
+    <img src="" alt="" id="ov-img">
+  </div>
+  <div class="ov-info-side">
+    <span class="ov-num" id="ov-num"></span>
+    <h2 class="ov-name-ar" id="ov-name-ar"></h2>
+    <p class="ov-name-en" id="ov-name-en"></p>
+    <div class="ov-gold-line"></div>
+    <p class="ov-desc" id="ov-desc"></p>
+    <p class="ov-desc-ar" id="ov-desc-ar"></p>
+    <span class="ov-origin" id="ov-origin"></span>
+    <a href="mailto:hello@irthmadina.com" class="ov-order nav-veil-link">اطلب الآن ↘</a>
+  </div>
+  <button class="ov-close" id="ov-close" aria-label="إغلاق">✕</button>
+</div>
+
+{% schema %}
+{
+  "name": "Home Cinematic",
+  "tag": "div",
+  "class": "home-cinematic-section"
+}
+{% endschema %}
