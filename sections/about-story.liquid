@@ -3,12 +3,12 @@
 <!-- Hero -->
 <div class="about-hero">
   <div class="about-hero-content">
-    <div class="about-hero-eyebrow">— Our Story · قصتنا</div>
+    <div class="about-hero-eyebrow">— قصتنا · Our Story</div>
     <h1 class="about-hero-title">
-      {{ section.settings.hero_title | default: 'Heritage of the Pure' }}
+      {{ section.settings.hero_title | default: 'Atmosphere Before Commerce' }}
     </h1>
     <p class="about-hero-sub" lang="ar" dir="rtl">
-      {{ section.settings.hero_sub | default: 'إرث ليس مجرد علامة تجارية — إنه التزام بإعادة ما أعطته الأرض بكرم وأمانة.' }}
+      {{ section.settings.hero_sub | default: 'إرث ليست مجرد علامة تجارية. إنها عالم مبني على السكينة، صُمم لمن يبحث عن معنى يتجاوز المادي.' }}
     </p>
   </div>
 </div>
@@ -17,28 +17,28 @@
 <div class="about-story-section">
   <div class="about-story-img">
     {%- if section.settings.story_image != blank -%}
-      <img src="{{ section.settings.story_image | image_url: width: 1200 }}" alt="" width="1200" height="1500">
+      <img src="{{ section.settings.story_image | image_url: width: 1200 }}" alt="IRTH — الإرث" width="1200" height="1500">
     {%- else -%}
-      <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="" width="800" height="1000">
+      <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="IRTH dates" width="800" height="1000">
     {%- endif -%}
     <div class="about-story-img-overlay"></div>
     <div class="about-story-img-text" lang="ar" dir="rtl">
-      {{ section.settings.img_quote | default: '"نبحث عن الأصل في كل حبّة، وعن الصدق في كل مصدر"' }}
+      {{ section.settings.img_quote | default: '"كل تفصيلة نلمسها صُممت لتبقى — في الجودة، في الذاكرة، وفي الإحساس."' }}
     </div>
   </div>
   <div class="about-story-body">
-    <div class="about-story-eyebrow">01 — Our Origin · أصلنا</div>
+    <div class="about-story-eyebrow">01 — جوهرنا · Our Essence</div>
     <h2 class="about-story-heading" lang="ar" dir="rtl">
-      {{ section.settings.story_heading | default: 'ولدنا من رحم <em>التراث</em>' }}
+      {{ section.settings.story_heading | default: 'عالم من المعاني، <em>صُمم ليُعاش</em>' }}
     </h2>
     <p class="about-story-text" lang="ar" dir="rtl">
-      {{ section.settings.story_text_1 | default: 'إرث بدأ من سؤال بسيط: لماذا يصعب إيجاد منتجات غذائية فاخرة بأصول حقيقية موثّقة؟ في عالم ملئ بالتقليد والإضافات، قررنا أن نكون مختلفين — أن نبحث عن الأجود في مصادره الأصيلة، ونقدّمه بالقدر الذي يستحقه.' }}
+      {{ section.settings.story_text_1 | default: 'نصنع تجارب تُبطّئ الحياة، وتُكرّم التراث، وترقى باللحظات اليومية إلى طقس. من أول تفاعل إلى آخر ذكرى، كل تفصيل له معنى.' }}
     </p>
     <blockquote class="about-story-quote">
-      {{ section.settings.story_quote | default: 'نختار الصبر على السرعة، والمصدر على الاختصار.' }}
+      {{ section.settings.story_quote | default: 'لا نتبع الترندات. نحن نبني حضوراً خالداً.' }}
     </blockquote>
     <p class="about-story-text" lang="ar" dir="rtl">
-      {{ section.settings.story_text_2 | default: 'من تمور العوالي في المدينة المنورة، إلى عسل حضرموت، وزيتون فلسطين، وعود آسيا — كل منتج في إرث يمثّل رحلة بحث عن النقاء في أصله الحقيقي.' }}
+      {{ section.settings.story_text_2 | default: 'نؤمن أن الفخامة الحقيقية ليست صاخبة، بل خالدة. تعيش في التفاصيل التي لا أحد يلحظها، لكن الجميع يشعر بها. من تمور المدينة المنورة العريقة، نحمل إليك إرثاً يستحق أن يبقى.' }}
     </p>
   </div>
 </div>
@@ -46,88 +46,88 @@
 <!-- Numbers -->
 <div class="about-numbers">
   <div class="about-num-item">
-    <div class="about-num-val">{{ section.settings.num1_val | default: '12' }}<span class="about-num-suffix">+</span></div>
+    <div class="about-num-val">{{ section.settings.num1_val | default: '29' }}<span class="about-num-suffix">+</span></div>
     <div class="about-num-ar">{{ section.settings.num1_ar | default: 'منتج فاخر' }}</div>
     <div class="about-num-en">{{ section.settings.num1_en | default: 'Premium Products' }}</div>
   </div>
   <div class="about-num-item">
-    <div class="about-num-val">{{ section.settings.num2_val | default: '8' }}</div>
-    <div class="about-num-ar">{{ section.settings.num2_ar | default: 'دول مصدر' }}</div>
-    <div class="about-num-en">{{ section.settings.num2_en | default: 'Countries of Origin' }}</div>
+    <div class="about-num-val">{{ section.settings.num2_val | default: '4' }}</div>
+    <div class="about-num-ar">{{ section.settings.num2_ar | default: 'أسواق دولية' }}</div>
+    <div class="about-num-en">{{ section.settings.num2_en | default: 'Global Markets' }}</div>
   </div>
   <div class="about-num-item">
     <div class="about-num-val">{{ section.settings.num3_val | default: '100' }}<span class="about-num-suffix">%</span></div>
-    <div class="about-num-ar">{{ section.settings.num3_ar | default: 'طبيعي' }}</div>
+    <div class="about-num-ar">{{ section.settings.num3_ar | default: 'طبيعي نقي' }}</div>
     <div class="about-num-en">{{ section.settings.num3_en | default: 'Natural & Pure' }}</div>
   </div>
   <div class="about-num-item">
-    <div class="about-num-val">{{ section.settings.num4_val | default: '3' }}</div>
-    <div class="about-num-ar">{{ section.settings.num4_ar | default: 'أسواق دولية' }}</div>
-    <div class="about-num-en">{{ section.settings.num4_en | default: 'Global Markets' }}</div>
+    <div class="about-num-val">{{ section.settings.num4_val | default: '١' }}</div>
+    <div class="about-num-ar">{{ section.settings.num4_ar | default: 'مصدر — المدينة المنورة' }}</div>
+    <div class="about-num-en">{{ section.settings.num4_en | default: 'Origin: Madinah Al Munawwarah' }}</div>
   </div>
 </div>
 
 <!-- Values -->
 <div class="about-values">
-  <div class="about-values-eyebrow">02 — Our Pillars · قيمنا</div>
+  <div class="about-values-eyebrow">02 — وعودنا · Our Promise</div>
   <h2 class="about-values-title" lang="ar" dir="rtl">{{ section.settings.values_title | default: 'ما نؤمن به' }}</h2>
   <div class="about-vals-grid">
     <div class="about-val">
       <span class="about-val-num">01</span>
-      <div class="about-val-ar">المصدر</div>
-      <div class="about-val-en">Pure Origins</div>
-      <div class="about-val-desc">Every ingredient selected at its source — no additives, no compromise. We visit every farm ourselves.</div>
+      <div class="about-val-ar">الجودة الخالدة</div>
+      <div class="about-val-en">Timeless Quality</div>
+      <div class="about-val-desc">Built to live. Designed to be found for generations. Every detail chosen not to impress, but to remain.</div>
     </div>
     <div class="about-val">
       <span class="about-val-num">02</span>
-      <div class="about-val-ar">الجودة</div>
-      <div class="about-val-en">Deep Heritage</div>
-      <div class="about-val-desc">Rooted in centuries of Arab culinary tradition — each product carries memory. We don't sell what we wouldn't serve at our own table.</div>
+      <div class="about-val-ar">التصميم الهادف</div>
+      <div class="about-val-en">Meaningful Design</div>
+      <div class="about-val-desc">Every form follows purpose and emotion. We design not to impress, but to create presence — quiet, architectural, timeless.</div>
     </div>
     <div class="about-val">
       <span class="about-val-num">03</span>
-      <div class="about-val-ar">الاستمرارية</div>
-      <div class="about-val-en">Lasting Impact</div>
-      <div class="about-val-desc">The same families, the same land, every season. We build relationships with growers, not just transactions.</div>
+      <div class="about-val-ar">الاحترام الثقافي</div>
+      <div class="about-val-en">Cultural Respect</div>
+      <div class="about-val-desc">Our work is a bridge between heritage and contemporary life. We honor what was by shaping what will be.</div>
     </div>
   </div>
 </div>
 
 <!-- Process steps -->
 <div class="about-origin">
-  <h2 class="about-origin-title">From Source to <em>Your Table</em></h2>
+  <h2 class="about-origin-title">From <em>Madinah</em> to You</h2>
   <div class="about-steps">
     <div class="about-step">
       <div class="about-step-num">01</div>
-      <div class="about-step-ar">الاختيار</div>
-      <div class="about-step-en">Source Selection</div>
-      <div class="about-step-desc">We travel to origin countries to select only the finest harvests — no import brokers, direct from growers.</div>
+      <div class="about-step-ar">الاكتشاف</div>
+      <div class="about-step-en">Discover</div>
+      <div class="about-step-desc">We seek origins worthy of the name — the finest Ajwa and Medjool dates from the blessed land of Al Madinah.</div>
     </div>
     <div class="about-step">
       <div class="about-step-num">02</div>
-      <div class="about-step-ar">الفرز</div>
-      <div class="about-step-en">Hand Sorting</div>
-      <div class="about-step-desc">Every batch is hand-sorted. Anything that doesn't meet our standard doesn't carry the IRTH name.</div>
+      <div class="about-step-ar">الانتقاء</div>
+      <div class="about-step-en">Select</div>
+      <div class="about-step-desc">Every piece hand-selected. What doesn't meet our standard doesn't carry the IRTH name — no exceptions.</div>
     </div>
     <div class="about-step">
       <div class="about-step-num">03</div>
       <div class="about-step-ar">التعبئة</div>
-      <div class="about-step-en">Artisan Packaging</div>
-      <div class="about-step-desc">Packed in boxes that reflect the weight of what's inside — designed to be gifted, remembered, kept.</div>
+      <div class="about-step-en">Package</div>
+      <div class="about-step-desc">Packed with restraint. Designed to be kept. Our packaging is an experience — the architecture of quiet luxury.</div>
     </div>
     <div class="about-step">
       <div class="about-step-num">04</div>
       <div class="about-step-ar">التسليم</div>
-      <div class="about-step-en">Delivered to You</div>
-      <div class="about-step-desc">Shipped across the Gulf, Egypt, Europe and Africa — with care that the journey doesn't diminish the product.</div>
+      <div class="about-step-en">Deliver</div>
+      <div class="about-step-desc">Across the Gulf, Egypt, Europe and Africa — carried with the same intention it was created with.</div>
     </div>
   </div>
 </div>
 
 <!-- CTA -->
 <div class="about-cta">
-  <h2 class="about-cta-title" lang="ar" dir="rtl">ابدأ رحلتك مع الإرث</h2>
-  <p class="about-cta-sub">Discover the collection — where every product carries a story.</p>
+  <h2 class="about-cta-title" lang="ar" dir="rtl">الإحساس قبل التجارة</h2>
+  <p class="about-cta-sub">Discover the collection. Every product carries a story worth keeping.</p>
   <a href="{{ routes.collections_url }}" class="about-cta-btn nav-veil-link">اكتشف المجموعة ↘</a>
 </div>
 
@@ -138,8 +138,8 @@
   "class": "section-about-story",
   "settings": [
     { "type": "header", "content": "Hero" },
-    { "type": "text", "id": "hero_title", "label": "Hero title (English)", "default": "Heritage of the Pure" },
-    { "type": "textarea", "id": "hero_sub", "label": "Hero subtitle (Arabic)", "default": "إرث ليس مجرد علامة تجارية — إنه التزام بإعادة ما أعطته الأرض بكرم وأمانة." },
+    { "type": "text", "id": "hero_title", "label": "Hero title (English)", "default": "Atmosphere Before Commerce" },
+    { "type": "textarea", "id": "hero_sub", "label": "Hero subtitle (Arabic)", "default": "إرث ليست مجرد علامة تجارية. إنها عالم مبني على السكينة، صُمم لمن يبحث عن معنى يتجاوز المادي." },
     { "type": "header", "content": "Story Section" },
     { "type": "image_picker", "id": "story_image", "label": "Story image" },
     { "type": "textarea", "id": "img_quote", "label": "Image quote (Arabic)" },
