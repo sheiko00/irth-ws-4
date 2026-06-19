@@ -1,29 +1,81 @@
 {% paginate blog.articles by 12 %}
-<div style="max-width:1400px;margin:0 auto;padding:140px 48px 120px;background:var(--sand,#E9E2D5);">
-  <div style="font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:#C9A86A;margin-bottom:28px;direction:ltr;">— Journal · المجلة</div>
-  <h1 style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(72px,11vw,140px);font-weight:300;color:#0E2B22;line-height:.95;margin-bottom:60px;direction:ltr;">Stories of <em>origin</em></h1>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:40px;">
-    {% for article in blog.articles %}
-    <article style="background:#F0E8DC;border:1px solid rgba(201,168,106,.15);overflow:hidden;">
-      {% if article.image %}
-      <a href="{{ article.url }}">
-        <div style="aspect-ratio:4/3;overflow:hidden;">
-          <img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.image.alt | escape }}" style="width:100%;height:100%;object-fit:cover;">
-        </div>
-      </a>
-      {% endif %}
-      <div style="padding:28px;">
-        <div style="font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#C9A86A;margin-bottom:14px;direction:ltr;">{{ article.published_at | date: '%B %d, %Y' }}</div>
-        <h2 style="font-family:'Noto Naskh Arabic',serif;font-size:22px;font-weight:500;color:#0E2B22;margin-bottom:12px;"><a href="{{ article.url }}" style="color:inherit;text-decoration:none;">{{ article.title }}</a></h2>
-        <p style="font-family:'Cormorant Garamond',serif;font-size:15px;opacity:.65;line-height:1.65;direction:ltr;">{{ article.excerpt | strip_html | truncate: 120 }}</p>
-      </div>
-    </article>
-    {% endfor %}
+<div class="journal-wrap">
+
+  <!-- Hero -->
+  <div class="journal-hero">
+    <div class="journal-eyebrow">— Journal · المجلة</div>
+    <h1 class="journal-title">Stories of <em>origin</em></h1>
+    <p class="journal-desc">حكايات من قلب الأرض — عن المصدر، والموسم، والأيدي التي تعمل بصدق.</p>
   </div>
 
-  {% if paginate.pages > 1 %}
-  <div style="text-align:center;margin-top:60px;">{{ paginate | default_pagination }}</div>
-  {% endif %}
+  {%- if blog.articles_count == 0 -%}
+    <div class="journal-empty">لا توجد مقالات حتى الآن · No articles yet</div>
+
+  {%- else -%}
+
+    {%- comment -%} Featured first article — full-width split layout {%- endcomment -%}
+    {%- assign featured = blog.articles.first -%}
+    <a href="{{ featured.url }}" class="journal-featured" style="text-decoration:none;">
+      <div class="jf-img-wrap">
+        {%- if featured.image -%}
+          <img src="{{ featured.image | image_url: width: 1200 }}" alt="{{ featured.image.alt | escape }}"
+               class="jf-img" width="1200" height="{{ 1200 | divided_by: featured.image.aspect_ratio | round }}" loading="eager">
+        {%- else -%}
+          <div style="width:100%;height:100%;background:var(--madinah);display:flex;align-items:center;justify-content:center;">
+            <img src="{{ 'logo.svg' | asset_url }}" alt="" width="80" height="80" style="opacity:.18;filter:brightness(0) invert(1);">
+          </div>
+        {%- endif -%}
+        <span class="jf-tag">مميز · Featured</span>
+      </div>
+      <div class="jf-content">
+        <div class="jf-date">{{ featured.published_at | date: '%B %d, %Y' }}</div>
+        <h2 class="jf-title">{{ featured.title }}</h2>
+        {%- if featured.excerpt != blank -%}
+          <p class="jf-excerpt">{{ featured.excerpt | strip_html | truncate: 180 }}</p>
+        {%- endif -%}
+        <span class="jf-cta">اقرأ المقال <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+
+    {%- comment -%} Remaining articles grid {%- endcomment -%}
+    {%- if blog.articles.size > 1 -%}
+    <div class="journal-grid">
+      {%- for article in blog.articles offset: 1 -%}
+      <article class="ja-card">
+        <a href="{{ article.url }}" class="ja-card-link" style="text-decoration:none;color:inherit;display:block;">
+          <div class="ja-img-wrap">
+            {%- if article.image -%}
+              <img src="{{ article.image | image_url: width: 720 }}" alt="{{ article.image.alt | escape }}"
+                   class="ja-img" width="720" height="{{ 720 | divided_by: article.image.aspect_ratio | round }}" loading="lazy">
+            {%- else -%}
+              <div class="ja-no-img">
+                <img src="{{ 'logo.svg' | asset_url }}" alt="" class="ja-no-img-logo" width="52" height="52">
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="ja-body">
+            <div class="ja-date">{{ article.published_at | date: '%B %d, %Y' }}</div>
+            <h2 class="ja-title">{{ article.title }}</h2>
+            {%- if article.excerpt != blank -%}
+              <p class="ja-excerpt">{{ article.excerpt | strip_html | truncate: 140 }}</p>
+            {%- endif -%}
+          </div>
+        </a>
+        <div class="ja-footer">
+          <a href="{{ article.url }}" class="ja-read" style="text-decoration:none;">اقرأ المقال →</a>
+        </div>
+      </article>
+      {%- endfor -%}
+    </div>
+    {%- endif -%}
+
+  {%- endif -%}
+
+  {%- if paginate.pages > 1 -%}
+    <div class="journal-pagination">{{ paginate | default_pagination }}</div>
+  {%- endif -%}
+
 </div>
+
 {% endpaginate %}
