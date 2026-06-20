@@ -235,6 +235,7 @@
           <div class="prod-name">التمور المجلّلة</div>
           <div class="prod-name-en">Premium Dates</div>
           <div class="prod-origin">المدينة المنورة</div>
+          {%- assign _ph = all_products['premium-dates'] -%}{%- if _ph and _ph.price_min > 0 -%}<div class="prod-price">{{ _ph.price_min | money_without_trailing_zeros }}</div>{%- endif -%}
         </div>
         <span class="prod-expand-hint">VIEW →</span>
       </div>
@@ -245,6 +246,7 @@
           <div class="prod-name">زيت الزيتون الفاخر</div>
           <div class="prod-name-en">Artisan Olive Oil</div>
           <div class="prod-origin">فلسطين · المغرب</div>
+          {%- assign _ph = all_products['artisan-olive-oil'] -%}{%- if _ph and _ph.price_min > 0 -%}<div class="prod-price">{{ _ph.price_min | money_without_trailing_zeros }}</div>{%- endif -%}
         </div>
         <span class="prod-expand-hint">VIEW →</span>
       </div>
@@ -255,6 +257,7 @@
           <div class="prod-name">القرفة السيلانية</div>
           <div class="prod-name-en">Ceylon Cinnamon</div>
           <div class="prod-origin">سريلانكا المختارة</div>
+          {%- assign _ph = all_products['ceylon-cinnamon'] -%}{%- if _ph and _ph.price_min > 0 -%}<div class="prod-price">{{ _ph.price_min | money_without_trailing_zeros }}</div>{%- endif -%}
         </div>
         <span class="prod-expand-hint">VIEW →</span>
       </div>
@@ -265,6 +268,7 @@
           <div class="prod-name">عسل السدر الملكي</div>
           <div class="prod-name-en">Sidr Royal Honey</div>
           <div class="prod-origin">اليمن · حضرموت</div>
+          {%- assign _ph = all_products['sidr-royal-honey'] -%}{%- if _ph and _ph.price_min > 0 -%}<div class="prod-price">{{ _ph.price_min | money_without_trailing_zeros }}</div>{%- endif -%}
         </div>
         <span class="prod-expand-hint">VIEW →</span>
       </div>
@@ -275,6 +279,7 @@
           <div class="prod-name">نعناع المدينة المجفّف</div>
           <div class="prod-name-en">Madinah Dried Mint</div>
           <div class="prod-origin">المدينة المنورة</div>
+          {%- assign _ph = all_products['madinah-dried-mint'] -%}{%- if _ph and _ph.price_min > 0 -%}<div class="prod-price">{{ _ph.price_min | money_without_trailing_zeros }}</div>{%- endif -%}
         </div>
         <span class="prod-expand-hint">VIEW →</span>
       </div>
@@ -285,6 +290,7 @@
           <div class="prod-name">زيت العود النقي</div>
           <div class="prod-name-en">Pure Oud Oil</div>
           <div class="prod-origin">كمبوديا · الهند</div>
+          {%- assign _ph = all_products['pure-oud-oil'] -%}{%- if _ph and _ph.price_min > 0 -%}<div class="prod-price">{{ _ph.price_min | money_without_trailing_zeros }}</div>{%- endif -%}
         </div>
         <span class="prod-expand-hint">VIEW →</span>
       </div>
@@ -617,7 +623,7 @@
 <!-- ── PRODUCT OVERLAY ── -->
 <div id="prod-overlay" aria-hidden="true" role="dialog">
   <div class="ov-img-side">
-    <img src="" alt="" id="ov-img">
+    <img src="" alt="" id="ov-img" width="800" height="800">
   </div>
   <div class="ov-info-side">
     <span class="ov-num" id="ov-num"></span>
