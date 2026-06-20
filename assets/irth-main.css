@@ -2127,3 +2127,332 @@
   .fade-up { animation-duration: .25s !important; }
   .will-change-transform { will-change: auto !important; }
 }
+
+/* ════════════════════════════════════════════════════════
+   MOBILE DEDICATED LAYER
+   Two-version strategy:
+   Desktop → full cinematic, scroll effects, horizontal scroll
+   Mobile  → all content visible, vertical flow, touch-first
+════════════════════════════════════════════════════════ */
+
+/* ── Ambient toggle: mobile position ── */
+@media (max-width: 600px) {
+  #ambient-toggle {
+    bottom: 20px; left: 16px;
+    width: 44px; height: 44px;
+  }
+}
+
+/* ══════════════════════════════════════════
+   TABLET + PHONE ≤ 768px
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Horizontal scroll → vertical stack ──
+     JS sets transform: translateX() inline on #hscroll-track;
+     !important overrides it on mobile */
+  #hscroll-section  { height: auto !important; }
+  #hscroll-sticky   {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  #hscroll-track {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+  .hs-panel {
+    width: 100% !important;
+    height: 72vw;
+    max-height: 440px;
+    flex-shrink: unset;
+  }
+  .hs-intro-panel {
+    width: 100% !important;
+    height: auto !important;
+    padding: 52px 28px;
+  }
+  .hs-drag-hint { display: none; }
+
+  /* ── Blog / Journal pages ── */
+  .journal-featured { min-height: auto; }
+  .jf-content { padding: 40px 32px; }
+  .journal-hero { padding: 110px 28px 60px; }
+
+  /* ── About page ── */
+  .about-story-body { padding: 56px 32px; }
+  .about-hero { padding: 120px 28px 72px; }
+
+  /* ── Collection hero ── */
+  .col-hero-content { padding: 0 28px; }
+
+  /* ── Collection grid page ── */
+  .products-section { padding: 68px 28px 96px; }
+  .cg-filters { gap: 6px; }
+  .cg-filter { padding: 8px 18px; font-size: 9.5px; min-height: 44px; }
+
+  /* ── Audio pill: hide label, keep bars ── */
+  .audio-pill { padding: 8px 14px 8px 10px; font-size: 11px; }
+  .audio-label { display: none; }
+
+  /* ── Letterbox: reduce height on mobile ── */
+  #letterbox-top, #letterbox-bot { height: 4vh; }
+
+  /* ── Product overlay: taller image row ── */
+  #prod-overlay { grid-template-rows: 50vw 1fr; }
+  .ov-close { top: calc(50vw + 12px); left: 16px; }
+
+  /* ── Gifts grid ── */
+  .gifts-heading { font-size: clamp(1.9rem, 7.5vw, 3.2rem); }
+  .gifts-sub { font-size: 0.9rem; margin-bottom: 36px; }
+  .gifts-tabs { flex-wrap: wrap; gap: 8px; }
+
+  /* ── Contact CTA ── */
+  .contact-btn { min-height: 52px; }
+
+  /* ── About numbers 2-col on tablet ── */
+  .about-num-item { padding: 40px 20px; }
+}
+
+/* ══════════════════════════════════════════
+   PHONE ≤ 480px — full phone layout
+══════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+  /* ── Reduce scroll-space: shorter zoom animation ── */
+  .scroll-space { height: 160vh; }
+
+  /* ── Letterbox: hide on phone (too obtrusive) ── */
+  #letterbox-top, #letterbox-bot { display: none; }
+
+  /* ── Floating nav ── */
+  .fnav-bar {
+    top: 10px;
+    padding: 6px 8px;
+    gap: 6px;
+    max-width: calc(100vw - 20px);
+  }
+  .fnav-logo  { width: 34px; height: 34px; font-size: 14px; }
+  .fnav-icons { gap: 2px; }
+  .fnav-icon  { width: 36px; height: 36px; }
+
+  /* ── Entry screen ── */
+  #entry { padding: 20px 20px; gap: 9px; }
+  .eyes  { gap: 12px; margin-bottom: 4px; }
+  .eye   { width: 50px; height: 30px; }
+  .e-logo-img { height: 56px; }
+  .e-desc-ar  { font-size: 13px; max-width: 260px; }
+  .e-desc     { font-size: 10px; max-width: 240px; }
+  .e-btn      { min-height: 48px; padding: 12px 22px; font-size: 14px; }
+
+  /* ── Hero: show eyebrow at smaller size ── */
+  .h-eyebrow {
+    display: block !important;
+    font-size: 8px;
+    letter-spacing: .18em;
+    margin-bottom: 12px;
+  }
+
+  /* ── Hero bottom pill group: stack on phone ── */
+  .h-bottom-group { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .h-cta   { min-height: 48px; padding: 11px 18px; font-size: 13px; }
+  .h-cta-arrow { display: none; }
+  .audio-pill  { padding: 7px 12px; }
+  .origin-pill { padding: 8px 14px; }
+  .origin-ar   { font-size: 11px; }
+  .h-year      { font-size: 9px; }
+
+  /* ── HScroll panels on phone ── */
+  .hs-panel       { height: 80vw; max-height: 320px; }
+  .hs-intro-panel { padding: 36px 16px; }
+  .hs-intro-title { font-size: clamp(24px, 7vw, 34px); }
+  .hs-intro-sub   { font-size: 12px; }
+  .hs-caption-ar  { font-size: 16px; }
+  .hs-caption-en  { font-size: 9px; }
+
+  /* ── Category sections ── */
+  .cat        { padding: 52px 16px 44px; gap: 24px; }
+  .cat-ar     { font-size: clamp(50px, 13vw, 78px); }
+  .cat-grid   { gap: 10px; }
+  .cat-cta    { min-height: 48px; display: flex; justify-content: center; }
+
+  /* ── Products ── */
+  #products   { padding: 56px 16px 64px; }
+  .prod-meta  { padding: 16px 18px 12px; }
+  .prod-name  { font-size: 15px; }
+  .prod-name-en { font-size: 10px; }
+
+  /* ── Story stats: wrap on phone ── */
+  .story-stats { flex-wrap: wrap; gap: 16px; padding-top: 14px; }
+  .stat        { min-width: 38%; }
+  .stat-label  { font-size: 12px; }
+
+  /* ── Values ── */
+  #values  { padding: 56px 16px 64px; }
+  .val     { padding: 28px 18px; }
+  .val-num { margin-bottom: 20px; }
+  .val-name-ar { font-size: 24px; }
+  .val-name    { font-size: 19px; }
+
+  /* ── Sourcing strip ── */
+  .sourcing-col { padding: 36px 16px; }
+  .sourcing-title { font-size: 20px; }
+
+  /* ── Gifts ── */
+  #gifts      { padding: 64px 16px 80px; }
+  .gift-tab   { min-height: 44px; padding: 8px 16px; font-size: 12px; }
+  .gifts-cta  {
+    min-height: 52px; width: 100%;
+    justify-content: center;
+    display: flex;
+  }
+  .gifts-message { font-size: 16px; } /* prevent iOS zoom on focus */
+
+  /* ── Contact ── */
+  #contact     { padding: 72px 16px 80px; }
+  .contact-btn {
+    min-height: 52px; width: 100%;
+    justify-content: center;
+    display: inline-flex;
+  }
+  .contact-title  { letter-spacing: -.025em; }
+  .contact-email  { font-size: clamp(13px, 3.5vw, 17px); word-break: break-all; }
+
+  /* ── Product overlay: phone bottom sheet ── */
+  #prod-overlay { grid-template-rows: 56vw 1fr; }
+  .ov-close     { top: calc(56vw + 10px); left: 14px; }
+  .ov-name-ar   { font-size: clamp(22px, 6.5vw, 34px); }
+  .ov-info-side { padding: 20px 16px; gap: 10px; }
+  .ov-desc, .ov-desc-ar { font-size: 13px; }
+  .ov-order     {
+    min-height: 52px; width: 100%;
+    justify-content: center;
+    display: inline-flex;
+  }
+
+  /* ── Ritual section: shorter scroll distance ── */
+  #ritual          { height: 380vh; }
+  .ritual-content  { inset: auto 16px 28px; gap: 14px; }
+  .ritual-heading  { font-size: clamp(1.7rem, 8vw, 2.8rem); }
+  .ritual-sub      { font-size: .88rem; margin-top: 10px; }
+  .ritual-eyebrow  { font-size: 9px; margin-bottom: 8px; }
+  .ritual-scroll-hint { top: 28px; }
+
+  /* ── Preloader ── */
+  .pre-bar-wrap { width: 160px; }
+  .pre-logo     { height: 38px; }
+
+  /* ── Section indicator: hidden on phone (already exists but reinforce) ── */
+  #sec-indicator { display: none !important; }
+
+  /* ── Footer: stack vertically ── */
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+    gap: 12px;
+  }
+  .f-copy { order: unset; width: auto; }
+  .f-logo img { height: 24px; }
+
+  /* ── Journal / Blog ── */
+  .journal-hero   { padding: 88px 20px 44px; }
+  .journal-title  { font-size: clamp(44px, 12.5vw, 70px); }
+  .journal-desc   { font-size: 15px; }
+  .jf-content     { padding: 28px 20px; }
+  .jf-title       { font-size: clamp(18px, 5vw, 26px); }
+  .jf-excerpt     { font-size: 15px; }
+  .jf-cta         { min-height: 44px; }
+  .ja-body        { padding: 16px 18px 12px; }
+  .ja-title       { font-size: 17px; }
+  .ja-footer      { padding: 0 18px 14px; }
+  .journal-pagination { padding: 36px 20px; }
+  .journal-empty  { padding: 72px 20px; font-size: 15px; }
+  .journal-pagination a,
+  .journal-pagination span { min-height: 44px; display: inline-flex; align-items: center; }
+
+  /* ── About page ── */
+  .about-hero       { padding: 100px 20px 52px; min-height: 48vh; }
+  .about-hero-title { font-size: clamp(44px, 12vw, 72px); }
+  .about-story-body { padding: 40px 20px; }
+  .about-story-img-text { bottom: 24px; left: 20px; right: 20px; font-size: 17px; }
+  .about-values     { padding: 60px 20px; }
+  .about-values-title { font-size: clamp(24px, 7.5vw, 40px); }
+  .about-num-item   { padding: 36px 16px; }
+  .about-num-val    { font-size: clamp(36px, 9vw, 56px); }
+  .about-origin     { padding: 60px 20px; }
+  .about-step       { padding: 32px 20px; }
+  .about-cta        { padding: 64px 20px; }
+  .about-cta-btn    {
+    min-height: 52px; display: inline-flex;
+    align-items: center; justify-content: center;
+    padding: 16px 32px;
+  }
+
+  /* ── Collection hero ── */
+  .col-hero-wrap    { height: 56vh; min-height: 340px; }
+  .col-hero-content { padding: 0 20px; }
+  .col-hero-title   { font-size: clamp(36px, 10vw, 58px); }
+  .col-hero-count   { padding: 10px 18px; }
+  .col-hero-count-num { font-size: 30px; }
+
+  /* ── Collection grid page ── */
+  .products-section { padding: 48px 16px 64px; }
+  .prod-cta-row     { margin-top: 44px; }
+  .btn-outline      {
+    min-height: 52px; width: 100%;
+    justify-content: center; display: inline-flex;
+    padding: 14px 24px;
+  }
+  .cg-filter { min-height: 44px; }
+
+  /* ── Page template ── */
+  .template-page .page-main { padding: 88px 20px 72px; }
+  .template-page .page-content { font-size: 16px; }
+
+  /* ── Section headings ── */
+  .sec-hd   { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 36px; }
+  .sec-title { font-size: clamp(30px, 8.5vw, 48px); }
+  .sec-ey   { font-size: 9px; }
+}
+
+/* ══════════════════════════════════════════
+   TOUCH DEVICE — interaction overrides
+   (hover: none catches all touch screens)
+══════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+
+  /* Proper tap targets for all CTAs */
+  .e-btn, .contact-btn, .ov-order, .h-cta,
+  .cat-cta, .gifts-cta, .btn-outline,
+  .gift-tab, .cg-filter, .about-cta-btn,
+  .nav-veil-link, .fnav-link, .mobile-nav a {
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: rgba(184,155,94,.15);
+  }
+
+  /* Remove hover-only shows (invisible on touch) */
+  .prod-card:hover .prod-expand-hint { opacity: 0; }
+  .template-collection .prod-card:hover .prod-order-ar { opacity: 0; }
+  .ja-card:hover .ja-read { opacity: 0; }
+
+  /* Disable layout-shifting hover transforms */
+  .cat-card:hover { transform: none; }
+  .gift-card:hover { transform: none; }
+
+  /* Snap vertical hscroll panels */
+  #hscroll-track {
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .hs-panel { scroll-snap-align: start; }
+
+  /* Input font-size 16px to prevent iOS zoom */
+  input, textarea, select { font-size: 16px !important; }
+
+  /* Gifts message already 16px above; extra safety */
+  .gifts-message { font-size: 16px !important; }
+}
