@@ -15,18 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Deploy to Shopify
+        uses: matthew-petrie/shopify-theme-actions@1.2.2
         with:
-          node-version: '20'
-
-      - name: Install Shopify CLI
-        run: npm install -g @shopify/cli@latest
-
-      - name: Push theme to Shopify
-        env:
-          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
-        run: |
-          shopify theme push \
-            --store irth-13.myshopify.com \
-            --theme 154488471690 \
-            --no-interactive
+          ACTION: 'THEME_PUSH'
+          SHOPIFY_STORE_URL: irth-13.myshopify.com
+          SHOPIFY_ACCESS_PASSWORD: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          THEME_ID: '154488471690'
