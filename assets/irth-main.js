@@ -179,8 +179,14 @@
   let overlayOpen = false;
 
   document.querySelectorAll('.prod-card').forEach(card => {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
     card.addEventListener('click', () => {
-      document.getElementById('ov-img').src       = card.dataset.prodImg || '';
+      // Use the card's actual rendered img src (Shopify CDN URL) — avoids broken relative path
+      document.getElementById('ov-img').src            = card.querySelector('.prod-img img')?.src || '';
       document.getElementById('ov-num').textContent     = card.dataset.prodNum;
       document.getElementById('ov-name-ar').textContent = card.dataset.prodAr;
       document.getElementById('ov-name-en').textContent = card.dataset.prodEn;
@@ -191,6 +197,7 @@
       overlay.setAttribute('aria-hidden', 'false');
       overlay.classList.add('open');
       overlayOpen = true;
+      setTimeout(() => { if (ovClose) ovClose.focus(); }, 50);
 
       gsap.fromTo(overlay,
         { y: '100%' },
@@ -640,6 +647,12 @@
       const mainCanvas  = document.getElementById('ritualFrames');
       const bgCanvas    = document.getElementById('ritualFramesBg');
       if (!ritualScene || !mainCanvas) return;
+      // Skip canvas animation on mobile — 240 JPEGs exhaust mobile heap; fallback img shown instead
+      if (window.innerWidth < 768) {
+        const fb = ritualScene.querySelector('.ritual-fallback');
+        if (fb) fb.style.display = 'block';
+        return;
+      }
 
       const ctx   = mainCanvas.getContext('2d');
       const bgCtx = bgCanvas.getContext('2d');
@@ -745,16 +758,41 @@
     initHScroll();
 
     /* ── GIFTS SECTION — tab + card interactivity ── */
+    const _giftPlaceholders = {
+      ramadan:   'مثال: بمناسبة رمضان الكريم، أهدي إليك أجود تمور المدينة.',
+      eid:       'مثال: كل عام وأنتم بخير — هدية من القلب بمناسبة العيد المبارك.',
+      wedding:   'مثال: ألف مبروك — هدية في يومكم الجميل من مجموعة إرث.',
+      corporate: 'مثال: بمناسبة الشراكة العزيزة — هدية مختارة بعناية من إرث.'
+    };
+    const _giftTA = document.getElementById('giftMessage');
     document.querySelectorAll('.gift-tab').forEach(tab => {
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', tab.classList.contains('active') ? 'true' : 'false');
       tab.addEventListener('click', () => {
-        document.querySelectorAll('.gift-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.gift-tab').forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
         tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        if (_giftTA && _giftPlaceholders[tab.dataset.occasion])
+          _giftTA.setAttribute('placeholder', _giftPlaceholders[tab.dataset.occasion]);
       });
     });
     document.querySelectorAll('.gift-card').forEach(card => {
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'radio');
+      card.setAttribute('aria-checked', card.classList.contains('selected') ? 'true' : 'false');
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+      });
       card.addEventListener('click', () => {
-        document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('selected'));
+        document.querySelectorAll('.gift-card').forEach(c => {
+          c.classList.remove('selected');
+          c.setAttribute('aria-checked', 'false');
+        });
         card.classList.add('selected');
+        card.setAttribute('aria-checked', 'true');
       });
     });
   }
