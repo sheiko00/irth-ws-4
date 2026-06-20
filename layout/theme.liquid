@@ -98,6 +98,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 
+  <!-- Hero poster preload — LCP critical path, fetchpriority forces browser to load before video -->
+  {%- if template.name == 'index' -%}
+  <link rel="preload" as="image" href="{{ 'hero-poster.jpg' | asset_url }}" fetchpriority="high">
+  {%- endif -%}
+
   <!-- Video preloads (home only) -->
   {%- if template.name == 'index' -%}
   <link rel="preload" as="video" href="{{ 'intro-mobile.mp4' | asset_url }}"  media="(max-width: 768px)"  type="video/mp4">

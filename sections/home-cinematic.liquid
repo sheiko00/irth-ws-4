@@ -13,7 +13,7 @@
 
 <!-- ── PRELOADER ── -->
 <div id="preloader" aria-hidden="true">
-  <img src="{{ 'logo.svg' | asset_url }}" alt="" class="pre-logo" id="pre-logo">
+  <img src="{{ 'logo.svg' | asset_url }}" alt="" class="pre-logo" id="pre-logo" width="40" height="40" loading="eager">
   <div class="pre-bar-wrap"><div class="pre-bar" id="pre-bar"></div></div>
   <span class="pre-pct" id="pre-pct">0%</span>
 </div>
@@ -55,7 +55,7 @@
       <div class="pupil" id="pr"></div>
     </div>
   </div>
-  <img src="{{ 'logo.svg' | asset_url }}" alt="إرث IRTH" class="e-logo-img">
+  <img src="{{ 'logo.svg' | asset_url }}" alt="إرث IRTH" class="e-logo-img" width="40" height="40" loading="eager">
   <div class="e-desc-ar">طعام راقٍ مستوحى من عمق الموروث العربي، يجمع بين نقاء المكوّن ونبل الأثر.</div>
   <div class="e-desc">Luxury food rooted in Arab heritage — where the finest ingredients become a lasting impression.</div>
   <button class="e-btn" id="e-enter">ادخل ↘</button>
@@ -116,7 +116,7 @@
 <div id="hud">
   <div class="h-center">
     <div class="h-eyebrow">From the Heart of Arab Heritage · من قلب الموروث</div>
-    <div class="hero-logo-seal" data-anim="seal-mark"><img src="{{ 'logo.svg' | asset_url }}" class="seal-logo-img" alt="إرث"></div>
+    <div class="hero-logo-seal" data-anim="seal-mark"><img src="{{ 'logo.svg' | asset_url }}" class="seal-logo-img" alt="إرث" width="64" height="64" loading="eager"></div>
     <h1 class="h-title">
       <span class="h-line-wrap"><span class="inner ar-line">من تراب المدينة</span></span>
       <span class="h-line-wrap"><span class="inner ar-line-bold">إلى مائدتك</span></span>
@@ -142,7 +142,7 @@
 
 <!-- ── FLOATING PILL NAV — Phase 02 (persistent, outside #hud) ── -->
 <nav class="fnav-bar" id="fnavBar" aria-label="التنقل الرئيسي">
-  <a href="{{ routes.root_url }}" class="fnav-logo" aria-label="إرث · الصفحة الرئيسية"><img src="{{ 'logo.svg' | asset_url }}" class="fnav-logo-img" alt="إرث"></a>
+  <a href="{{ routes.root_url }}" class="fnav-logo" aria-label="إرث · الصفحة الرئيسية"><img src="{{ 'logo.svg' | asset_url }}" class="fnav-logo-img" alt="إرث" width="40" height="40" loading="eager"></a>
   <div class="fnav-links">
     <a href="{{ routes.root_url }}" class="fnav-link">الرئيسية</a>
     <a href="{{ routes.collections_url }}" class="fnav-link nav-veil-link">المجموعة</a>
@@ -185,7 +185,7 @@
       <div class="ritual-media" aria-hidden="true">
         <canvas id="ritualFramesBg"></canvas>
         <canvas id="ritualFrames"></canvas>
-        <img class="ritual-fallback" src="{{ 'irth_0001.jpg' | asset_url }}" alt="">
+        <img class="ritual-fallback" src="{{ 'irth_0001.jpg' | asset_url }}" alt="" width="1920" height="1080" loading="lazy">
       </div>
 
       <!-- Overlay vignette -->
@@ -229,7 +229,7 @@
     </div>
     <div class="prod-grid">
       <div class="prod-card" data-prod-num="01" data-prod-ar="التمور المجلّلة" data-prod-en="Premium Dates" data-prod-origin="المدينة المنورة" data-prod-img="assets/dates-cream-linen.png" data-prod-desc="Hand-selected Ajwa and Medjoul dates from Madinah's finest farms." data-prod-desc-ar="عجوة ومجول، يُقطفان في موسم النضج فقط من نخيل العوالي. كل حبة تُفرز يدويًا قبل أن تستقر في صندوقها.">
-        <div class="prod-img"><img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="تمور إرث الفاخرة"></div>
+        <div class="prod-img"><img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="تمور إرث الفاخرة" width="800" height="800" loading="lazy"></div>
         <div class="prod-meta">
           <div class="prod-num">01</div>
           <div class="prod-name">التمور المجلّلة</div>
@@ -239,7 +239,7 @@
         <span class="prod-expand-hint">VIEW →</span>
       </div>
       <div class="prod-card" data-prod-num="02" data-prod-ar="زيت الزيتون الفاخر" data-prod-en="Artisan Olive Oil" data-prod-origin="فلسطين · المغرب" data-prod-img="assets/olive-oil-premium.jpg" data-prod-desc="First cold-press extra virgin from ancient Palestinian and Moroccan groves." data-prod-desc-ar="بكر ممتاز، عصر بارد أول من بساتين أثرية في فلسطين والمغرب. غني، حار، لا إضافات.">
-        <div class="prod-img"><img src="{{ 'olive-oil-premium.jpg' | asset_url }}" alt="زيت الزيتون إرث"></div>
+        <div class="prod-img"><img src="{{ 'olive-oil-premium.jpg' | asset_url }}" alt="زيت الزيتون إرث" width="800" height="800" loading="lazy"></div>
         <div class="prod-meta">
           <div class="prod-num">02</div>
           <div class="prod-name">زيت الزيتون الفاخر</div>
@@ -249,7 +249,7 @@
         <span class="prod-expand-hint">VIEW →</span>
       </div>
       <div class="prod-card" data-prod-num="03" data-prod-ar="القرفة السيلانية" data-prod-en="Ceylon Cinnamon" data-prod-origin="سريلانكا المختارة" data-prod-img="assets/cinnamon-powder.jpg" data-prod-desc="True cinnamon — not cassia — from Sri Lanka. Soft, sweet, hand-rolled quills." data-prod-desc-ar="قرفة حقيقية من سريلانكا. ناعمة وحلوة، نادرة في سوق ملئ بالتقليد.">
-        <div class="prod-img"><img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="قرفة إرث"></div>
+        <div class="prod-img"><img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="قرفة إرث" width="800" height="800" loading="lazy"></div>
         <div class="prod-meta">
           <div class="prod-num">03</div>
           <div class="prod-name">القرفة السيلانية</div>
@@ -259,7 +259,7 @@
         <span class="prod-expand-hint">VIEW →</span>
       </div>
       <div class="prod-card" data-prod-num="04" data-prod-ar="عسل السدر الملكي" data-prod-en="Sidr Royal Honey" data-prod-origin="اليمن · حضرموت" data-prod-img="assets/sidr-honey.jpg" data-prod-desc="Raw, unfiltered Sidr honey from Yemen's Hadhramaut valley, harvested from wild trees." data-prod-desc-ar="عسل سدر خام، غير مُصفى، من وادي حضرموت. يجمع في موسم الذروة من أشجار برية.">
-        <div class="prod-img"><img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر إرث"></div>
+        <div class="prod-img"><img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر إرث" width="800" height="800" loading="lazy"></div>
         <div class="prod-meta">
           <div class="prod-num">04</div>
           <div class="prod-name">عسل السدر الملكي</div>
@@ -269,7 +269,7 @@
         <span class="prod-expand-hint">VIEW →</span>
       </div>
       <div class="prod-card" data-prod-num="05" data-prod-ar="نعناع المدينة المجفّف" data-prod-en="Madinah Dried Mint" data-prod-origin="المدينة المنورة" data-prod-img="assets/madinah-mint.jpg" data-prod-desc="Sun-dried mint from Madinah's heritage farms — intense aroma, vibrant colour." data-prod-desc-ar="نعناع مجفف بأشعة الشمس من مزارع المدينة. أروما عالية، يناسب الشاي والطهي والوصفات التراثية.">
-        <div class="prod-img"><img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع المدينة إرث"></div>
+        <div class="prod-img"><img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع المدينة إرث" width="800" height="800" loading="lazy"></div>
         <div class="prod-meta">
           <div class="prod-num">05</div>
           <div class="prod-name">نعناع المدينة المجفّف</div>
@@ -279,7 +279,7 @@
         <span class="prod-expand-hint">VIEW →</span>
       </div>
       <div class="prod-card" data-prod-num="06" data-prod-ar="زيت العود النقي" data-prod-en="Pure Oud Oil" data-prod-origin="كمبوديا · الهند" data-prod-img="assets/oud-oil.jpg" data-prod-desc="Pure agarwood oil from Aquilaria trees in Cambodia and India. Rare, precious." data-prod-desc-ar="زيت عود طبيعي من أشجار الأقيلارية. نادر وثمين، رائحة عرّفت الهوية العربية لقرون.">
-        <div class="prod-img"><img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود إرث"></div>
+        <div class="prod-img"><img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود إرث" width="800" height="800" loading="lazy"></div>
         <div class="prod-meta">
           <div class="prod-num">06</div>
           <div class="prod-name">زيت العود النقي</div>
@@ -304,14 +304,14 @@
     </div>
     <div class="cat-grid">
       <a href="{{ routes.root_url }}products/dates" class="cat-card">
-        <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="التمور المجلّلة">
+        <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="التمور المجلّلة" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">التمور المجلّلة</div>
           <div class="cat-card-en">Premium Dates · Madinah</div>
         </div>
       </a>
       <a href="{{ routes.root_url }}products/dates" class="cat-card">
-        <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="عجوة">
+        <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="عجوة" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">عجوة</div>
           <div class="cat-card-en">Ajwa · Al-Awali</div>
@@ -333,14 +333,14 @@
     </div>
     <div class="cat-grid">
       <a href="{{ routes.root_url }}products/mint" class="cat-card">
-        <img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع">
+        <img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">نعناع المدينة</div>
           <div class="cat-card-en">Madinah Mint</div>
         </div>
       </a>
       <a href="{{ routes.root_url }}products/cinnamon" class="cat-card">
-        <img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="قرفة">
+        <img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="قرفة" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">القرفة السيلانية</div>
           <div class="cat-card-en">Ceylon Cinnamon</div>
@@ -362,14 +362,14 @@
     </div>
     <div class="cat-grid">
       <a href="{{ routes.root_url }}products/oud" class="cat-card">
-        <img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود">
+        <img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">زيت العود النقي</div>
           <div class="cat-card-en">Pure Oud Oil</div>
         </div>
       </a>
       <a href="{{ routes.root_url }}products/honey" class="cat-card">
-        <img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر">
+        <img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">عسل السدر الملكي</div>
           <div class="cat-card-en">Sidr Royal Honey</div>
@@ -394,42 +394,42 @@
         </div>
         <!-- Panels filled by JS from prod-cards data -->
         <div class="hs-panel" id="hs-p1">
-          <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="التمور المجلّلة">
+          <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="التمور المجلّلة" width="800" height="800" loading="lazy">
           <div class="hs-caption">
             <div class="hs-caption-ar">التمور المجلّلة</div>
             <div class="hs-caption-en">Premium Dates · Madinah</div>
           </div>
         </div>
         <div class="hs-panel" id="hs-p2">
-          <img src="{{ 'olive-oil-premium.jpg' | asset_url }}" alt="زيت الزيتون">
+          <img src="{{ 'olive-oil-premium.jpg' | asset_url }}" alt="زيت الزيتون" width="800" height="800" loading="lazy">
           <div class="hs-caption">
             <div class="hs-caption-ar">زيت الزيتون الفاخر</div>
             <div class="hs-caption-en">Artisan Olive Oil · Palestine</div>
           </div>
         </div>
         <div class="hs-panel" id="hs-p3">
-          <img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر">
+          <img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر" width="800" height="800" loading="lazy">
           <div class="hs-caption">
             <div class="hs-caption-ar">عسل السدر الملكي</div>
             <div class="hs-caption-en">Sidr Honey · Hadhramaut</div>
           </div>
         </div>
         <div class="hs-panel" id="hs-p4">
-          <img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="القرفة السيلانية">
+          <img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="القرفة السيلانية" width="800" height="800" loading="lazy">
           <div class="hs-caption">
             <div class="hs-caption-ar">القرفة السيلانية</div>
             <div class="hs-caption-en">Ceylon Cinnamon · Sri Lanka</div>
           </div>
         </div>
         <div class="hs-panel" id="hs-p5">
-          <img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود">
+          <img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود" width="800" height="800" loading="lazy">
           <div class="hs-caption">
             <div class="hs-caption-ar">زيت العود النقي</div>
             <div class="hs-caption-en">Pure Oud Oil · Cambodia</div>
           </div>
         </div>
         <div class="hs-panel" id="hs-p6">
-          <img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع المدينة">
+          <img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع المدينة" width="800" height="800" loading="lazy">
           <div class="hs-caption">
             <div class="hs-caption-ar">نعناع المدينة</div>
             <div class="hs-caption-en">Dried Mint · Madinah</div>
@@ -468,7 +468,7 @@
   <!-- Brand Story -->
   <section id="story" data-section="03" data-section-name="Story">
     <div class="story-img-side">
-      <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="إرث — قصة البراند">
+      <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="إرث — قصة البراند" width="800" height="600" loading="lazy">
       <div class="story-img-overlay"></div>
     </div>
     <div class="story-text-side">
@@ -592,7 +592,7 @@
   </section>
 
   <footer>
-    <a href="{{ routes.root_url }}" class="f-logo"><img src="{{ 'logo.svg' | asset_url }}" alt="إرث IRTH"></a>
+    <a href="{{ routes.root_url }}" class="f-logo"><img src="{{ 'logo.svg' | asset_url }}" alt="إرث IRTH" width="40" height="40" loading="lazy"></a>
     <span class="f-copy">© ٢٠٢٦ إرث IRTH · جميع الحقوق محفوظة</span>
     <ul class="f-links">
       <li><a href="#" aria-label="Instagram">
