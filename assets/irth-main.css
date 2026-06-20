@@ -944,10 +944,10 @@
        MARQUEE
     ══════════════════════════════════════════ */
     .marquee-strip {
-      background: var(--madinah); overflow: hidden;
+      background: var(--ink); overflow: hidden;
       padding: 15px 0; white-space: nowrap;
-      border-top: 1px solid rgba(184,155,94,.1);
-      border-bottom: 1px solid rgba(184,155,94,.1);
+      border-top: 1px solid rgba(184,155,94,.08);
+      border-bottom: 1px solid rgba(184,155,94,.08);
     }
     .marquee-inner {
       display: inline-flex; gap: 0;
@@ -1033,31 +1033,76 @@
     /* ══════════════════════════════════════════
        VALUES
     ══════════════════════════════════════════ */
-    #values { background: var(--madinah); padding: 110px 48px; }
-    #values .sec-ey { color: rgba(184,155,94,.45); direction: ltr; }
-    #values .sec-title { color: rgba(243,239,231,.92); }
+    #values { background: var(--ivory); padding: 110px 48px; }
+    #values .sec-ey { color: rgba(184,155,94,.6); direction: ltr; }
+    #values .sec-title { color: var(--ink); }
     #values .sec-hd { direction: rtl; }
 
     .vals-grid {
       display: grid; grid-template-columns: repeat(3,1fr);
-      border-top: 1px solid rgba(184,155,94,.15); margin-top: 72px;
+      border-top: 1px solid rgba(26,26,26,.08); margin-top: 72px;
     }
     .val {
       padding: 48px 40px;
-      border-right: 1px solid rgba(184,155,94,.08);
+      border-right: 1px solid rgba(26,26,26,.06);
     }
     .val:last-child { border-right: none; }
-    .val-num { font-size: 10px; color: rgba(184,155,94,.38); letter-spacing: .1em; margin-bottom: 48px; }
-    .val-name { font-size: 22px; font-weight: 300; color: white; line-height: 1.2; margin-bottom: 10px; }
+    .val-num { font-size: 10px; color: rgba(184,155,94,.5); letter-spacing: .1em; margin-bottom: 48px; }
+    .val-name { font-size: 22px; font-weight: 300; color: var(--ink); line-height: 1.2; margin-bottom: 10px; }
     .val-name em { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; }
     .val-name-ar {
       font-family: 'Noto Naskh Arabic', serif; font-size: 28px; font-weight: 500;
       color: var(--gold); line-height: 1.2; margin-bottom: 16px; direction: rtl;
     }
-    .val-desc { font-size: 13px; color: white; opacity: .35; line-height: 1.88; }
+    .val-desc { font-size: 13px; color: var(--ink); opacity: .5; line-height: 1.88; }
     .val-desc-ar {
       font-family: 'Noto Naskh Arabic', serif; font-size: 13px;
-      color: rgba(243,239,231,.38); line-height: 1.95; direction: rtl; margin-top: 8px;
+      color: var(--ink); opacity: .42; line-height: 1.95; direction: rtl; margin-top: 8px;
+    }
+
+    /* ══════════════════════════════════════════
+       SOURCING STRIP — روح المدينة (only green section)
+    ══════════════════════════════════════════ */
+    .section-sourcing { background: var(--madinah); }
+    .sourcing-strip {
+      padding: clamp(80px,10vw,120px) clamp(24px,6vw,96px);
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 0; position: relative; overflow: hidden;
+    }
+    .sourcing-strip::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 80%, rgba(184,155,94,.08) 0%, transparent 60%);
+    }
+    .sourcing-inner {
+      display: contents;
+    }
+    .sourcing-col {
+      padding: 48px 40px;
+      border-right: 1px solid rgba(184,155,94,.12);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .sourcing-col:last-child { border-right: none; }
+    .sourcing-icon {
+      font-size: 18px; color: var(--gold); opacity: .6;
+      display: block; margin-bottom: 8px;
+    }
+    .sourcing-title {
+      font-family: 'Noto Naskh Arabic', serif; font-size: 22px; font-weight: 500;
+      color: rgba(243,239,231,.9); line-height: 1.25;
+    }
+    .sourcing-title--en {
+      font-family: 'DM Sans', sans-serif; font-size: 11px;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); opacity: .55; font-weight: 400; margin-top: -8px;
+    }
+    .sourcing-desc {
+      font-family: 'Noto Naskh Arabic', serif; font-size: 13px;
+      color: rgba(243,239,231,.38); line-height: 1.95;
+    }
+    @media (max-width: 768px) {
+      .sourcing-strip { grid-template-columns: 1fr; }
+      .sourcing-col { border-right: none; border-bottom: 1px solid rgba(184,155,94,.1); }
+      .sourcing-col:last-child { border-bottom: none; }
     }
 
     /* ══════════════════════════════════════════
@@ -1114,25 +1159,25 @@
        GIFT SECTION — Phase 07
     ══════════════════════════════════════════ */
     #gifts {
-      background: var(--madinah);
+      background: var(--beige);
       padding: clamp(80px,12vw,140px) clamp(24px,6vw,96px);
       position: relative; overflow: hidden;
     }
     #gifts::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse at 28% 60%, rgba(184,155,94,.07) 0%, transparent 55%),
-                  radial-gradient(ellipse at 80% 15%, rgba(243,239,231,.04) 0%, transparent 50%);
+      background: radial-gradient(ellipse at 28% 60%, rgba(184,155,94,.08) 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 15%, rgba(243,239,231,.06) 0%, transparent 50%);
     }
     .gifts-eyebrow {
       font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--gold); opacity: .75; margin-bottom: 20px;
+      color: var(--gold); opacity: .85; margin-bottom: 20px;
     }
     .gifts-heading {
       font-family: 'Noto Naskh Arabic', serif; font-size: clamp(2.4rem,5vw,4.8rem);
-      font-weight: 400; color: var(--linen); line-height: 1.1; margin: 0 0 16px;
+      font-weight: 400; color: var(--ink); line-height: 1.1; margin: 0 0 16px;
     }
     .gifts-sub {
-      font-size: clamp(.9rem,1.3vw,1.05rem); color: rgba(216,204,188,.42);
+      font-size: clamp(.9rem,1.3vw,1.05rem); color: var(--ink); opacity: .5;
       max-width: 440px; line-height: 1.75; margin-bottom: 48px;
     }
     .gifts-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 44px; }
@@ -1147,12 +1192,12 @@
       display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-bottom: 48px;
     }
     .gift-card {
-      background: rgba(243,239,231,.04); border: 1px solid rgba(184,155,94,.14);
+      background: rgba(255,255,255,.55); border: 1px solid rgba(184,155,94,.2);
       border-radius: 4px; padding: 30px 26px; cursor: pointer;
       transition: border-color .35s, background .35s, transform .35s; position: relative;
     }
-    .gift-card:hover { border-color: rgba(184,155,94,.42); background: rgba(243,239,231,.07); transform: translateY(-4px); }
-    .gift-card.selected { border-color: var(--gold); background: rgba(184,155,94,.10); }
+    .gift-card:hover { border-color: rgba(184,155,94,.6); background: rgba(255,255,255,.8); transform: translateY(-4px); }
+    .gift-card.selected { border-color: var(--gold); background: rgba(255,255,255,.9); }
     .gift-card-check {
       position: absolute; top: 16px; left: 16px; width: 18px; height: 18px;
       border-radius: 50%; border: 1px solid rgba(184,155,94,.3);
@@ -1163,22 +1208,22 @@
     .gift-card-check::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
     .gift-card-icon { font-size: 1.8rem; margin-bottom: 18px; line-height: 1; color: rgba(184,155,94,.5); }
     .gift-card.selected .gift-card-icon { color: var(--gold); }
-    .gift-card-name { font-family: 'Noto Naskh Arabic', serif; font-size: 1.05rem; color: var(--linen); margin-bottom: 6px; }
-    .gift-card-name-en { font-family: 'Cormorant Garamond', serif; font-size: .78rem; color: rgba(216,204,188,.3); letter-spacing: .1em; margin-bottom: 12px; }
-    .gift-card-desc { font-size: .78rem; color: rgba(216,204,188,.38); line-height: 1.65; }
+    .gift-card-name { font-family: 'Noto Naskh Arabic', serif; font-size: 1.05rem; color: var(--ink); margin-bottom: 6px; }
+    .gift-card-name-en { font-family: 'Cormorant Garamond', serif; font-size: .78rem; color: var(--ink); opacity: .38; letter-spacing: .1em; margin-bottom: 12px; }
+    .gift-card-desc { font-size: .78rem; color: var(--ink); opacity: .45; line-height: 1.65; }
     .gifts-message-label {
       font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
       color: var(--gold); opacity: .65; margin-bottom: 12px; display: block;
     }
     .gifts-message {
       width: 100%; max-width: 580px; display: block;
-      background: rgba(243,239,231,.04); border: 1px solid rgba(184,155,94,.18);
+      background: rgba(255,255,255,.7); border: 1px solid rgba(184,155,94,.25);
       border-radius: 4px; padding: 16px 20px; resize: none;
-      font-family: 'Noto Naskh Arabic', serif; font-size: 14px; color: var(--linen);
+      font-family: 'Noto Naskh Arabic', serif; font-size: 14px; color: var(--ink);
       direction: rtl; outline: none; transition: border-color .3s; margin-bottom: 36px;
     }
-    .gifts-message:focus { border-color: rgba(184,155,94,.45); }
-    .gifts-message::placeholder { color: rgba(216,204,188,.18); }
+    .gifts-message:focus { border-color: rgba(184,155,94,.55); }
+    .gifts-message::placeholder { color: rgba(26,26,26,.25); }
     .gifts-cta {
       display: inline-flex; align-items: center; gap: 12px;
       background: var(--gold); color: var(--madinah);
