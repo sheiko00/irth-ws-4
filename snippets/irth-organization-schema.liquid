@@ -1,10 +1,4 @@
-{% comment %}
-  IRTH — Organization + WebSite + LocalBusiness JSON-LD
-  Inject on homepage only via theme.liquid
-{% endcomment %}
-
 {% if template.name == 'index' %}
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -13,9 +7,12 @@
   "alternateName": ["إرث", "IRTH Madina", "irthmadina"],
   "url": "https://irthmadina.com",
   "logo": "https://irthmadina.com/cdn/shop/files/IRTH_logo.png",
-  "description": "IRTH is a luxury Islamic heritage brand inspired by Madinah Al-Munawwarah. We offer authentic dates, Sidr honey, Madinah herbs, misbahas, prayer rugs, and luxury gift boxes — shipped to Egypt, the Gulf, and worldwide.",
+  "description": "IRTH is a luxury Islamic heritage brand inspired by Madinah Al-Munawwarah. We offer authentic dates, Madinah herbs, misbahas, prayer rugs, fragrances, and luxury gift boxes — shipped to Egypt, the Gulf, and worldwide.",
   "foundingDate": "2025",
-  "foundingLocation": { "@type": "Place", "name": "New Cairo, Egypt" },
+  "foundingLocation": {
+    "@type": "Place",
+    "name": "New Cairo, Egypt"
+  },
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "New Cairo",
@@ -25,6 +22,7 @@
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer service",
+    "email": "hello@irthmadina.com",
     "availableLanguage": ["Arabic", "English"],
     "areaServed": ["EG", "SA", "AE", "GB", "US"]
   },
@@ -34,8 +32,12 @@
     "https://www.facebook.com/irthmadina"
   ],
   "knowsAbout": [
-    "Madinah Al-Munawwarah", "Islamic heritage products",
-    "Ajwa dates", "Sidr honey", "Arabic luxury gifts", "Prophetic medicine"
+    "Madinah Al-Munawwarah",
+    "Islamic heritage products",
+    "Ajwa dates",
+    "Madinah herbs",
+    "Arabic luxury gifts",
+    "Prophetic medicine"
   ]
 }
 </script>
@@ -74,16 +76,23 @@
     "postalCode": "11835",
     "addressCountry": "EG"
   },
-  "geo": { "@type": "GeoCoordinates", "latitude": 30.0074, "longitude": 31.4913 },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 30.0074,
+    "longitude": 31.4913
+  },
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"],
+    "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
     "opens": "09:00",
     "closes": "22:00"
   },
   "priceRange": "EGP 250 – EGP 7500",
-  "sameAs": ["https://www.instagram.com/irthmadina","https://www.tiktok.com/@irthmadina"]
+  "hasMap": "https://maps.google.com/?q=New+Cairo+Egypt",
+  "sameAs": [
+    "https://www.instagram.com/irthmadina",
+    "https://www.tiktok.com/@irthmadina"
+  ]
 }
 </script>
-
 {% endif %}
