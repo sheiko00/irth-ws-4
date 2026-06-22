@@ -30,7 +30,10 @@
   function showEntry() {
     gsap.to(preloader, {
       opacity: 0, duration: .6, ease: 'power2.in',
-      onComplete: () => { preloader.style.display = 'none'; }
+      onComplete: () => {
+        preloader.style.display = 'none';
+        if (window.innerWidth <= 768) { warmAmbient(); doEnterDirect(); }
+      }
     });
   }
 
@@ -361,7 +364,10 @@
     const amb = document.getElementById('amb-track');
     if (amb) { try { amb.load(); } catch (e) {} }
   }
-  document.getElementById('e-enter').addEventListener('click', () => { warmAmbient(); doEnter(); });
+  document.getElementById('e-enter').addEventListener('click', () => {
+    warmAmbient();
+    if (window.innerWidth <= 768) doEnterDirect(); else doEnter();
+  });
   document.getElementById('e-skip').addEventListener('click', e => { e.preventDefault(); warmAmbient(); doEnterDirect(); });
 
   /* ══════════════════════════════════════════
