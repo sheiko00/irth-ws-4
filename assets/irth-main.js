@@ -129,14 +129,26 @@
   const hud       = document.getElementById('hud');
   let mouseX = 0, mouseY = 0, smoothX = 0, smoothY = 0, scrollScale = 1;
 
+  /* Cache eye rects — update on resize, not per-pixel */
+  const eyeRects = new Map();
+  function cacheEyeRects() {
+    [pl, pr].forEach(p => {
+      if (!p) return;
+      const eye = p.parentElement;
+      eyeRects.set(p, eye.getBoundingClientRect());
+    });
+  }
+  cacheEyeRects();
+  window.addEventListener('resize', cacheEyeRects, { passive: true });
+
   /* Unified mousemove — cursor (if !RM) + eyes + video parallax */
   window.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     if (qxCur) { qxCur(mx); qyCur(my); gsap.set(curLabel, { x: mx, y: my }); }
     [pl, pr].forEach(p => {
       if (!p) return;
-      const eye = p.parentElement;
-      const r = eye.getBoundingClientRect();
+      const r = eyeRects.get(p);
+      if (!r) return;
       const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       p.style.transform = `translate(${Math.max(-10,Math.min(10,(e.clientX-cx)*.18))}px,${Math.max(-8,Math.min(8,(e.clientY-cy)*.14))}px)`;
     });
@@ -154,15 +166,18 @@
   ══════════════════════════════════════════ */
   function addMagnetic(selector, strength) {
     document.querySelectorAll(selector).forEach(btn => {
+      let _r = null;
+      btn.addEventListener('mouseenter', () => { _r = btn.getBoundingClientRect(); });
       btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
+        if (!_r) return;
         gsap.to(btn, {
-          x: (e.clientX - (r.left + r.width/2)) * strength,
-          y: (e.clientY - (r.top + r.height/2)) * strength,
+          x: (e.clientX - (_r.left + _r.width/2)) * strength,
+          y: (e.clientY - (_r.top + _r.height/2)) * strength,
           duration: .35, ease: 'power2.out'
         });
       });
       btn.addEventListener('mouseleave', () => {
+        _r = null;
         gsap.to(btn, { x: 0, y: 0, duration: .65, ease: 'elastic.out(1,.5)' });
       });
     });
@@ -646,14 +661,23 @@
     // Marquee direction
     const marquee = document.getElementById('marquee-inner');
     let marqueeDir = 1, lastSY = 0;
-    window.addEventListener('scroll', () => {
-      const dir = window.scrollY > lastSY ? 1 : -1;
-      lastSY = window.scrollY;
-      if (dir !== marqueeDir) {
-        marqueeDir = dir;
-        marquee.style.animationDirection = dir === 1 ? 'normal' : 'reverse';
-      }
-    }, { passive: true });
+    window._lenis
+      ? window._lenis.on('scroll', ({ scroll }) => {
+          const dir = scroll > lastSY ? 1 : -1;
+          lastSY = scroll;
+          if (dir !== marqueeDir) {
+            marqueeDir = dir;
+            marquee.style.animationDirection = dir === 1 ? 'normal' : 'reverse';
+          }
+        })
+      : window.addEventListener('scroll', () => {
+          const dir = window.scrollY > lastSY ? 1 : -1;
+          lastSY = window.scrollY;
+          if (dir !== marqueeDir) {
+            marqueeDir = dir;
+            marquee.style.animationDirection = dir === 1 ? 'normal' : 'reverse';
+          }
+        }, { passive: true });
 
     /* ── RITUAL FRAME SEQUENCER (Phase 06) ── */
     (function initRitual() {
@@ -1137,16 +1161,19 @@
 
   // Auto-start on first scroll (browsers allow audio after any interaction)
   let autoStarted = false;
-  window.addEventListener('scroll', function onScroll() {
-    if (!autoStarted) {
-      autoStarted = true;
-      window.removeEventListener('scroll', onScroll);
-      fadeIn();
-      playing = true;
-      btn.classList.add('playing');
-      iconOn.style.display  = 'block';
-      iconOff.style.display = 'none';
-      btn.setAttribute('aria-label', 'إيقاف صوت المدينة');
-    }
-  }, { passive: true });
+  function onFirstScroll() {
+    if (autoStarted) return;
+    autoStarted = true;
+    fadeIn();
+    playing = true;
+    btn.classList.add('playing');
+    iconOn.style.display  = 'block';
+    iconOff.style.display = 'none';
+    btn.setAttribute('aria-label', 'إيقاف صوت المدينة');
+  }
+  if (window._lenis) {
+    window._lenis.on('scroll', onFirstScroll);
+  } else {
+    window.addEventListener('scroll', onFirstScroll, { passive: true });
+  }
 })();
