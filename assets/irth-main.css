@@ -492,7 +492,7 @@
       transition: border-color .25s ease;
     }
     .fnav-logo:hover { border-color: rgba(184,155,94,.85); }
-    .fnav-links { display: flex; gap: 26px; }
+    .fnav-links { display: flex; gap: 18px; }
     .fnav-link {
       font-family: 'Noto Naskh Arabic', serif; font-size: 14px;
       color: rgba(26,26,26,.7); text-decoration: none;
@@ -1192,11 +1192,15 @@
       background: var(--sand); padding: 28px 48px;
       border-top: 1px solid rgba(26,26,26,.07);
       display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
       direction: ltr;
     }
     .f-logo { display: block; text-decoration: none; }
     .f-logo img { height: 30px; object-fit: contain; opacity: .65; }
     .f-copy { font-size: 11px; color: var(--ink); opacity: .2; font-family: 'Noto Naskh Arabic', serif; }
+    .f-policy-links { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap; justify-content: center; width: 100%; border-top: 1px solid rgba(26,26,26,.06); padding-top: 16px; }
+    .f-policy-links a { font-size: 10px; letter-spacing: .08em; color: var(--ink); opacity: .35; text-decoration: none; font-family: 'Suisse Intl', 'Helvetica Neue', sans-serif; text-transform: uppercase; transition: opacity .3s; }
+    .f-policy-links a:hover { opacity: .8; }
     .f-links { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; align-items: center; }
     .f-links a { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; color: var(--ink); opacity: .28; transition: opacity .3s, color .3s; border-radius: 50%; }
     .f-links a:hover { opacity: 1; color: var(--gold); }

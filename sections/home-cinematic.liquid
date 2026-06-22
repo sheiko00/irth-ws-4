@@ -144,8 +144,10 @@
 <nav class="fnav-bar" id="fnavBar" aria-label="التنقل الرئيسي">
   <a href="{{ routes.root_url }}" class="fnav-logo" aria-label="إرث · الصفحة الرئيسية"><img src="{{ 'logo.svg' | asset_url }}" class="fnav-logo-img" alt="إرث" width="40" height="40" loading="eager"></a>
   <div class="fnav-links">
-    <a href="{{ routes.root_url }}" class="fnav-link">الرئيسية</a>
-    <a href="{{ routes.collections_url }}" class="fnav-link nav-veil-link">المجموعة</a>
+    <a href="{{ routes.root_url }}collections/dates" class="fnav-link nav-veil-link">التمر</a>
+    <a href="{{ routes.root_url }}collections/madinah-herbs" class="fnav-link nav-veil-link">الأعشاب</a>
+    <a href="{{ routes.root_url }}collections/spirit-of-madinah" class="fnav-link nav-veil-link">روح المدينة</a>
+    <a href="{{ routes.root_url }}collections/gift-boxes" class="fnav-link nav-veil-link">الهدايا</a>
     <a href="{{ routes.root_url }}pages/about" class="fnav-link nav-veil-link">قصتنا</a>
     <a href="{{ routes.root_url }}blogs/journal" class="fnav-link nav-veil-link">المجلة</a>
   </div>
@@ -167,7 +169,10 @@
 <!-- Mobile nav drawer — outside #hud so opacity:0 on hud doesn't affect it -->
 <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
   <button class="mobile-nav-close" id="mobile-nav-close" aria-label="إغلاق القائمة">✕</button>
-  <a href="{{ routes.collections_url }}" class="nav-veil-link">المجموعة</a>
+  <a href="{{ routes.root_url }}collections/dates" class="nav-veil-link">التمر</a>
+  <a href="{{ routes.root_url }}collections/madinah-herbs" class="nav-veil-link">الأعشاب</a>
+  <a href="{{ routes.root_url }}collections/spirit-of-madinah" class="nav-veil-link">روح المدينة</a>
+  <a href="{{ routes.root_url }}collections/gift-boxes" class="nav-veil-link">الهدايا</a>
   <a href="{{ routes.root_url }}pages/about" class="nav-veil-link">قصتنا</a>
   <a href="{{ routes.root_url }}blogs/journal" class="nav-veil-link">المجلة</a>
   <a href="#contact">تواصل</a>
@@ -604,6 +609,13 @@
   <footer>
     <a href="{{ routes.root_url }}" class="f-logo"><img src="{{ 'logo.svg' | asset_url }}" alt="إرث IRTH" width="40" height="40" loading="lazy"></a>
     <span class="f-copy">© ٢٠٢٦ إرث IRTH · جميع الحقوق محفوظة</span>
+    <ul class="f-policy-links">
+      <li><a href="{{ routes.root_url }}policies/shipping-policy" class="nav-veil-link">سياسة الشحن</a></li>
+      <li><a href="{{ routes.root_url }}policies/refund-policy" class="nav-veil-link">سياسة الإرجاع</a></li>
+      <li><a href="{{ routes.root_url }}policies/privacy-policy" class="nav-veil-link">الخصوصية</a></li>
+      <li><a href="{{ routes.root_url }}pages/contact" class="nav-veil-link">تواصل معنا</a></li>
+      <li><a href="{{ routes.root_url }}blogs/journal" class="nav-veil-link">المجلة</a></li>
+    </ul>
     <ul class="f-links">
       <li><a href="#" aria-label="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
