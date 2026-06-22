@@ -2456,3 +2456,63 @@
   /* Gifts message already 16px above; extra safety */
   .gifts-message { font-size: 16px !important; }
 }
+
+/* ══════════════════════════════════════════
+   SHOWCASE INTRO CTA — mobile-only
+══════════════════════════════════════════ */
+.hs-intro-cta { display: none; }
+@media (max-width: 768px) {
+  .hs-intro-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 28px;
+    padding: 12px 22px;
+    border: 1px solid rgba(17,17,17,.22);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    min-height: 48px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(17,17,17,.06);
+    transition: border-color .25s, color .25s;
+    align-self: flex-start;
+  }
+}
+@media (max-width: 480px) {
+  .hs-intro-cta { margin-top: 22px; padding: 11px 18px; font-size: 10px; }
+}
+
+/* ══════════════════════════════════════════
+   HOME PRODUCTS — view-all bottom row
+══════════════════════════════════════════ */
+.prod-more-row {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+}
+.prod-more-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  border: 1px solid rgba(17,17,17,.16);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  min-height: 48px;
+  cursor: pointer;
+  transition: border-color .3s, color .3s;
+}
+.prod-more-cta:hover { border-color: var(--gold); color: var(--gold); }
+@media (max-width: 480px) {
+  .prod-more-row { margin-top: 32px; }
+  .prod-more-cta {
+    width: 100%; justify-content: center;
+    padding: 14px 20px; min-height: 52px;
+  }
+}

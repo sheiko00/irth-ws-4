@@ -45,12 +45,10 @@
   const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (REDUCED_MOTION) document.documentElement.classList.add('reduced-motion');
 
+  let qxCur, qyCur;
   if (!REDUCED_MOTION) {
-    window.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      gsap.to(cur, { x: mx, y: my, duration: 0.07 });
-      gsap.set(curLabel, { x: mx, y: my });
-    });
+    qxCur = gsap.quickTo(cur, 'x', { duration: 0.07 });
+    qyCur = gsap.quickTo(cur, 'y', { duration: 0.07 });
     (function rf() {
       rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
       gsap.set(curRing, { x: rx, y: ry });
@@ -101,15 +99,6 @@
   ══════════════════════════════════════════ */
   const pl = document.getElementById('pl');
   const pr = document.getElementById('pr');
-  window.addEventListener('mousemove', e => {
-    [pl, pr].forEach(p => {
-      if (!p) return;
-      const eye = p.parentElement;
-      const r = eye.getBoundingClientRect();
-      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      p.style.transform = `translate(${Math.max(-10,Math.min(10,(e.clientX-cx)*.18))}px,${Math.max(-8,Math.min(8,(e.clientY-cy)*.14))}px)`;
-    });
-  });
 
   /* ══════════════════════════════════════════
      PAGE TRANSITION VEIL
@@ -137,10 +126,20 @@
   const hud       = document.getElementById('hud');
   let mouseX = 0, mouseY = 0, smoothX = 0, smoothY = 0, scrollScale = 1;
 
+  /* Unified mousemove — cursor (if !RM) + eyes + video parallax */
   window.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (qxCur) { qxCur(mx); qyCur(my); gsap.set(curLabel, { x: mx, y: my }); }
+    [pl, pr].forEach(p => {
+      if (!p) return;
+      const eye = p.parentElement;
+      const r = eye.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      p.style.transform = `translate(${Math.max(-10,Math.min(10,(e.clientX-cx)*.18))}px,${Math.max(-8,Math.min(8,(e.clientY-cy)*.14))}px)`;
+    });
     mouseX = ((e.clientX - window.innerWidth  / 2) / (window.innerWidth  / 2)) * -26;
     mouseY = ((e.clientY - window.innerHeight / 2) / (window.innerHeight / 2)) * -18;
-  });
+  }, { passive: true });
   gsap.ticker.add(() => {
     smoothX += (mouseX - smoothX) * 0.07;
     smoothY += (mouseY - smoothY) * 0.07;
@@ -165,11 +164,6 @@
       });
     });
   }
-  addMagnetic('.h-pill',      0.30);
-  addMagnetic('.contact-btn', 0.28);
-  addMagnetic('.e-btn',       0.25);
-  addMagnetic('.n-dot',       0.40);
-  addMagnetic('.ov-order',    0.22);
 
   /* ══════════════════════════════════════════
      PRODUCT OVERLAY
@@ -853,8 +847,10 @@
       particles.push(p);
     }
 
-    (function tick() {
-      requestAnimationFrame(tick);
+    const trail = [];
+    const TRAIL_LEN = 12;
+    (function masterTick() {
+      requestAnimationFrame(masterTick);
       ctx.clearRect(0, 0, W, H);
       particles.forEach(p => {
         p.x += p.vx; p.y += p.vy; p.life++;
@@ -863,6 +859,15 @@
         ctx.fillStyle = `rgba(201,168,106,${p.a * Math.min(fade, 1)})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      trail.unshift({ x: mx, y: my });
+      if (trail.length > TRAIL_LEN) trail.pop();
+      trail.forEach((pt, i) => {
+        const a = (TRAIL_LEN - i) / TRAIL_LEN * 0.35;
+        ctx.fillStyle = `rgba(201,168,106,${a})`;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 2.2, 0, Math.PI * 2);
         ctx.fill();
       });
     })();
@@ -874,24 +879,6 @@
       });
     }, { threshold: [0, 0.25, 0.6] });
     document.querySelectorAll('#values, .hs-intro-panel, #hscroll-section').forEach(s => obs.observe(s));
-
-    // Cursor trail
-    const trail = [];
-    const TRAIL_LEN = 12;
-    let mx = 0, my = 0;
-    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    (function trailTick() {
-      requestAnimationFrame(trailTick);
-      trail.unshift({ x: mx, y: my });
-      if (trail.length > TRAIL_LEN) trail.pop();
-      trail.forEach((pt, i) => {
-        const a = (TRAIL_LEN - i) / TRAIL_LEN * 0.35;
-        ctx.fillStyle = `rgba(201,168,106,${a})`;
-        ctx.beginPath();
-        ctx.arc(pt.x, pt.y, 2.2, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    })();
   }
 
   /* ── PHASE 4 · SCENE NUMBER CARDS (film chapter marks) ── */
@@ -931,7 +918,7 @@
   /* ── PHASE 3 · MAGNETIC CTAs ── */
   function initMagnetic() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    document.querySelectorAll('.h-pill, .contact-btn, .e-btn, .ov-order').forEach(el => {
+    document.querySelectorAll('.h-pill, .contact-btn, .e-btn, .ov-order, .n-dot').forEach(el => {
       const qx = gsap.quickTo(el, 'x', { duration: 0.4, ease: 'power3.out' });
       const qy = gsap.quickTo(el, 'y', { duration: 0.4, ease: 'power3.out' });
       el.addEventListener('mousemove', e => {
@@ -951,13 +938,16 @@
     document.querySelectorAll('.prod-card').forEach(card => {
       card.style.transformStyle = 'preserve-3d';
       card.style.perspective    = '900px';
+      let _r = null;
+      card.addEventListener('mouseenter', () => { _r = card.getBoundingClientRect(); });
       card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width  - 0.5;
-        const py = (e.clientY - r.top)  / r.height - 0.5;
+        if (!_r) return;
+        const px = (e.clientX - _r.left) / _r.width  - 0.5;
+        const py = (e.clientY - _r.top)  / _r.height - 0.5;
         card.style.transform = `perspective(900px) rotateY(${px * 6}deg) rotateX(${-py * 6}deg) translateZ(0)`;
       });
       card.addEventListener('mouseleave', () => {
+        _r = null;
         card.style.transform = 'perspective(900px) rotateY(0) rotateX(0)';
       });
     });
