@@ -71,7 +71,7 @@
     <source media="(max-width: 768px)" src="{{ 'intro-mobile.mp4' | asset_url }}"  type="video/mp4">
     <source src="{{ 'intro-desktop.webm' | asset_url }}" type="video/webm">
     <source src="{{ 'intro-desktop.mp4' | asset_url }}"  type="video/mp4">
-    <source src="assets/intro.mp4" type="video/mp4"><!-- raw fallback until compression run -->
+    <source src="{{ 'intro.mp4' | asset_url }}" type="video/mp4">
   </video>
   <!-- Color grade layers -->
   <div class="film-grade"></div>
@@ -121,24 +121,24 @@
       <span class="h-line-wrap"><span class="inner ar-line">من تراب المدينة</span></span>
       <span class="h-line-wrap"><span class="inner ar-line-bold">إلى مائدتك</span></span>
     </h1>
-    <a href="{{ routes.collections_url }}" class="h-pill nav-veil-link">ابدأ رحلتك مع الإرث ↘</a>
+    <a href="#products" class="h-pill">ابدأ رحلتك مع الإرث ↘</a>
   </div>
 
   <div class="h-bottom">
-    <div class="h-bottom-group">
-      <button class="audio-pill" id="audio-pill" aria-label="Toggle ambient audio">
-        <span class="audio-bars"><span></span><span></span><span></span><span></span></span>
-        <span class="audio-label">Madinah · Ambient</span>
-      </button>
-    </div>
     <div class="h-year">©2026</div>
   </div>
 </div>
 
 <!-- Ambient track for audio-pill -->
 <audio id="amb-track" loop preload="none">
-  <source src="assets/ambient.mp3" type="audio/mpeg">
+  <source src="{{ 'ambient.mp3' | asset_url }}" type="audio/mpeg">
 </audio>
+
+<!-- Floating ambient pill — fixed, always above page content -->
+<button class="audio-pill" id="audio-pill" aria-label="Toggle ambient audio">
+  <span class="audio-bars"><span></span><span></span><span></span><span></span></span>
+  <span class="audio-label">Madinah · Ambient</span>
+</button>
 
 <!-- ── FLOATING PILL NAV — Phase 02 (persistent, outside #hud) ── -->
 <nav class="fnav-bar" id="fnavBar" aria-label="التنقل الرئيسي">
@@ -302,14 +302,14 @@
 
   <!-- ── CATEGORY ACT 01 · التمر ── -->
   <section class="cat cat-tamr" data-section="01a" data-section-name="Dates">
-    <div class="cat-bg" style="background-image:url('assets/dates-cream-linen.png')"></div>
+    <div class="cat-bg" style="background-image:url('{{ 'dates-cream-linen.png' | asset_url }}')"></div>
     <div class="cat-text">
       <div class="cat-num">— 01 · القسم الأول</div>
       <h2 class="cat-ar">التمر</h2>
       <div class="cat-en">Sweetness, harvested by hand</div>
       <div class="cat-rule"></div>
       <p class="cat-desc">عجوة ومجول، يُقطفان في موسم النضج فقط من نخيل العوالي. كل حبة تُفرز يدويًا قبل أن تستقر في صندوقها.</p>
-      <a href="collection.html#tamr" class="cat-cta nav-veil-link">اكتشف التمر ↘</a>
+      <a href="{{ routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف التمر ↘</a>
     </div>
     <div class="cat-grid">
       <a href="{{ routes.root_url }}products/dates" class="cat-card">
@@ -331,14 +331,14 @@
 
   <!-- ── CATEGORY ACT 02 · أعشاب المدينه ── -->
   <section class="cat cat-herbs" data-section="01b" data-section-name="Herbs">
-    <div class="cat-bg" style="background-image:url('assets/madinah-mint.jpg')"></div>
+    <div class="cat-bg" style="background-image:url('{{ 'madinah-mint.jpg' | asset_url }}')"></div>
     <div class="cat-text">
       <div class="cat-num">— 02 · القسم الثاني</div>
       <h2 class="cat-ar">أعشاب المدينه</h2>
       <div class="cat-en">Dried slow. Kept close.</div>
       <div class="cat-rule"></div>
       <p class="cat-desc">نعناع، قرفة، إكليل جبل — أعشاب جُمعت من مزارع المدينة، مجفّفة طبيعيًا، تحمل رائحة الأرض الأصلية في كل حبّة.</p>
-      <a href="collection.html#herbs" class="cat-cta nav-veil-link">اكتشف الأعشاب ↘</a>
+      <a href="{{ routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف الأعشاب ↘</a>
     </div>
     <div class="cat-grid">
       <a href="{{ routes.root_url }}products/mint" class="cat-card">
@@ -360,14 +360,14 @@
 
   <!-- ── CATEGORY ACT 03 · روح المدينه ── -->
   <section class="cat cat-ruh" data-section="01c" data-section-name="Spirit">
-    <div class="cat-bg" style="background-image:url('assets/oud-oil.jpg')"></div>
+    <div class="cat-bg" style="background-image:url('{{ 'oud-oil.jpg' | asset_url }}')"></div>
     <div class="cat-text">
       <div class="cat-num">— 03 · القسم الثالث</div>
       <h2 class="cat-ar">روح المدينه</h2>
       <div class="cat-en">What lingers after</div>
       <div class="cat-rule"></div>
       <p class="cat-desc">عسل السدر، زيت العود، زيت الزيتون — جواهر تحمل رائحة الأرض وذاكرة الأجداد، تُهدى بحبّ، تُذكر إلى الأبد.</p>
-      <a href="collection.html#ruh" class="cat-cta nav-veil-link">اكتشف الروح ↘</a>
+      <a href="{{ routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف الروح ↘</a>
     </div>
     <div class="cat-grid">
       <a href="{{ routes.root_url }}products/oud" class="cat-card">

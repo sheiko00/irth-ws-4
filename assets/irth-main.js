@@ -268,6 +268,21 @@
     initCursorSwap();
     initParticles();
     initSceneCards();
+
+    // h-pill → smooth scroll to products section
+    const pill = document.querySelector('.h-pill');
+    if (pill) {
+      pill.addEventListener('click', e => {
+        const target = document.getElementById('products');
+        if (!target) return;
+        e.preventDefault();
+        if (window._lenis) {
+          window._lenis.scrollTo(target, { offset: -80, duration: 1.4 });
+        } else {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
   }
 
   function finishEnter() {
@@ -450,6 +465,7 @@
   ══════════════════════════════════════════ */
   function initScroll() {
     const lenis = new Lenis({ lerp: 0.075 });
+    window._lenis = lenis;
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(tm => lenis.raf(tm * 1000));
     gsap.ticker.lagSmoothing(0);

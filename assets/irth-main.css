@@ -606,6 +606,17 @@
     }
 
     /* ── AUDIO PILL (Unseen signature) ── */
+    /* Moved outside #hud — fixed floating, always above page content */
+    #audio-pill {
+      position: fixed;
+      bottom: 28px;
+      left: 40px;
+      z-index: 1500;
+      opacity: 0;
+      transition: opacity .6s .2s;
+    }
+    #audio-pill.floating { opacity: 1; }
+
     .audio-pill {
       display: flex; align-items: center; gap: 12px;
       background: linear-gradient(135deg, rgba(216,204,188,.5) 0%, rgba(243,239,231,.36) 100%);
@@ -767,39 +778,70 @@
     }
 
     /* ══════════════════════════════════════════
-       PRODUCTS GRID
+       PRODUCTS GRID — Liquid Glass Cards
     ══════════════════════════════════════════ */
-    #products { background: var(--sand); padding: 110px 48px; }
+    #products {
+      background: linear-gradient(145deg, #E5DDD0 0%, #EDE6D9 35%, #E2D8C8 65%, #D9CFBE 100%);
+      padding: 110px 48px;
+    }
 
-    .prod-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+    .prod-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+
+    /* iOS-style frosted glass card */
     .prod-card {
-      background: var(--warm); cursor: none; overflow: hidden;
+      background: linear-gradient(145deg, rgba(255,255,255,.52) 0%, rgba(243,239,231,.38) 100%);
+      backdrop-filter: blur(28px) saturate(1.8) brightness(1.06);
+      -webkit-backdrop-filter: blur(28px) saturate(1.8) brightness(1.06);
+      border: 1px solid rgba(255,255,255,.62);
+      border-bottom-color: rgba(255,255,255,.22);
+      border-right-color: rgba(255,255,255,.22);
+      border-radius: 24px;
+      overflow: hidden;
       position: relative;
+      cursor: none;
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.7) inset,
+        0 10px 40px rgba(26,26,26,.07),
+        0 2px 8px rgba(26,26,26,.04);
+      transition: transform .45s cubic-bezier(.22,1,.36,1),
+                  box-shadow .45s cubic-bezier(.22,1,.36,1);
     }
-    .prod-img { aspect-ratio: 4/5; overflow: hidden; }
+    .prod-card:hover {
+      transform: translateY(-6px) scale(1.012);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.7) inset,
+        0 20px 60px rgba(26,26,26,.13),
+        0 6px 20px rgba(26,26,26,.06);
+    }
+
+    .prod-img { aspect-ratio: 4/5; overflow: hidden; border-radius: 18px 18px 0 0; }
     .prod-img img {
-      width: 100%; height: 110%; object-fit: cover; display: block;
-      filter: saturate(.82); will-change: transform;
-      transition: filter .5s;
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: saturate(.88); will-change: transform;
+      transition: filter .5s, transform .6s cubic-bezier(.22,1,.36,1);
     }
-    .prod-card:hover .prod-img img { filter: saturate(1.05); }
-    .prod-meta { padding: 22px 24px 16px; }
-    .prod-num { font-size: 10px; color: var(--ink); opacity: .25; letter-spacing: .1em; margin-bottom: 5px; }
+    .prod-card:hover .prod-img img { filter: saturate(1.08); transform: scale(1.04); }
+
+    .prod-meta { padding: 20px 22px 16px; }
+    .prod-num { font-size: 10px; color: var(--ink); opacity: .22; letter-spacing: .1em; margin-bottom: 5px; }
     .prod-name { font-size: 17px; color: var(--ink); font-family: 'Noto Naskh Arabic', serif; direction: rtl; }
     .prod-name-en { font-size: 11px; color: var(--ink); opacity: .38; letter-spacing: .1em; text-transform: uppercase; margin-top: 3px; }
     .prod-origin { font-size: 11px; color: var(--gold); opacity: .78; margin-top: 6px; }
     .prod-price { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--gold); margin-top: 9px; letter-spacing: .03em; }
-    /* Gold line */
+
+    /* Gold shimmer line on hover */
     .prod-card::after {
-      content: ''; display: block; height: 1px;
-      background: var(--gold); width: 0%;
-      transition: width .6s cubic-bezier(.22,1,.36,1);
+      content: ''; position: absolute; bottom: 0; left: 0;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transition: width .7s cubic-bezier(.22,1,.36,1);
+      border-radius: 0 0 24px 24px;
     }
     .prod-card:hover::after { width: 100%; }
 
     /* Expand indicator */
     .prod-expand-hint {
-      position: absolute; bottom: 16px; right: 20px;
+      position: absolute; bottom: 18px; right: 22px;
       font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
       color: var(--gold); opacity: 0;
       transition: opacity .3s;
@@ -2216,9 +2258,19 @@
   /* ── About numbers 2-col on tablet ── */
   .about-num-item { padding: 40px 20px; }
 
-  /* ── Products grid: 2-column on tablet ── */
-  .prod-grid { grid-template-columns: repeat(2, 1fr); }
-  .prod-img img { height: 100%; object-position: center top; }
+  /* ── Products grid: 2-column on tablet, glass cards ── */
+  #products { padding: 70px 16px; }
+  .prod-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .prod-img { border-radius: 16px 16px 0 0; }
+  .prod-img img { object-position: center top; }
+  .prod-card { border-radius: 18px; }
+
+  /* ── Floating audio pill: bottom-right on mobile ── */
+  #audio-pill {
+    left: auto !important;
+    right: 16px;
+    bottom: 20px;
+  }
 
   /* ════════════════════════════════════════
      MOBILE HERO — full redesign
