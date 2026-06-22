@@ -320,7 +320,7 @@
         // Video fade in
         gsap.to(transVid, { opacity: 1, duration: .55, ease: 'power2.out' });
         transVid.classList.add('playing');
-        transVid.play().catch(() => {});
+        transVid.play().catch(() => { finishEnter(); });
         // Letterbox bars slide IN — cinematic crop
         gsap.to(filmLbTop, { yPercent: 0, duration: .75, ease: 'power3.out', delay: .1 });
         gsap.to(filmLbBot, { yPercent: 0, duration: .75, ease: 'power3.out', delay: .1 });
@@ -406,6 +406,8 @@
   function initHScroll() {
     const section = document.getElementById('hscroll-section');
     const track   = document.getElementById('hscroll-track');
+
+    if (window.innerWidth <= 768) return;
 
     // Reduced-motion: no scroll-jacking pin — make showcase a simple swipeable strip
     if (REDUCED_MOTION) {
@@ -513,7 +515,7 @@
 
     /* PHASE 2 · Pin story image side */
     const storyImgPin = document.querySelector('.story-img-side');
-    if (storyImgPin) {
+    if (storyImgPin && window.innerWidth > 768) {
       ScrollTrigger.create({
         trigger: '#story', start: 'top top', end: 'bottom bottom',
         pin: storyImgPin, pinSpacing: false

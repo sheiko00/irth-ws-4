@@ -2215,6 +2215,10 @@
 
   /* ── About numbers 2-col on tablet ── */
   .about-num-item { padding: 40px 20px; }
+
+  /* ── Products grid: 2-column on tablet ── */
+  .prod-grid { grid-template-columns: repeat(2, 1fr); }
+  .prod-img img { height: 100%; object-position: center top; }
 }
 
 /* ══════════════════════════════════════════
@@ -2281,6 +2285,7 @@
 
   /* ── Products ── */
   #products   { padding: 56px 16px 64px; }
+  .prod-grid  { grid-template-columns: 1fr; }
   .prod-meta  { padding: 16px 18px 12px; }
   .prod-name  { font-size: 15px; }
   .prod-name-en { font-size: 10px; }
