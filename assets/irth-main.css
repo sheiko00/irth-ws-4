@@ -913,6 +913,7 @@
     ══════════════════════════════════════════ */
     #hscroll-section {
       position: relative;
+      touch-action: pan-y;
       /* height set by JS based on how many panels × viewport */
     }
     #hscroll-sticky {
@@ -1468,8 +1469,9 @@
        RITUAL SCROLL SECTION (Phase 06)
     ══════════════════════════════════════════ */
     #ritual {
-      height: 560vh;
+      height: 300vh;
       position: relative;
+      touch-action: pan-y;
     }
 
     .ritual-hero {
@@ -2340,7 +2342,7 @@
 @media (max-width: 480px) {
 
   /* ── Reduce scroll-space: shorter zoom animation ── */
-  .scroll-space { height: 160vh; }
+  .scroll-space { height: 160vh !important; }
 
   /* ── Letterbox: hide on phone (too obtrusive) ── */
   #letterbox-top, #letterbox-bot { display: none; }
@@ -2573,6 +2575,9 @@
 
   /* Gifts message already 16px above; extra safety */
   .gifts-message { font-size: 16px !important; }
+
+  /* Remove custom cursor — touch devices show OS default */
+  body { cursor: auto !important; }
 }
 
 /* ══════════════════════════════════════════
@@ -2658,8 +2663,8 @@
     opacity: .5 !important;
     max-width: 100%;
   }
-  .ar-line      { font-size: clamp(26px, 6.8vw, 54px) !important; }
-  .ar-line-bold { font-size: clamp(28px, 7.2vw, 58px) !important; }
+  .ar-line      { font-size: clamp(32px, 8.5vw, 54px) !important; }
+  .ar-line-bold { font-size: clamp(34px, 9vw, 58px) !important; }
   .h-pill {
     opacity: 1 !important;
     margin-top: 8px;
@@ -2667,6 +2672,11 @@
     font-size: 14px !important;
   }
   .h-title { margin-bottom: 24px; }
+  .fnav-bar { opacity: 1 !important; pointer-events: all !important; }
+  .fnav-logo { width: 48px; height: 48px; font-size: 20px; }
+  .hero-logo-seal { opacity: 1 !important; }
+  .prod-img img { transform: none !important; }
+  .col-hero-bg-img { transform: none !important; }
 }
 
 /* ── Ritual: strip sticky scroll on mobile — show as single hero section ── */
@@ -2713,7 +2723,8 @@
     height: 70vw !important;
     max-height: 300px !important;
   }
-  .ar-line      { font-size: clamp(22px, 6.5vw, 36px) !important; }
-  .ar-line-bold { font-size: clamp(24px, 7vw, 40px) !important; }
+  .ar-line      { font-size: clamp(28px, 7.5vw, 40px) !important; }
+  .ar-line-bold { font-size: clamp(30px, 8vw, 44px) !important; }
   .h-pill { font-size: 13px !important; padding: 10px 20px !important; }
+  .fnav-logo { width: 44px; height: 44px; font-size: 18px; }
 }

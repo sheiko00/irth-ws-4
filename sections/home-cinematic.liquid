@@ -230,7 +230,7 @@
         <div class="sec-ey">The Collection · المجموعة</div>
         <h2 class="sec-title ar">منتجاتنا</h2>
       </div>
-      <a href="{{ routes.collections_url }}" class="view-all nav-veil-link">المجموعة الكاملة ↘</a>
+      <a href="{{ routes.all_products_collection_url }}" class="view-all nav-veil-link">المجموعة الكاملة ↘</a>
     </div>
     <div class="prod-grid">
       <div class="prod-card" data-prod-num="01" data-prod-ar="التمور المجلّلة" data-prod-en="Premium Dates" data-prod-origin="المدينة المنورة" data-prod-img="{{ 'dates-cream-linen.png' | asset_url }}" data-prod-desc="Hand-selected Ajwa and Medjoul dates from Madinah's finest farms." data-prod-desc-ar="عجوة ومجول، يُقطفان في موسم النضج فقط من نخيل العوالي. كل حبة تُفرز يدويًا قبل أن تستقر في صندوقها.">
@@ -301,7 +301,7 @@
       </div>
     </div>
     <div class="prod-more-row">
-      <a href="{{ routes.collections_url }}" class="prod-more-cta nav-veil-link" lang="ar" dir="rtl">عرض جميع المنتجات · ٢٩ منتجاً ↘</a>
+      <a href="{{ routes.all_products_collection_url }}" class="prod-more-cta nav-veil-link" lang="ar" dir="rtl">عرض جميع المنتجات · ٢٩ منتجاً ↘</a>
     </div>
   </section>
 
@@ -314,17 +314,17 @@
       <div class="cat-en">Sweetness, harvested by hand</div>
       <div class="cat-rule"></div>
       <p class="cat-desc">عجوة ومجول، يُقطفان في موسم النضج فقط من نخيل العوالي. كل حبة تُفرز يدويًا قبل أن تستقر في صندوقها.</p>
-      <a href="{{ routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف التمر ↘</a>
+      <a href="{{ collections['dates'].url | default: routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف التمر ↘</a>
     </div>
     <div class="cat-grid">
-      <a href="{{ routes.root_url }}products/dates" class="cat-card">
+      <a href="{{ collections['dates'].url | default: routes.collections_url }}" class="cat-card">
         <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="التمور المجلّلة" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">التمور المجلّلة</div>
           <div class="cat-card-en">Premium Dates · Madinah</div>
         </div>
       </a>
-      <a href="{{ routes.root_url }}products/dates" class="cat-card">
+      <a href="{{ collections['dates'].url | default: routes.collections_url }}" class="cat-card">
         <img src="{{ 'dates-cream-linen.png' | asset_url }}" alt="عجوة" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">عجوة</div>
@@ -343,17 +343,17 @@
       <div class="cat-en">Dried slow. Kept close.</div>
       <div class="cat-rule"></div>
       <p class="cat-desc">نعناع، قرفة، إكليل جبل — أعشاب جُمعت من مزارع المدينة، مجفّفة طبيعيًا، تحمل رائحة الأرض الأصلية في كل حبّة.</p>
-      <a href="{{ routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف الأعشاب ↘</a>
+      <a href="{{ collections['madinah-herbs'].url | default: routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف الأعشاب ↘</a>
     </div>
     <div class="cat-grid">
-      <a href="{{ routes.root_url }}products/mint" class="cat-card">
+      <a href="{{ collections['madinah-herbs'].url | default: routes.collections_url }}" class="cat-card">
         <img src="{{ 'madinah-mint.jpg' | asset_url }}" alt="نعناع" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">نعناع المدينة</div>
           <div class="cat-card-en">Madinah Mint</div>
         </div>
       </a>
-      <a href="{{ routes.root_url }}products/cinnamon" class="cat-card">
+      <a href="{{ collections['madinah-herbs'].url | default: routes.collections_url }}" class="cat-card">
         <img src="{{ 'cinnamon-powder.jpg' | asset_url }}" alt="قرفة" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">القرفة السيلانية</div>
@@ -372,17 +372,17 @@
       <div class="cat-en">What lingers after</div>
       <div class="cat-rule"></div>
       <p class="cat-desc">عسل السدر، زيت العود، زيت الزيتون — جواهر تحمل رائحة الأرض وذاكرة الأجداد، تُهدى بحبّ، تُذكر إلى الأبد.</p>
-      <a href="{{ routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف الروح ↘</a>
+      <a href="{{ collections['spirit-of-madinah'].url | default: routes.collections_url }}" class="cat-cta nav-veil-link">اكتشف الروح ↘</a>
     </div>
     <div class="cat-grid">
-      <a href="{{ routes.root_url }}products/oud" class="cat-card">
+      <a href="{{ collections['spirit-of-madinah'].url | default: routes.collections_url }}" class="cat-card">
         <img src="{{ 'oud-oil.jpg' | asset_url }}" alt="زيت العود" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">زيت العود النقي</div>
           <div class="cat-card-en">Pure Oud Oil</div>
         </div>
       </a>
-      <a href="{{ routes.root_url }}products/honey" class="cat-card">
+      <a href="{{ collections['spirit-of-madinah'].url | default: routes.collections_url }}" class="cat-card">
         <img src="{{ 'sidr-honey.jpg' | asset_url }}" alt="عسل السدر" width="600" height="600" loading="lazy">
         <div class="cat-card-meta">
           <div class="cat-card-ar">عسل السدر الملكي</div>
@@ -405,7 +405,7 @@
             <div class="hs-drag-hint-line"></div>
             <span>DRAG →</span>
           </div>
-          <a href="{{ routes.collections_url }}" class="hs-intro-cta nav-veil-link" lang="ar" dir="rtl">اكتشف المجموعة ↘</a>
+          <a href="{{ collections['gift-boxes'].url | default: routes.collections_url }}" class="hs-intro-cta nav-veil-link" lang="ar" dir="rtl">اكتشف المجموعة ↘</a>
         </div>
         <!-- Panels filled by JS from prod-cards data -->
         <div class="hs-panel" id="hs-p1">

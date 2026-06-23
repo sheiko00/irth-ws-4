@@ -284,15 +284,16 @@
     initParticles();
     initSceneCards();
 
-    // h-pill → smooth scroll to products section
+    // h-pill → auto-scroll through zoom animation into ritual section
     const pill = document.querySelector('.h-pill');
     if (pill) {
       pill.addEventListener('click', e => {
-        const target = document.getElementById('products');
-        if (!target) return;
         e.preventDefault();
+        const ritual = document.getElementById('ritual');
+        const target = ritual || document.getElementById('products');
+        if (!target) return;
         if (window._lenis) {
-          window._lenis.scrollTo(target, { offset: -80, duration: 1.4 });
+          window._lenis.scrollTo(target, { offset: -60, duration: 3.2, easing: t => 1 - Math.pow(1 - t, 3) });
         } else {
           target.scrollIntoView({ behavior: 'smooth' });
         }
@@ -344,31 +345,31 @@
       opacity: 0, scale: 1.05, duration: .6, ease: 'power2.inOut',
       onComplete: () => { entry.style.display = 'none'; }
     });
-    // Iris expand
+    // Iris expand — halved from .9s
     transOverlay.style.pointerEvents = 'all';
     gsap.to(transOverlay, {
       clipPath: 'circle(150% at 50% 44%)',
-      duration: .9, ease: 'power2.inOut',
+      duration: .5, ease: 'power2.inOut',
       onComplete: () => {
         // Video fade in
-        gsap.to(transVid, { opacity: 1, duration: .55, ease: 'power2.out' });
+        gsap.to(transVid, { opacity: 1, duration: .4, ease: 'power2.out' });
         transVid.classList.add('playing');
         transVid.play().catch(() => { finishEnter(); });
         // Letterbox bars slide IN — cinematic crop
-        gsap.to(filmLbTop, { yPercent: 0, duration: .75, ease: 'power3.out', delay: .1 });
-        gsap.to(filmLbBot, { yPercent: 0, duration: .75, ease: 'power3.out', delay: .1 });
-        // Title emerge at 2.2s
+        gsap.to(filmLbTop, { yPercent: 0, duration: .5, ease: 'power3.out', delay: .05 });
+        gsap.to(filmLbBot, { yPercent: 0, duration: .5, ease: 'power3.out', delay: .05 });
+        // Title emerge at 1.2s (was 2.2)
         gsap.fromTo(filmTitle,
           { opacity: 0, y: 28 },
-          { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 2.2 }
+          { opacity: 1, y: 0, duration: .8, ease: 'power3.out', delay: 1.2 }
         );
-        // Title hold then fade at 7s
-        gsap.to(filmTitle, { opacity: 0, y: -18, duration: .9, ease: 'power2.in', delay: 7.0 });
+        // Title hold then fade at 3.5s (was 7.0)
+        gsap.to(filmTitle, { opacity: 0, y: -18, duration: .7, ease: 'power2.in', delay: 3.5 });
       }
     });
     transVid.addEventListener('ended', finishEnter, { once: true });
-    // Safety gate — fires at 10.5s if 'ended' event doesn't fire (e.g. mobile autoplay blocked)
-    setTimeout(finishEnter, 10500);
+    // Safety gate — fires at 5.5s (was 10.5)
+    setTimeout(finishEnter, 5500);
   }
 
   function doEnterDirect() {
@@ -607,11 +608,13 @@
         opacity: 1, y: 0, duration: .85, ease: 'power2.out', delay: i * 0.07,
         scrollTrigger: { trigger: card, start: 'top 88%' }
       });
-      const img = card.querySelector('.prod-img img');
-      gsap.fromTo(img, { yPercent: -6 }, {
-        yPercent: 6, ease: 'none',
-        scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
-      });
+      if (window.innerWidth > 768) {
+        const img = card.querySelector('.prod-img img');
+        gsap.fromTo(img, { yPercent: -6 }, {
+          yPercent: 6, ease: 'none',
+          scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      }
     });
 
     // Story image parallax
