@@ -1,5 +1,6 @@
 <div class="blog-page">
   <header class="blog-hero">
+    <img src="{{ 'hero-journal.png' | asset_url }}" alt="" class="blog-hero-img" aria-hidden="true" loading="eager" fetchpriority="high" width="1920" height="1080">
     <div class="blog-hero-inner">
       <p class="blog-eyebrow">{{ section.settings.eyebrow | default: 'من قلب المدينة' }}</p>
       <h1 class="blog-title">{{ blog.title | default: section.settings.title | default: 'مجلة إرث' }}</h1>
@@ -108,6 +109,7 @@
 .blog-page { background: var(--ivory); min-height: 60vh; }
 
 .blog-hero { background: var(--madinah); padding: 120px 48px 80px; text-align: center; position: relative; overflow: hidden; }
+.blog-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .28; }
 .blog-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, rgba(184,155,94,.03) 0, rgba(184,155,94,.03) 1px, transparent 1px, transparent 9px); pointer-events: none; }
 .blog-hero-inner { position: relative; max-width: 640px; margin: 0 auto; }
 .blog-eyebrow { font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }

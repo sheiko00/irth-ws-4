@@ -8,10 +8,30 @@
 
 <div class="col-hero-wrap" id="col-hero">
 
+  {%- liquid
+    case collection.handle
+      when 'dates'
+        assign col_hero_img = 'hero-dates.png' | asset_url
+      when 'madinah-herbs'
+        assign col_hero_img = 'hero-herbs.png' | asset_url
+      when 'gift-boxes'
+        assign col_hero_img = 'hero-gifts.png' | asset_url
+      when 'spirit-of-madinah'
+        assign col_hero_img = 'hero-spirit.png' | asset_url
+      else
+        assign col_hero_img = 'hero-home.png' | asset_url
+    endcase
+  -%}
+
   <div class="col-hero-bg" aria-hidden="true">
     {%- if collection.image -%}
       <img src="{{ collection.image | image_url: width: 1920 }}" alt=""
-           class="col-hero-bg-img" width="1920" height="1080" loading="eager">
+           class="col-hero-bg-img" width="1920" height="1080" loading="eager"
+           fetchpriority="high">
+    {%- else -%}
+      <img src="{{ col_hero_img }}" alt=""
+           class="col-hero-bg-img" width="1920" height="1080" loading="eager"
+           fetchpriority="high">
     {%- endif -%}
     <div class="col-hero-overlay"></div>
   </div>
