@@ -2634,3 +2634,86 @@
     padding: 14px 20px; min-height: 52px;
   }
 }
+
+/* ══════════════════════════════════════════
+   MOBILE FIX LAYER — hero, ritual, hscroll
+   Applied on top of all existing mobile rules
+══════════════════════════════════════════ */
+
+/* ── Hero center: constrain width so Arabic text doesn't overflow ── */
+@media (max-width: 768px) {
+  .h-center {
+    width: calc(100vw - 40px);
+    max-width: 100%;
+    left: 50%;
+    top: 46%;
+    transform: translate(-50%, -50%);
+  }
+  .h-eyebrow {
+    white-space: normal;
+    word-break: break-word;
+    font-size: 8px !important;
+    letter-spacing: .14em;
+    margin-bottom: 14px !important;
+    opacity: .5 !important;
+    max-width: 100%;
+  }
+  .ar-line      { font-size: clamp(26px, 6.8vw, 54px) !important; }
+  .ar-line-bold { font-size: clamp(28px, 7.2vw, 58px) !important; }
+  .h-pill {
+    opacity: 1 !important;
+    margin-top: 8px;
+    padding: 11px 22px !important;
+    font-size: 14px !important;
+  }
+  .h-title { margin-bottom: 24px; }
+}
+
+/* ── Ritual: strip sticky scroll on mobile — show as single hero section ── */
+@media (max-width: 768px) {
+  #ritual { height: auto !important; }
+  .ritual-hero {
+    position: relative !important;
+    height: 100svh !important;
+    min-height: 520px !important;
+  }
+  .ritual-media canvas { display: none !important; }
+  /* Fallback was a blurred bg-layer behind canvas; on mobile it IS the image */
+  .ritual-fallback {
+    filter: saturate(1.05) brightness(0.55) !important;
+    transform: none !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+  .ritual-scroll-hint { display: none !important; }
+  .ritual-content {
+    position: absolute !important;
+    inset: auto 20px 40px 20px !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+  .ritual-stages { display: none !important; }
+}
+
+/* ── Hscroll panels: square product images — crop from top not center ── */
+@media (max-width: 768px) {
+  .hs-panel {
+    height: 65vw !important;
+    max-height: 360px !important;
+  }
+  .hs-panel img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
+  }
+}
+@media (max-width: 480px) {
+  .hs-panel {
+    height: 70vw !important;
+    max-height: 300px !important;
+  }
+  .ar-line      { font-size: clamp(22px, 6.5vw, 36px) !important; }
+  .ar-line-bold { font-size: clamp(24px, 7vw, 40px) !important; }
+  .h-pill { font-size: 13px !important; padding: 10px 20px !important; }
+}
