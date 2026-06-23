@@ -2674,6 +2674,7 @@
   .h-title { margin-bottom: 24px; }
   .fnav-bar { opacity: 1 !important; pointer-events: all !important; }
   .fnav-logo { width: 48px; height: 48px; font-size: 20px; }
+  .fnav-logo-img { width: 38px; height: 38px; }
   .hero-logo-seal { opacity: 1 !important; }
   .prod-img img { transform: none !important; }
   .col-hero-bg-img { transform: none !important; }
@@ -2727,4 +2728,5 @@
   .ar-line-bold { font-size: clamp(30px, 8vw, 44px) !important; }
   .h-pill { font-size: 13px !important; padding: 10px 20px !important; }
   .fnav-logo { width: 44px; height: 44px; font-size: 18px; }
+  .fnav-logo-img { width: 34px; height: 34px; }
 }
