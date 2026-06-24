@@ -112,6 +112,11 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   {%- endif -%}
 
+  <!-- GSC Verification -->
+  {%- if settings.gsc_verification != blank -%}
+    <meta name="google-site-verification" content="{{ settings.gsc_verification }}">
+  {%- endif -%}
+
   <!-- Schema JSON-LD -->
   {% render 'irth-organization-schema' %}
   {%- if template.name == 'product' -%}{% render 'irth-product-schema' %}{%- endif -%}
