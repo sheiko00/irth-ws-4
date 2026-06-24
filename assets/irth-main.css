@@ -2334,6 +2334,15 @@
 
   /* Reduce scroll-space (no video zoom on mobile) */
   .scroll-space { height: 60vh !important; }
+
+  /* ── Ritual: canvas disabled on mobile — collapse sticky to static panel ── */
+  #ritual { height: auto !important; }
+  .ritual-hero {
+    position: relative !important;
+    height: 65vh;
+    min-height: 0 !important;
+  }
+  .ritual-scroll-hint { display: none; }
 }
 
 /* ══════════════════════════════════════════
@@ -2341,8 +2350,8 @@
 ══════════════════════════════════════════ */
 @media (max-width: 480px) {
 
-  /* ── Reduce scroll-space: shorter zoom animation ── */
-  .scroll-space { height: 160vh !important; }
+  /* ── Reduce scroll-space: no zoom animation on phone ── */
+  .scroll-space { height: 40vh !important; }
 
   /* ── Letterbox: hide on phone (too obtrusive) ── */
   #letterbox-top, #letterbox-bot { display: none; }
@@ -2363,8 +2372,8 @@
   .eyes  { gap: 12px; margin-bottom: 4px; }
   .eye   { width: 50px; height: 30px; }
   .e-logo-img { height: 56px; }
-  .e-desc-ar  { font-size: 13px; max-width: 260px; }
-  .e-desc     { font-size: 10px; max-width: 240px; }
+  .e-desc-ar  { font-size: 15px; max-width: 260px; }
+  .e-desc     { font-size: 12px; max-width: 240px; }
   .e-btn      { min-height: 48px; padding: 12px 22px; font-size: 14px; }
 
   /* ── Hero: show eyebrow at smaller size ── */
@@ -2453,8 +2462,6 @@
     display: inline-flex;
   }
 
-  /* ── Ritual section: shorter scroll distance ── */
-  #ritual          { height: 380vh; }
   .ritual-content  { inset: auto 16px 28px; gap: 14px; }
   .ritual-heading  { font-size: clamp(1.7rem, 8vw, 2.8rem); }
   .ritual-sub      { font-size: .88rem; margin-top: 10px; }
