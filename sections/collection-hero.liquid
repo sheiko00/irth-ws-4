@@ -1,17 +1,65 @@
-<div class="col-hero">
-  <div class="col-hero-inner">
-    <span class="sec-ey">{{ section.settings.eyebrow | default: 'المجموعة' }}</span>
-    <h1 class="col-hero-title" lang="ar" dir="rtl">
-      {{ section.settings.title_ar | default: collection.title | default: 'المجموعة الكاملة' }}
-    </h1>
-    <p class="col-hero-en">
-      {{ section.settings.title_en | default: 'The Full Collection' }}
-    </p>
-    <span class="col-hero-count">
-      {%- assign prod_count = collection.products_count | default: 0 -%}
-      {%- if prod_count < 10 -%}0{%- endif -%}{{ prod_count }}
-    </span>
+{%- liquid
+  assign col_eyebrow  = section.settings.eyebrow  | default: 'المجموعة · The Collection'
+  assign col_title_ar = section.settings.title_ar  | default: collection.title | default: 'المجموعة الكاملة'
+  assign col_title_en = section.settings.title_en  | default: 'The Full Collection'
+  assign col_desc_ar  = section.settings.desc_ar   | default: ''
+  assign cnt          = collection.products_count  | default: 0
+-%}
+
+<div class="col-hero-wrap" id="col-hero">
+
+  {%- liquid
+    case collection.handle
+      when 'dates'
+        assign col_hero_img = 'hero-dates.png' | asset_url
+      when 'madinah-herbs'
+        assign col_hero_img = 'hero-herbs.png' | asset_url
+      when 'gift-boxes'
+        assign col_hero_img = 'hero-gifts.png' | asset_url
+      when 'spirit-of-madinah'
+        assign col_hero_img = 'hero-spirit.png' | asset_url
+      else
+        assign col_hero_img = 'hero-home.png' | asset_url
+    endcase
+  -%}
+
+  <div class="col-hero-bg" aria-hidden="true">
+    {%- if collection.image -%}
+      <img src="{{ collection.image | image_url: width: 1920 }}" alt=""
+           class="col-hero-bg-img" width="1920" height="1080" loading="eager"
+           fetchpriority="high">
+    {%- else -%}
+      <img src="{{ col_hero_img }}" alt=""
+           class="col-hero-bg-img" width="1920" height="1080" loading="eager"
+           fetchpriority="high">
+    {%- endif -%}
+    <div class="col-hero-overlay"></div>
   </div>
+
+  <div class="col-lb col-lb--top" aria-hidden="true"></div>
+  <div class="col-lb col-lb--bot" aria-hidden="true"></div>
+
+  <div class="col-hero-content">
+    <div class="col-hero-eyebrow">{{ col_eyebrow }}</div>
+    <h1 class="col-hero-title" lang="ar" dir="rtl">{{ col_title_ar }}</h1>
+    <div class="col-hero-rule"></div>
+    <div class="col-hero-sub">{{ col_title_en }}</div>
+    {%- if col_desc_ar != blank -%}
+      <p class="col-hero-desc" lang="ar" dir="rtl">{{ col_desc_ar }}</p>
+    {%- endif -%}
+    <div class="col-hero-count-wrap">
+      <span class="col-hero-count">
+        <span class="col-hero-count-num">{%- if cnt < 10 -%}0{%- endif -%}{{ cnt }}</span>
+        <span class="col-hero-count-lbl">منتج فاخر · Premium Products</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="col-hero-scroll" aria-hidden="true">
+    <div class="col-hero-scroll-line"></div>
+    <span>اكتشف</span>
+  </div>
+
 </div>
 
 {% schema %}
@@ -20,23 +68,10 @@
   "tag": "div",
   "class": "section-collection-hero",
   "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow"
-    },
-    {
-      "type": "text",
-      "id": "title_ar",
-      "label": "Title (Arabic) — overrides collection title",
-      "info": "Leave blank to use the collection title."
-    },
-    {
-      "type": "text",
-      "id": "title_en",
-      "label": "Title (English)",
-      "default": "The Full Collection"
-    }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "المجموعة · The Collection" },
+    { "type": "text", "id": "title_ar", "label": "Title (Arabic)", "info": "Leave blank to use collection title." },
+    { "type": "text", "id": "title_en", "label": "Title (English)", "default": "The Full Collection" },
+    { "type": "textarea", "id": "desc_ar", "label": "Description (Arabic)" }
   ]
 }
 {% endschema %}

@@ -1,9 +1,9 @@
 {%- liquid
-  assign grid_collection = collections[section.settings.collection]
+  assign grid_collection    = collections[section.settings.collection]
   if grid_collection == blank
     assign grid_collection = collection
   endif
-  assign products_to_show = section.settings.products_count | default: 6
+  assign products_to_show = section.settings.products_count | default: 12
   assign section_title_ar = section.settings.title_ar | default: 'منتجاتنا'
   assign section_title_en = section.settings.title_en | default: 'Our Products'
   assign section_ey       = section.settings.eyebrow  | default: '01 — Collection'
@@ -19,13 +19,25 @@
     </div>
   </div>
 
-  <div class="prod-grid">
+  {%- if grid_collection != blank and grid_collection.all_tags.size > 0 -%}
+  <div class="cg-filters" id="cgFilters">
+    <button class="cg-filter is-active" data-tag="">الكل · All</button>
+    {%- for tag in grid_collection.all_tags -%}
+      <button class="cg-filter" data-tag="{{ tag | handle }}">{{ tag }}</button>
+    {%- endfor -%}
+  </div>
+  {%- endif -%}
+
+  <div class="prod-grid" id="cgGrid">
     {%- if grid_collection != blank and grid_collection.products.size > 0 -%}
       {%- for product in grid_collection.products limit: products_to_show -%}
-        {%- render 'product-card', product: product -%}
+        {%- if forloop.first -%}
+          {%- render 'product-card', product: product, loading: 'eager', fetchpriority: 'high' -%}
+        {%- else -%}
+          {%- render 'product-card', product: product -%}
+        {%- endif -%}
       {%- endfor -%}
     {%- else -%}
-      {%- comment -%} Static placeholder cards for demo / when no collection assigned {%- endcomment -%}
       {%- for i in (1..6) -%}
         <article class="prod-card prod-card--placeholder">
           <div class="prod-img-wrap">
@@ -43,16 +55,35 @@
     {%- endif -%}
   </div>
 
-  {%- if section.settings.show_view_all and grid_collection != blank -%}
+  {%- if section.settings.show_view_all and grid_collection != blank and grid_collection.products_count > products_to_show -%}
     <div class="prod-cta-row">
-      <a href="{{ grid_collection.url }}" class="btn-outline nav-veil-link mag-btn" lang="ar" dir="rtl">
+      <a href="{{ grid_collection.url }}" class="btn-outline nav-veil-link" lang="ar" dir="rtl">
         {{ section.settings.view_all_label | default: 'عرض المجموعة الكاملة' }}
-        <span aria-hidden="true"> →</span>
+        <span aria-hidden="true">→</span>
       </a>
     </div>
   {%- endif -%}
 
 </section>
+
+<script>
+(function(){
+  const filters = document.querySelectorAll('#cgFilters .cg-filter');
+  if (!filters.length) return;
+  filters.forEach(btn => {
+    btn.addEventListener('click', function(){
+      filters.forEach(b => b.classList.remove('is-active'));
+      this.classList.add('is-active');
+      const tag = this.dataset.tag;
+      document.querySelectorAll('#cgGrid .prod-card').forEach(card => {
+        if (!tag) { card.style.display = ''; return; }
+        const tags = (card.dataset.tags || '').split(',');
+        card.style.display = tags.includes(tag) ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>
 
 {% schema %}
 {
@@ -60,56 +91,14 @@
   "tag": "div",
   "class": "section-collection-grid",
   "settings": [
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection"
-    },
-    {
-      "type": "range",
-      "id": "products_count",
-      "label": "Products to show",
-      "min": 2,
-      "max": 12,
-      "step": 1,
-      "default": 6
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow label",
-      "default": "01 — Collection"
-    },
-    {
-      "type": "text",
-      "id": "title_ar",
-      "label": "Section title (Arabic)",
-      "default": "منتجاتنا"
-    },
-    {
-      "type": "text",
-      "id": "title_en",
-      "label": "Section title (English)",
-      "default": "Our Products"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_view_all",
-      "label": "Show 'View all' button",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "view_all_label",
-      "label": "View all label (Arabic)",
-      "default": "عرض المجموعة الكاملة"
-    }
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_count", "label": "Products to show", "min": 2, "max": 24, "step": 1, "default": 12 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "01 — Collection" },
+    { "type": "text", "id": "title_ar", "label": "Section title (Arabic)", "default": "منتجاتنا" },
+    { "type": "text", "id": "title_en", "label": "Section title (English)", "default": "Our Products" },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show 'View all' button", "default": true },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "عرض المجموعة الكاملة" }
   ],
-  "presets": [
-    {
-      "name": "Collection Grid",
-      "category": "Collection"
-    }
-  ]
+  "presets": [{ "name": "Collection Grid", "category": "Collection" }]
 }
 {% endschema %}

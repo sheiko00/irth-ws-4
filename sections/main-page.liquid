@@ -1,0 +1,21 @@
+<div class="page-main">
+  <h1 class="page-title">{{ page.title }}</h1>
+  <div class="page-content rte">{{ page.content }}</div>
+</div>
+
+<style>
+.page-main { max-width: 800px; margin: 0 auto; padding: 140px 48px 100px; min-height: 70vh; }
+.page-title { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(32px,5vw,56px); font-weight: 500; color: var(--madinah, #0E2B22); margin-bottom: 40px; line-height: 1.2; }
+.page-content { font-family: 'Noto Naskh Arabic', serif; font-size: 17px; line-height: 1.9; opacity: .8; }
+.page-content h2, .page-content h3 { color: var(--madinah, #0E2B22); margin: 32px 0 16px; }
+.page-content a { color: var(--gold, #C9A86A); }
+@media (max-width: 640px) { .page-main { padding: 100px 24px 80px; } }
+</style>
+
+{% schema %}
+{
+  "name": "Page Main",
+  "tag": "section",
+  "class": "section-main-page"
+}
+{% endschema %}

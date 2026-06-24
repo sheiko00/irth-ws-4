@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Improve — irthmadina.com — 2026-06-20</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #F3EFE7; color: #111; line-height: 1.65; font-size: 15px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 48px 24px 96px; }
+  h1 { font-size: 26px; font-weight: 700; letter-spacing: -.02em; border-bottom: 2px solid #111; padding-bottom: 16px; margin-bottom: 8px; }
+  .meta { font-size: 12px; color: #666; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 40px; }
+  .tldr { background: #e8f4fd; border-left: 4px solid #2980b9; padding: 18px 22px; border-radius: 0 8px 8px 0; margin-bottom: 40px; }
+  .tldr strong { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #2980b9; margin-bottom: 6px; }
+  h2 { font-size: 18px; font-weight: 700; margin: 40px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #ddd; }
+  h3 { font-size: 15px; font-weight: 700; margin: 0 0 12px; display: flex; align-items: center; gap: 10px; }
+  p { margin-bottom: 12px; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px 20px; border-radius: 6px; overflow-x: auto; font-size: 12.5px; line-height: 1.6; margin: 12px 0 20px; font-family: 'Menlo','Consolas',monospace; white-space: pre; }
+  code { background: #e8e3d8; padding: 2px 6px; border-radius: 3px; font-family: 'Menlo','Consolas',monospace; font-size: 12.5px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; }
+  th { background: #111; color: #F3EFE7; padding: 10px 14px; text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  td { padding: 10px 14px; border-bottom: 1px solid #ddd; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+  .red { background: #fee; color: #c00; }
+  .orange { background: #fff3e0; color: #e65100; }
+  .yellow { background: #fffde7; color: #c77700; }
+  .card { background: #fff; border-radius: 10px; padding: 24px 28px; margin: 20px 0; box-shadow: 0 1px 3px rgba(0,0,0,.08); border: 1px solid #e0dbd0; }
+  .num { display: inline-flex; align-items: center; justify-content: center; background: #B89B5E; color: #fff; width: 28px; height: 28px; border-radius: 50%; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .bar { height: 6px; border-radius: 3px; background: #eee; margin: 8px 0 16px; }
+  .fill { height: 100%; border-radius: 3px; background: #B89B5E; }
+  .sketch { background: #1a1a1a; color: #7de; padding: 14px 18px; border-radius: 6px; font-family: 'Menlo','Consolas',monospace; font-size: 12px; line-height: 1.7; margin: 12px 0; overflow-x: auto; white-space: pre; }
+  .green-box { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 20px 0; }
+  .green-box strong { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #2e7d32; margin-bottom: 6px; }
+  .ratio-bar { height: 28px; border-radius: 4px; display: flex; overflow: hidden; margin: 8px 0 4px; }
+  .atm { background: #0E2B22; }
+  .com { background: #B89B5E; }
+  footer { margin-top: 60px; font-size: 11px; color: #999; letter-spacing: .05em; border-top: 1px solid #ddd; padding-top: 16px; }
+  a { color: #2980b9; }
+  ul { margin: 8px 0 12px 20px; line-height: 2; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Design Improve: irthmadina.com</h1>
+<div class="meta">2026-06-20 &nbsp;·&nbsp; irth-house.com &nbsp;·&nbsp; 7 improvements</div>
+
+<div class="tldr">
+  <strong>TL;DR</strong>
+  Hero video kills LCP before luxury experience starts. Add poster image with fetchpriority=high for 2–3s instant win. Then Lenis smooth scroll for cinematic pacing. Fix price visibility + CLS after.
+</div>
+
+<h2>Scores</h2>
+<table>
+  <thead><tr><th>Dimension</th><th>Before</th><th>Target</th><th>Key Fix</th></tr></thead>
+  <tbody>
+    <tr><td>Aesthetics</td><td>9/10</td><td>9/10</td><td>No change needed</td></tr>
+    <tr><td>UX</td><td>7/10</td><td>8.5/10</td><td>Lenis + mobile parallax disable</td></tr>
+    <tr><td>Conversion</td><td>6.5/10</td><td>8/10</td><td>Price signal + gift imagery</td></tr>
+    <tr><td>Performance</td><td>6/10</td><td>8/10</td><td>LCP fix + CLS fix</td></tr>
+  </tbody>
+</table>
+
+<div class="green-box">
+  <strong>Preserve exactly — Do NOT touch</strong>
+  Entry screen "Enter without audio" ritual · Opening Ritual box drag · Section 01/02/03 numbering · Marquee rhythm · Bilingual AR/EN headlines · Color system (ivory/ink/gold/madinah) · Sourcing strip (sole green section) · Gift category labels
+</div>
+
+<h2>Improvements</h2>
+
+<div class="card">
+  <h3><span class="num">1</span> Hero Video LCP Fix <span class="badge red">CRITICAL</span></h3>
+  <div class="bar"><div class="fill" style="width:100%"></div></div>
+  <p><strong>Problem:</strong> Video adds 2–5s to LCP. Browser can't use <code>&lt;video&gt;</code> as LCP candidate. Missing poster = blank screen 4+ seconds.</p>
+<pre>&lt;!-- theme.liquid head --&gt;
+&lt;link rel="preload" as="image"
+  href="{{ 'hero-poster.jpg' | asset_url }}"
+  fetchpriority="high"&gt;
+
+&lt;!-- hero section --&gt;
+&lt;video autoplay muted loop playsinline
+  poster="{{ 'hero-poster.jpg' | asset_url }}"
+  preload="none" aria-hidden="true"&gt;
+  &lt;source src="{{ section.settings.video_url }}" type="video/mp4"&gt;
+&lt;/video&gt;</pre>
+  <p>Mobile: hide video, show static poster instead.</p>
+  <p style="font-size:12px;color:#888">Expected: LCP 4s → 1.5s desktop · 5s → 2s mobile</p>
+</div>
+
+<div class="card">
+  <h3><span class="num">2</span> Lenis Smooth Scroll <span class="badge orange">HIGH</span></h3>
+  <div class="bar"><div class="fill" style="width:80%"></div></div>
+  <p><strong>Problem:</strong> Native scroll = jumpy on cinematic site. Lenis + GSAP = industry standard for luxury ecommerce 2025.</p>
+  <div class="sketch">WITHOUT: Scroll ---- jump ---- section appears instantly
+WITH:     Scroll ~~~~ glide ~~~~ section floats in over 400ms</div>
+<pre>&lt;script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lenis = new Lenis({ duration: 1.4,
+      easing: t =&gt; Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+  }
+&lt;/script&gt;</pre>
+</div>
+
+<div class="card">
+  <h3><span class="num">3</span> Fix img Width/Height — CLS <span class="badge orange">HIGH</span></h3>
+  <div class="bar"><div class="fill" style="width:75%"></div></div>
+  <p><strong>Problem:</strong> 10 img tags in <code>home-cinematic.liquid</code> missing dimensions → CLS ~0.3 (needs improvement).</p>
+<pre>{{- image | image_url: width: 800 | image_tag:
+    width: image.width, height: image.height,
+    loading: 'lazy', widths: '375, 600, 800, 1200' -}}</pre>
+  <p>Above-fold: <code>loading: 'eager'</code>, <code>fetchpriority: 'high'</code></p>
+  <p style="font-size:12px;color:#888">Expected: CLS 0.3 → &lt;0.1</p>
+</div>
+
+<div class="card">
+  <h3><span class="num">4</span> Price Signal on Collection Cards <span class="badge yellow">MEDIUM</span></h3>
+  <div class="bar"><div class="fill" style="width:55%"></div></div>
+  <p><strong>Problem:</strong> "VIEW →" no price = 3 clicks before visitor knows if they can afford it.</p>
+  <div class="sketch">BEFORE          AFTER
++-----------+   +-----------+
+|  [image]  |   |  [image]  |
+|  التمور   | → |  التمور   |
+|  VIEW →   |   |  from £18 |
++-----------+   |  اكتشف ↘ |
+                +-----------+</div>
+<pre>{% if card_product.price_min %}
+&lt;span class="card-price"&gt;from {{ card_product.price_min | money }}&lt;/span&gt;
+{% endif %}</pre>
+  <p style="font-size:12px;color:#888">Price in gold, 11px, opacity .7 — whispers, doesn't shout.</p>
+</div>
+
+<div class="card">
+  <h3><span class="num">5</span> Arabic Font Preload <span class="badge yellow">MEDIUM</span></h3>
+  <div class="bar"><div class="fill" style="width:45%"></div></div>
+  <p><strong>Problem:</strong> Noto Naskh Arabic loads late → invisible text flash → CLS spike on Arabic content.</p>
+<pre>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+&lt;link rel="preload" as="style"
+  href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600&amp;display=swap"&gt;</pre>
+  <p>Add <code>font-display: swap</code> to all <code>@font-face</code> declarations.</p>
+</div>
+
+<div class="card">
+  <h3><span class="num">6</span> Mobile Parallax Disable <span class="badge orange">HIGH</span></h3>
+  <div class="bar"><div class="fill" style="width:70%"></div></div>
+  <p><strong>Problem:</strong> Parallax transforms on mobile = 30fps jank + battery drain.</p>
+<pre>@media (max-width: 768px) {
+  [data-parallax] { transform: none !important; }
+  .fade-up { animation-duration: .3s; }
+  .hero-video-wrap video { display: none; }
+}</pre>
+</div>
+
+<div class="card">
+  <h3><span class="num">7</span> Gift Section Imagery <span class="badge yellow">MEDIUM</span></h3>
+  <div class="bar"><div class="fill" style="width:50%"></div></div>
+  <p><strong>Problem:</strong> Gift tier cards have no photos — highest-intent section on site with no visual confidence builder.</p>
+  <p><strong>Needed from client:</strong></p>
+  <ul>
+    <li><code>gift-classic.jpg</code> — wooden box open, velvet interior, wax seal</li>
+    <li><code>gift-signature.jpg</code> — gold box, embossed name</li>
+    <li><code>gift-royal.jpg</code> — full set, dried rose petals, calligraphy card</li>
+  </ul>
+  <p style="font-size:12px;color:#888">Until photos: dark texture placeholder so section doesn't feel hollow.</p>
+</div>
+
+<h2>Priority Matrix</h2>
+<table>
+  <thead><tr><th>#</th><th>Fix</th><th>Impact</th><th>Effort</th><th>Order</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Hero video LCP + poster</td><td><span class="badge red">Critical</span></td><td>Medium</td><td>1st</td></tr>
+    <tr><td>2</td><td>Lenis smooth scroll</td><td><span class="badge orange">High</span></td><td>Low</td><td>1st</td></tr>
+    <tr><td>3</td><td>img width/height CLS</td><td><span class="badge orange">High</span></td><td>Low</td><td>1st</td></tr>
+    <tr><td>4</td><td>Price on collection cards</td><td><span class="badge yellow">Medium</span></td><td>Low</td><td>2nd</td></tr>
+    <tr><td>5</td><td>Arabic font preload</td><td><span class="badge yellow">Medium</span></td><td>Very low</td><td>1st</td></tr>
+    <tr><td>6</td><td>Mobile parallax disable</td><td><span class="badge orange">High</span></td><td>Low</td><td>1st</td></tr>
+    <tr><td>7</td><td>Gift section imagery</td><td><span class="badge yellow">Medium</span></td><td>Needs photos</td><td>When ready</td></tr>
+  </tbody>
+</table>
+
+<h2>Atmosphere × Commerce</h2>
+<p style="font-size:12px;color:#666;margin-bottom:4px">Current: 85% atmosphere · 15% commerce</p>
+<div class="ratio-bar"><div class="atm" style="width:85%"></div><div class="com" style="width:15%"></div></div>
+<p style="font-size:12px;color:#666;margin-bottom:4px">Target: 65% atmosphere · 35% commerce</p>
+<div class="ratio-bar"><div class="atm" style="width:65%"></div><div class="com" style="width:35%"></div></div>
+<p style="font-size:12px;color:#888;margin-top:8px">Fix 4 (price) moves needle. Commerce whispers in gold — doesn't shout in red.</p>
+
+<footer>
+  Sources: <a href="https://performance.shopify.com/blogs/blog/optimizing-images-for-performance-on-shopify">Shopify Performance Blog</a> ·
+  <a href="https://lenis.dev">Lenis.dev</a> ·
+  <a href="https://www.debugbear.com/blog/shopify-speed-optimization">DebugBear</a> ·
+  <a href="https://www.convertcart.com/blog/luxury-product-page-ecommerce">convertcart luxury UX</a><br><br>
+  Generated 2026-06-20 · lazyweb-design-improve
+</footer>
+</div>
+</body>
+</html>

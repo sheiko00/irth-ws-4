@@ -1,0 +1,208 @@
+<article class="art-page" itemscope itemtype="https://schema.org/BlogPosting">
+
+  <nav class="art-nav" aria-label="breadcrumb">
+    <a href="{{ routes.root_url }}">إرث</a>
+    <span aria-hidden="true">·</span>
+    <a href="{{ blog.url }}">{{ blog.title | default: 'مجلة إرث' }}</a>
+    <span aria-hidden="true">·</span>
+    <span>{{ article.title }}</span>
+  </nav>
+
+  <header class="art-header">
+    <div class="art-header-inner">
+      {%- if article.tags.size > 0 -%}
+        <div class="art-tags">
+          {%- for tag in article.tags -%}
+            <span class="art-tag">{{ tag }}</span>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <h1 class="art-title" itemprop="headline">{{ article.title }}</h1>
+
+      <div class="art-meta">
+        <time itemprop="datePublished" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+          {{ article.published_at | date: '%d %B %Y' }}
+        </time>
+        {%- if article.author != blank -%}
+          <span class="art-meta-sep" aria-hidden="true">—</span>
+          <span itemprop="author">{{ article.author }}</span>
+        {%- endif -%}
+        {%- if article.comments_count > 0 -%}
+          <span class="art-meta-sep" aria-hidden="true">·</span>
+          <span>{{ article.comments_count }} تعليق</span>
+        {%- endif -%}
+      </div>
+
+      {%- if article.excerpt != blank -%}
+        <p class="art-deck" itemprop="description">{{ article.excerpt | strip_html }}</p>
+      {%- endif -%}
+    </div>
+  </header>
+
+  {%- if article.image -%}
+  <div class="art-hero-img" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+    <img src="{{ article.image | image_url: width: 1800 }}"
+         alt="{{ article.image.alt | default: article.title | escape }}"
+         width="1800"
+         height="{{ 1800 | divided_by: article.image.aspect_ratio | round }}"
+         itemprop="url"
+         loading="eager"
+         fetchpriority="high">
+    {%- if article.image.alt != blank -%}
+      <p class="art-img-caption">{{ article.image.alt }}</p>
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+
+  <div class="art-body-wrap">
+    <div class="art-body rte" itemprop="articleBody">
+      {{ article.content }}
+    </div>
+
+    {%- if article.tags.size > 0 -%}
+    <div class="art-footer-tags">
+      <span class="art-footer-tags-label">الوسوم:</span>
+      {%- for tag in article.tags -%}
+        <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="art-footer-tag">{{ tag }}</a>
+      {%- endfor -%}
+    </div>
+    {%- endif -%}
+
+    <div class="art-share">
+      <p class="art-share-label">شارك المقال</p>
+      <div class="art-share-btns">
+        <a href="https://wa.me/?text={{ article.title | url_encode }}%20{{ shop.url }}{{ article.url | url_encode }}"
+           class="art-share-btn"
+           target="_blank" rel="noopener noreferrer" aria-label="شارك على واتساب">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </a>
+        <a href="https://twitter.com/intent/tweet?text={{ article.title | url_encode }}&url={{ shop.url }}{{ article.url | url_encode }}"
+           class="art-share-btn"
+           target="_blank" rel="noopener noreferrer" aria-label="شارك على X">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <button class="art-share-btn" data-copy-url="{{ shop.url }}{{ article.url }}" aria-label="نسخ الرابط">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {%- if blog.next_article or blog.previous_article -%}
+  <nav class="art-adjacent" aria-label="مقالات أخرى">
+    {%- if blog.previous_article -%}
+      <a href="{{ blog.previous_article.url }}" class="art-adj-link art-adj-prev">
+        <span class="art-adj-dir">&#x2192; السابق</span>
+        <span class="art-adj-title">{{ blog.previous_article.title }}</span>
+      </a>
+    {%- else -%}
+      <span></span>
+    {%- endif -%}
+    {%- if blog.next_article -%}
+      <a href="{{ blog.next_article.url }}" class="art-adj-link art-adj-next">
+        <span class="art-adj-dir">التالي &#x2190;</span>
+        <span class="art-adj-title">{{ blog.next_article.title }}</span>
+      </a>
+    {%- endif -%}
+  </nav>
+  {%- endif -%}
+
+  <div class="art-back-wrap">
+    <a href="{{ blog.url }}" class="art-back">&#x2190; العودة إلى المجلة</a>
+  </div>
+
+</article>
+
+<style>
+.art-page { background: var(--ivory); min-height: 60vh; }
+
+.art-nav { max-width: 760px; margin: 0 auto; padding: 100px 48px 0; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; display: flex; gap: 10px; align-items: center; color: var(--mineral); flex-wrap: wrap; }
+.art-nav a { color: inherit; transition: color .2s; }
+.art-nav a:hover { color: var(--gold); }
+
+.art-header { max-width: 760px; margin: 0 auto; padding: 40px 48px 48px; }
+.art-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.art-tag { font-size: 9px; letter-spacing: .35em; text-transform: uppercase; background: var(--madinah); color: var(--ivory); padding: 4px 12px; }
+.art-title { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(32px, 4.5vw, 64px); font-weight: 500; color: var(--ink); line-height: 1.15; margin-bottom: 20px; }
+.art-meta { font-size: 11px; letter-spacing: .15em; color: var(--mineral); display: flex; gap: 10px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+.art-meta-sep { opacity: .4; }
+.art-deck { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(18px, 2vw, 26px); line-height: 1.55; color: var(--ink); opacity: .65; border-right: 2px solid var(--gold); padding-right: 20px; }
+
+.art-hero-img { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+.art-hero-img img { width: 100%; height: auto; display: block; }
+.art-img-caption { font-size: 11px; letter-spacing: .1em; color: var(--mineral); text-align: center; margin-top: 10px; opacity: .6; font-style: italic; }
+
+.art-body-wrap { max-width: 760px; margin: 0 auto; padding: 56px 48px 80px; }
+.art-body.rte { font-family: 'Noto Naskh Arabic', serif; font-size: 17px; line-height: 2; color: var(--ink); }
+.art-body.rte h2 { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(22px, 2.5vw, 32px); font-weight: 500; color: var(--madinah); margin: 48px 0 20px; line-height: 1.3; }
+.art-body.rte h3 { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(18px, 2vw, 24px); font-weight: 500; color: var(--ink); margin: 36px 0 14px; }
+.art-body.rte p { margin-bottom: 24px; }
+.art-body.rte blockquote { border-right: 3px solid var(--gold); padding: 12px 24px; margin: 32px 0; font-style: italic; color: var(--mineral); font-size: 18px; line-height: 1.75; }
+.art-body.rte img { max-width: 100%; height: auto; margin: 32px 0; }
+.art-body.rte a { color: var(--madinah); border-bottom: 1px solid rgba(14,43,34,.3); transition: border-color .2s; }
+.art-body.rte a:hover { border-color: var(--madinah); }
+.art-body.rte ul, .art-body.rte ol { padding-right: 24px; margin-bottom: 24px; }
+.art-body.rte li { margin-bottom: 8px; line-height: 1.85; }
+.art-body.rte strong { font-weight: 600; }
+
+.art-footer-tags { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(17,17,17,.08); }
+.art-footer-tags-label { font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--mineral); }
+.art-footer-tag { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--mineral); border: 1px solid rgba(17,17,17,.15); padding: 4px 12px; transition: all .2s; }
+.art-footer-tag:hover { border-color: var(--gold); color: var(--gold); }
+
+.art-share { margin-top: 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.art-share-label { font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--mineral); }
+.art-share-btns { display: flex; gap: 10px; }
+.art-share-btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid rgba(17,17,17,.15); color: var(--ink); background: none; cursor: pointer; transition: all .25s; text-decoration: none; }
+.art-share-btn:hover, .art-share-btn.copied { background: var(--madinah); color: var(--ivory); border-color: var(--madinah); }
+
+.art-adjacent { display: flex; justify-content: space-between; gap: 24px; max-width: 1200px; margin: 0 auto; padding: 48px; border-top: 1px solid rgba(17,17,17,.08); }
+.art-adj-link { display: flex; flex-direction: column; gap: 8px; flex: 1; text-decoration: none; }
+.art-adj-prev { align-items: flex-end; }
+.art-adj-next { align-items: flex-start; }
+.art-adj-dir { font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+.art-adj-title { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(14px, 1.4vw, 18px); color: var(--ink); line-height: 1.35; transition: color .2s; max-width: 300px; }
+.art-adj-link:hover .art-adj-title { color: var(--madinah); }
+
+.art-back-wrap { text-align: center; padding: 48px 24px 80px; }
+.art-back { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid transparent; transition: border-color .25s; padding-bottom: 2px; }
+.art-back:hover { border-color: var(--gold); }
+
+@media (max-width: 680px) {
+  .art-nav, .art-header, .art-body-wrap { padding-inline: 24px; }
+  .art-hero-img { padding-inline: 0; }
+  .art-adjacent { flex-direction: column; padding-inline: 24px; }
+  .art-adj-prev { align-items: flex-start; }
+  .art-back-wrap { padding-inline: 24px; }
+}
+</style>
+
+<script>
+document.querySelectorAll('[data-copy-url]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var url = btn.getAttribute('data-copy-url');
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function() {
+        btn.classList.add('copied');
+        setTimeout(function() { btn.classList.remove('copied'); }, 2000);
+      });
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Article Main",
+  "tag": "section",
+  "class": "section-main-article"
+}
+{% endschema %}

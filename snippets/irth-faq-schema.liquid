@@ -1,0 +1,105 @@
+{% comment %}
+  IRTH — FAQPage JSON-LD schema
+  Fires on any page whose handle contains "faq" or template suffix is "faq".
+  Called from theme.liquid <head>.
+
+  FAQ pairs pulled from page metafields:
+    irth.faq_questions  — list.single_line_text_field
+    irth.faq_answers    — list.multi_line_text_field
+  Fallback: hardcoded brand FAQs below.
+{% endcomment %}
+
+{% if template.name == 'page' %}
+  {% assign _is_faq = false %}
+  {% if page.handle contains 'faq' or page.template_suffix == 'faq' %}
+    {% assign _is_faq = true %}
+  {% endif %}
+
+  {% if _is_faq %}
+
+    {% assign _faq_questions = page.metafields.irth.faq_questions.value %}
+    {% assign _faq_answers   = page.metafields.irth.faq_answers.value %}
+
+    {% if _faq_questions != blank and _faq_answers != blank %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for _q in _faq_questions %}
+    {
+      "@type": "Question",
+      "name": {{ _q | escape | json }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ _faq_answers[forloop.index0] | escape | json }}
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+</script>
+
+    {% else %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is IRTH?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "IRTH (إرث) is a luxury Islamic heritage brand inspired by Madinah Al-Munawwarah. We offer authentic Ajwa dates, Sidr honey, Madinah herbs, misbahas, prayer rugs, and curated gift boxes — rooted in Prophetic tradition and crafted for discerning Muslims worldwide."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do your dates come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our dates — including premium Ajwa, Medjool, Sukkari, and Safawi varieties — are sourced directly from certified growers in Madinah Al-Munawwarah and the wider Hejaz region of Saudi Arabia."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you ship internationally?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. IRTH ships to Egypt, Saudi Arabia, the UAE, the UK, and other countries worldwide. Domestic Egyptian orders are fulfilled via Bosta courier. International orders use Mylerz. Delivery times and fees are shown at checkout."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What payment methods do you accept?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We accept credit and debit cards via Paymob, Fawry cash on delivery (Egypt), and major digital wallets. International orders are processed via Stripe."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are your products halal-certified?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "All IRTH food products — dates, honey, herbal blends — are 100% natural with no additives, preservatives, or artificial flavours. We source only from suppliers who adhere to Islamic agricultural and food-handling standards."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I customise a gift box?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Our روح المدينة (Spirit of Madinah) collection includes curated luxury gift sets. Custom corporate or wedding gift boxes are available — contact us at hello@irth-house.com or via WhatsApp for a bespoke quote."
+      }
+    }
+  ]
+}
+</script>
+
+    {% endif %}
+  {% endif %}
+{% endif %}

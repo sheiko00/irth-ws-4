@@ -1,0 +1,24 @@
+name: Deploy Theme to Shopify
+
+on:
+  push:
+    branches: [master]
+
+concurrency:
+  group: shopify-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: shopify theme push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Shopify
+        uses: matthew-petrie/shopify-theme-actions@1.2.2
+        with:
+          ACTION: 'THEME_PUSH'
+          SHOPIFY_STORE_URL: irth-13.myshopify.com
+          SHOPIFY_ACCESS_PASSWORD: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          THEME_ID: '154488471690'

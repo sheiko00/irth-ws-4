@@ -1,0 +1,182 @@
+<div class="blog-page">
+  <header class="blog-hero">
+    <img src="{{ 'hero-journal.png' | asset_url }}" alt="" class="blog-hero-img" aria-hidden="true" loading="eager" fetchpriority="high" width="1920" height="1080">
+    <div class="blog-hero-inner">
+      <p class="blog-eyebrow">{{ section.settings.eyebrow | default: 'من قلب المدينة' }}</p>
+      <h1 class="blog-title">{{ blog.title | default: section.settings.title | default: 'مجلة إرث' }}</h1>
+      <p class="blog-subtitle">{{ section.settings.subtitle | default: 'قصص التمر والأرض والإرث الذي نحمله' }}</p>
+      <div class="blog-rule"></div>
+    </div>
+  </header>
+
+  {%- paginate blog.articles by 12 -%}
+  {%- if blog.articles.size > 0 -%}
+    {%- assign featured = blog.articles.first -%}
+    <div class="blog-featured">
+      <a href="{{ featured.url }}" class="blog-featured-link" aria-label="{{ featured.title | escape }}">
+        <div class="blog-featured-img">
+          {%- if featured.image -%}
+            <img src="{{ featured.image | image_url: width: 1600 }}"
+                 alt="{{ featured.image.alt | default: featured.title | escape }}"
+                 width="1600"
+                 height="{{ 1600 | divided_by: featured.image.aspect_ratio | round }}"
+                 loading="eager">
+          {%- else -%}
+            <div class="blog-featured-placeholder"></div>
+          {%- endif -%}
+          <div class="blog-featured-overlay">
+            <div class="blog-featured-meta">
+              {%- if featured.tags.size > 0 -%}
+                <span class="blog-tag">{{ featured.tags.first }}</span>
+              {%- endif -%}
+              <time class="blog-date" datetime="{{ featured.published_at | date: '%Y-%m-%d' }}">
+                {{ featured.published_at | date: '%d %B %Y' }}
+              </time>
+            </div>
+            <h2 class="blog-featured-title">{{ featured.title }}</h2>
+            {%- if featured.excerpt_or_content != blank -%}
+              <p class="blog-featured-excerpt">{{ featured.excerpt_or_content | strip_html | truncate: 140 }}</p>
+            {%- endif -%}
+            <span class="blog-read-more" aria-hidden="true">اقرأ المقال ←</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    {%- if blog.articles.size > 1 -%}
+    <div class="blog-grid-wrap">
+      <div class="blog-grid">
+        {%- for article in blog.articles offset: 1 -%}
+          <article class="blog-card">
+            <a href="{{ article.url }}" class="blog-card-img-wrap" tabindex="-1" aria-hidden="true">
+              <div class="blog-card-img">
+                {%- if article.image -%}
+                  <img src="{{ article.image | image_url: width: 800 }}"
+                       alt="{{ article.image.alt | default: article.title | escape }}"
+                       width="800"
+                       height="{{ 800 | divided_by: article.image.aspect_ratio | round }}"
+                       loading="lazy">
+                {%- else -%}
+                  <div class="blog-card-placeholder"></div>
+                {%- endif -%}
+              </div>
+            </a>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                {%- if article.tags.size > 0 -%}
+                  <span class="blog-tag blog-tag--sm">{{ article.tags.first }}</span>
+                {%- endif -%}
+                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                  {{ article.published_at | date: '%d %B %Y' }}
+                </time>
+              </div>
+              <h2 class="blog-card-title">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+              </h2>
+              {%- if article.excerpt_or_content != blank -%}
+                <p class="blog-card-excerpt">{{ article.excerpt_or_content | strip_html | truncate: 110 }}</p>
+              {%- endif -%}
+              <a href="{{ article.url }}" class="blog-card-cta">اقرأ المقال</a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+      <nav class="blog-pagination" aria-label="تنقل الصفحات">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="blog-page-btn">&#x2190; السابق</a>
+        {%- endif -%}
+        <span class="blog-page-info">{{ paginate.current_page }} / {{ paginate.pages }}</span>
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="blog-page-btn">التالي &#x2192;</a>
+        {%- endif -%}
+      </nav>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+
+  {%- else -%}
+    <div class="blog-empty">
+      <p>مقالات جديدة قادمة قريباً</p>
+      <a href="{{ routes.root_url }}" class="blog-empty-cta">العودة للرئيسية</a>
+    </div>
+  {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+<style>
+.blog-page { background: var(--ivory); min-height: 60vh; }
+
+.blog-hero { background: var(--madinah); padding: 120px 48px 80px; text-align: center; position: relative; overflow: hidden; }
+.blog-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .28; }
+.blog-hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, rgba(184,155,94,.03) 0, rgba(184,155,94,.03) 1px, transparent 1px, transparent 9px); pointer-events: none; }
+.blog-hero-inner { position: relative; max-width: 640px; margin: 0 auto; }
+.blog-eyebrow { font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+.blog-title { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(42px, 6vw, 80px); font-weight: 500; color: var(--ivory); line-height: 1; margin-bottom: 18px; }
+.blog-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(16px, 2vw, 22px); color: rgba(243,239,231,.55); margin-bottom: 32px; }
+.blog-rule { width: 48px; height: 1px; background: var(--gold); margin: 0 auto; opacity: .5; }
+
+.blog-featured { max-width: 1480px; margin: 0 auto; padding: 64px 48px 0; }
+.blog-featured-link { display: block; position: relative; overflow: hidden; }
+.blog-featured-img { position: relative; aspect-ratio: 16/7; overflow: hidden; background: var(--beige); }
+.blog-featured-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s ease; }
+.blog-featured-link:hover .blog-featured-img img { transform: scale(1.03); }
+.blog-featured-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--madinah) 0%, #1a4a3a 100%); }
+.blog-featured-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,43,34,.88) 0%, rgba(14,43,34,.3) 55%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 48px; }
+.blog-featured-meta { display: flex; gap: 16px; align-items: center; margin-bottom: 14px; }
+.blog-tag { font-size: 9px; letter-spacing: .35em; text-transform: uppercase; background: var(--gold); color: var(--ivory); padding: 4px 12px; }
+.blog-tag--sm { font-size: 8px; padding: 3px 9px; }
+.blog-date { font-size: 11px; letter-spacing: .12em; color: rgba(243,239,231,.6); }
+.blog-featured-title { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(26px, 3.5vw, 52px); font-weight: 500; color: var(--ivory); line-height: 1.15; margin-bottom: 16px; max-width: 720px; }
+.blog-featured-excerpt { font-size: 15px; color: rgba(243,239,231,.65); max-width: 560px; line-height: 1.7; margin-bottom: 24px; font-family: 'Noto Naskh Arabic', serif; }
+.blog-read-more { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); display: inline-flex; align-items: center; gap: 8px; transition: gap .3s; }
+.blog-featured-link:hover .blog-read-more { gap: 14px; }
+
+.blog-grid-wrap { max-width: 1480px; margin: 0 auto; padding: 64px 48px 100px; }
+.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.blog-card { display: flex; flex-direction: column; }
+.blog-card-img-wrap { display: block; }
+.blog-card-img { aspect-ratio: 4/3; overflow: hidden; background: var(--beige); margin-bottom: 20px; }
+.blog-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.blog-card:hover .blog-card-img img { transform: scale(1.04); }
+.blog-card-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--beige), var(--taupe)); }
+.blog-card-body { flex: 1; display: flex; flex-direction: column; }
+.blog-card-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--mineral); }
+.blog-card-title { font-family: 'Noto Naskh Arabic', serif; font-size: clamp(18px, 1.6vw, 26px); font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 12px; flex: 1; }
+.blog-card-title a { color: inherit; transition: color .25s; }
+.blog-card-title a:hover { color: var(--madinah); }
+.blog-card-excerpt { font-size: 13px; line-height: 1.75; color: var(--mineral); margin-bottom: 16px; font-family: 'Noto Naskh Arabic', serif; }
+.blog-card-cta { font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); align-self: flex-start; border-bottom: 1px solid transparent; transition: border-color .25s; padding-bottom: 2px; }
+.blog-card-cta:hover { border-color: var(--gold); }
+
+.blog-pagination { display: flex; justify-content: center; align-items: center; gap: 32px; margin-top: 64px; }
+.blog-page-btn { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink); border: 1px solid rgba(17,17,17,.2); padding: 10px 24px; transition: all .25s; }
+.blog-page-btn:hover { background: var(--madinah); color: var(--ivory); border-color: var(--madinah); }
+.blog-page-info { font-size: 11px; letter-spacing: .12em; color: var(--mineral); }
+
+.blog-empty { text-align: center; padding: 120px 48px; font-family: 'Noto Naskh Arabic', serif; font-size: 18px; color: var(--mineral); }
+.blog-empty-cta { display: inline-block; margin-top: 24px; font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+
+@media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 680px) {
+  .blog-hero { padding: 100px 24px 60px; }
+  .blog-featured, .blog-grid-wrap { padding-inline: 24px; }
+  .blog-grid { grid-template-columns: 1fr; gap: 48px; }
+  .blog-featured-overlay { padding: 24px; }
+  .blog-featured-img { aspect-ratio: 4/3; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Blog Main",
+  "tag": "section",
+  "class": "section-main-blog",
+  "settings": [
+    { "type": "text", "id": "eyebrow",  "label": "Eyebrow",  "default": "من قلب المدينة" },
+    { "type": "text", "id": "title",    "label": "Heading (fallback)", "default": "مجلة إرث" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "قصص التمر والأرض والإرث الذي نحمله" }
+  ]
+}
+{% endschema %}

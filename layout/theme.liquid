@@ -1,30 +1,170 @@
 <!DOCTYPE html>
-<html lang="{{ request.locale.iso_code | default: 'en' }}" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>
-    {%- if template.name == 'index' -%}
-      {{ shop.name }}{% if shop.description != blank %} — {{ shop.description }}{% endif %}
-    {%- else -%}
-      {{ page_title }} | {{ shop.name }}
-    {%- endif -%}
-  </title>
+  {%- if template.name == 'index' -%}
+    <title>إرث IRTH — تمور المدينة الفاخرة · Luxury Dates from Madinah</title>
+    <meta name="description" content="إرث — تمور عجوة ومجول من قلب المدينة المنورة. منتجات غذائية فاخرة للهدايا والجملة. نشحن للخليج ومصر وأوروبا وأفريقيا. IRTH: premium Ajwa & Medjool dates, corporate gifts, B2B wholesale.">
+  {%- elsif template.name == 'product' -%}
+    {%- assign _ar_name = product.metafields.irth.arabic_name -%}
+    <title>{% if _ar_name != blank %}{{ _ar_name | escape }} — {% endif %}{{ product.title | escape }} | إرث IRTH</title>
+    <meta name="description" content="{{ product.description | strip_html | truncate: 160 | escape }}">
+  {%- elsif template.name == 'collection' -%}
+    <title>{{ collection.title }} | تسوق — إرث IRTH</title>
+    <meta name="description" content="{{ collection.description | strip_html | default: collection.title | append: ' — تمور المدينة الفاخرة من إرث.' | truncate: 160 | escape }}">
+  {%- elsif template.name == 'article' -%}
+    <title>{{ article.title }} | مجلة إرث</title>
+    <meta name="description" content="{{ article.excerpt_or_content | strip_html | truncate: 160 | escape }}">
+  {%- elsif template.name == 'cart' -%}
+    <title>عربة التسوق | إرث IRTH</title>
+  {%- elsif template.name == 'search' -%}
+    <title>{% if search.performed %}نتائج: {{ search.terms | escape }}{% else %}البحث{% endif %} | إرث IRTH</title>
+  {%- else -%}
+    <title>{{ page_title }} | إرث IRTH</title>
+    {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  {%- endif -%}
 
-  <meta name="description" content="{{ page_description | default: shop.description | escape }}">
-
-  {%- if canonical_url != blank -%}
+  <!-- Canonical -->
+  {%- if template.name == 'product' -%}
+    <link rel="canonical" href="{{ canonical_url | split: '?' | first }}">
+  {%- elsif canonical_url != blank -%}
     <link rel="canonical" href="{{ canonical_url }}">
+  {%- endif -%}
+
+  <!-- Hreflang -->
+  {% render 'irth-hreflang' %}
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="إرث IRTH">
+  <meta property="og:locale" content="ar_SA">
+  <meta property="og:locale:alternate" content="ar_EG">
+  <meta property="og:locale:alternate" content="ar_AE">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:locale:alternate" content="en_US">
+  {%- if template.name == 'product' -%}
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="{{ product.title | escape }} | إرث">
+    <meta property="og:description" content="{{ product.description | strip_html | truncate: 200 | escape }}">
+    <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200, height: 630, crop: 'center' }}">
+    <meta property="og:url" content="{{ canonical_url | split: '?' | first }}">
+    <meta property="product:price:amount" content="{{ product.price_min | money_without_currency | remove: ',' }}">
+    <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+  {%- elsif template.name == 'collection' -%}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ collection.title | escape }} | إرث IRTH">
+    <meta property="og:description" content="{{ collection.description | strip_html | default: collection.title | truncate: 200 | escape }}">
+    {%- if collection.image -%}
+      <meta property="og:image" content="{{ collection.image | image_url: width: 1200, height: 630, crop: 'center' }}">
+    {%- else -%}
+      <meta property="og:image" content="{{ 'og-home.jpg' | asset_url }}">
+    {%- endif -%}
+    <meta property="og:url" content="{{ canonical_url }}">
+  {%- elsif template.name == 'article' -%}
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ article.title | escape }} | مجلة إرث">
+    <meta property="og:description" content="{{ article.excerpt_or_content | strip_html | truncate: 200 | escape }}">
+    {%- if article.image -%}
+      <meta property="og:image" content="{{ article.image | image_url: width: 1200, height: 630, crop: 'center' }}">
+    {%- else -%}
+      <meta property="og:image" content="{{ 'og-home.jpg' | asset_url }}">
+    {%- endif -%}
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}">
+    <meta property="article:author" content="{{ article.author }}">
+  {%- elsif template.name == 'index' -%}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="إرث IRTH — تمور المدينة الفاخرة · Luxury Dates from Madinah">
+    <meta property="og:description" content="تمور عجوة ومجول من المدينة المنورة. هدايا فاخرة وتوريد بالجملة. Premium Ajwa dates, B2B wholesale.">
+    <meta property="og:image" content="{{ 'og-home.jpg' | asset_url }}">
+    <meta property="og:url" content="{{ shop.url }}">
+  {%- else -%}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ page_title | escape }} | إرث">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ 'og-home.jpg' | asset_url }}">
+  {%- endif -%}
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@irthhouse">
+  <meta name="twitter:title" content="{{ page_title | escape }} | إرث IRTH">
+  <meta name="twitter:description" content="{{ page_description | default: page_title | truncate: 200 | escape }}">
+  {%- if template.name == 'product' and product.featured_image -%}
+    <meta name="twitter:image" content="{{ product.featured_image | image_url: width: 1200, height: 630, crop: 'center' }}">
+  {%- elsif template.name == 'article' and article.image -%}
+    <meta name="twitter:image" content="{{ article.image | image_url: width: 1200, height: 630, crop: 'center' }}">
+  {%- else -%}
+    <meta name="twitter:image" content="{{ 'og-home.jpg' | asset_url }}">
+  {%- endif -%}
+
+  <!-- Geo -->
+  <meta name="geo.region" content="SA-MD">
+  <meta name="geo.placename" content="Al Madinah Al Munawwarah, Saudi Arabia">
+  <meta name="geo.position" content="24.5247;39.5692">
+  <meta name="ICBM" content="24.5247, 39.5692">
+
+  <!-- Robots -->
+  {%- if template.name == 'search' or template.name == 'cart' or template.name == '404' -%}
+    <meta name="robots" content="noindex, follow">
+  {%- else -%}
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  {%- endif -%}
+
+  <!-- GSC Verification -->
+  {%- if settings.gsc_verification != blank -%}
+    <meta name="google-site-verification" content="{{ settings.gsc_verification }}">
+  {%- endif -%}
+
+  <!-- Schema JSON-LD -->
+  {% render 'irth-organization-schema' %}
+  {%- if template.name == 'product' -%}{% render 'irth-product-schema' %}{%- endif -%}
+  {%- if template.name != 'index' -%}{% render 'irth-breadcrumb-schema' %}{%- endif -%}
+  {% render 'irth-faq-schema' %}
+
+  <!-- Favicons -->
+  <link rel="icon" href="{{ 'favicon.ico' | asset_url }}" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ 'favicon-96x96.png' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ 'favicon-32.png' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ 'favicon-16.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ 'apple-touch-icon.png' | asset_url }}">
+  <link rel="manifest" href="{{ 'site.webmanifest' | asset_url }}">
+  <meta name="theme-color" content="#0E2B22">
+
+  <!-- GA4 -->
+  {%- if settings.ga4_measurement_id != blank -%}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.ga4_measurement_id }}"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ settings.ga4_measurement_id }}');</script>
   {%- endif -%}
 
   {{ content_for_header }}
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 
-  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <!-- Hero poster preload — LCP critical path, fetchpriority forces browser to load before video -->
+  {%- if template.name == 'index' -%}
+  <link rel="preload" as="image" href="{{ 'hero-poster.jpg' | asset_url }}" fetchpriority="high">
+  {%- endif -%}
+
+  <!-- Video preloads (home only) -->
+  {%- if template.name == 'index' -%}
+  <link rel="preload" as="video" href="{{ 'intro-mobile.mp4' | asset_url }}"  media="(max-width: 768px)"  type="video/mp4">
+  <link rel="preload" as="video" href="{{ 'intro-desktop.mp4' | asset_url }}" media="(min-width: 769px)" type="video/mp4">
+  {%- endif -%}
+
+  <!-- Shopify prefers-reduced-motion -->
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+
+  {{ 'irth-main.css' | asset_url | stylesheet_tag }}
 
   {%- if settings.custom_css != blank -%}
     <style>{{ settings.custom_css }}</style>
@@ -32,24 +172,33 @@
 </head>
 <body class="template-{{ template.name }}{% if template.suffix != blank %}-{{ template.suffix }}{% endif %}">
 
-  {%- render 'cursor' -%}
-  <div class="noise" aria-hidden="true"></div>
-  <div id="prog" aria-hidden="true"></div>
-  <div id="veil" aria-hidden="true"></div>
-
-  {%- section 'header' -%}
+  <!-- Inject asset base URLs for JS -->
+  <script>
+    window.IRTH_FRAME_BASE = "{{ 'irth_0001.jpg' | asset_url | split: 'irth_0001.jpg' | first }}";
+    window.IRTH_ASSETS = {
+      heroDesktop:      "{{ 'hero-desktop.mp4'      | asset_url }}",
+      heroMobile:       "{{ 'hero-mobile.mp4'       | asset_url }}",
+      introDesktop:     "{{ 'intro-desktop.mp4'     | asset_url }}",
+      introMobile:      "{{ 'intro-mobile.mp4'      | asset_url }}",
+      transDesktop:     "{{ 'transition-desktop.mp4'| asset_url }}",
+      transMobile:      "{{ 'transition-mobile.mp4' | asset_url }}"
+    };
+  </script>
 
   <main id="main" role="main" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
-  {%- section 'footer' -%}
+  <!-- Ambient audio (home only) -->
+  {%- if template.name == 'index' -%}
+    {% render 'ambient-audio' %}
+  {%- endif -%}
 
-  <!-- GSAP + Lenis (pin to exact versions for stability) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" crossorigin="anonymous"></script>
-  {{ 'theme.js' | asset_url | script_tag }}
+  <!-- GSAP + Lenis + main (all served from Shopify CDN, defer preserves order) -->
+  <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'lenis.min.js' | asset_url }}" defer></script>
+  <script src="{{ 'irth-main.js' | asset_url }}" defer></script>
 
 </body>
 </html>

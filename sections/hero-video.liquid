@@ -1,5 +1,9 @@
 {%- liquid
-  assign hero_video_url = section.settings.video_url | default: ''
+  assign hero_video_url  = section.settings.video_url | default: ''
+  assign hero_poster_url = ''
+  if section.settings.poster_image != blank
+    assign hero_poster_url = section.settings.poster_image | image_url: width: 1920
+  endif
   assign hero_line1_ar  = section.settings.hero_line1_ar | default: 'إرث الأجيال'
   assign hero_line2_ar  = section.settings.hero_line2_ar | default: 'في كل ثمرة'
   assign hero_pill_ar   = section.settings.hero_pill_ar  | default: 'تمور طبيعية'
@@ -16,6 +20,7 @@
     <video
       id="hero-vid"
       src="{{ hero_video_url }}"
+      {%- if hero_poster_url != blank %} poster="{{ hero_poster_url }}"{% endif %}
       autoplay
       muted
       loop
@@ -26,6 +31,7 @@
     <video
       id="hero-vid"
       src="{{ section.settings.video.sources.first.url }}"
+      {%- if hero_poster_url != blank %} poster="{{ hero_poster_url }}"{% endif %}
       autoplay
       muted
       loop
@@ -88,6 +94,12 @@
       "id": "video",
       "label": "Video (Shopify hosted)",
       "info": "Upload via Shopify. Used only if Video URL above is blank."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image",
+      "label": "Poster image (CWV fallback)",
+      "info": "Shown before video loads. Improves LCP on slow connections. Recommended: 1920×1080 WebP."
     },
     {
       "type": "header",
