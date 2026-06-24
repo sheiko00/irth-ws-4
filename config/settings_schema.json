@@ -33,22 +33,20 @@
         "type": "text",
         "id": "ga4_measurement_id",
         "label": "GA4 Measurement ID",
-        "info": "Format: G-XXXXXXXXXX — get from Google Analytics → Admin → Data Streams → your web stream → Measurement ID",
-        "default": ""
+        "info": "Format: G-XXXXXXXXXX — get from Google Analytics → Admin → Data Streams → your web stream → Measurement ID"
       },
       {
         "type": "text",
         "id": "gsc_verification",
         "label": "Google Search Console verification",
-        "info": "Paste only the content value from the meta tag GSC gives you",
-        "default": ""
+        "info": "Paste only the content value from the meta tag GSC gives you"
       }
     ]
   },
   {
     "name": "Custom CSS",
     "settings": [
-      { "type": "textarea", "id": "custom_css", "label": "Custom CSS", "default": "" }
+      { "type": "textarea", "id": "custom_css", "label": "Custom CSS" }
     ]
   }
 ]
